@@ -1,4 +1,7 @@
 FILES = input/introduction.md \
+	input/background.md \
+	input/methods.md \
+	input/results.md \
 	input/conclusion.md
 
 METADATA = metadata.yml
