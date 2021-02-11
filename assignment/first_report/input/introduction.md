@@ -1,4 +1,4 @@
-\IEEEraisesectionheading{\section{Introduction}\label{sec:introduction}}
+\IEEEraisesectionheading{\section{Introduction}\label{introduction}}
 
 \IEEEPARstart{C}{onvolutional} neural networks (CNN's) currently are one of the must explored topics due to their high efficiency in several areas of ML, in particular Computer Vision and Image Recognition. This led to the creation of popular datasets such as MNIST and ImageNet, which are used nowadays to introduce the topic or to pre-train the CNN's to be able to perform _Transfer Learning_ for more specific tasks. This had led to the researchers to not only improve the performance of the CNN's but also found a use for them, one of these cases have been for the detection of Wildfires.
 

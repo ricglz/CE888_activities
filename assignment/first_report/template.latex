@@ -116,6 +116,8 @@
 
 \usepackage[unicode=true]{hyperref}
 
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 
 \begin{document}
 %
