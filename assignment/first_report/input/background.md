@@ -20,6 +20,11 @@ In addition that due to their popularity people train these models with popular 
 
 Actually in the case of the FLAME research done, it's mentioned in the paper that the model that achieved a 76% of accuracy was using an architecture called Xception \cite{Shamsoshoara2020}.
 
+Another example of an architecture is EfficientNet published in September 2019, that wanted to tackle the problem of scaling up an architecture by having a smaller amount of parameters, but also by keeping/increasing the accuracy of the model, this was able by the use of _compound coefficient_ \cite{Tan2020}.
+
+Also it exists the architecture of ReXNet which was proposed in July 2020, aiming to follow the trend of creating accurate and lightweight architectures, distinguishing themselves by the use of _representational bottlenecks_. The result was quite good improving the accuracy when doing transfer learning from trained models using the COCO dataset, while keeping a small amount of parameters to train \cite{Han2020}.
+
+
 ## Data augmentation
 
 Is a method that allows to increase the amount of data that we have in a dataset, allowing to be persistent being that you generate new data based on the previous one and save it on the same dataset. Or add randomness prior to training a batch, making that every epoch and batch should not consist of the same data in the same order \cite{Van2001}.

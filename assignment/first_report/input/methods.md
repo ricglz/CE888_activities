@@ -2,29 +2,21 @@
 
 ## Dataset
 
-As mentioned in the introduction \ref{introduction}, the objective of this research is to use both the FLAME and Kaggle datasets, thus prior to training both datasets will be merged. But also to provide a little more diversity new images will be created, this will help a lot considering that after giving a quick look to the FLAME dataset must of the images are just burst of the same environment with/without fire. Due to this the model could instead of learning to detect fire, could learn to detect the environments.
+As mentioned in the introduction \ref{introduction}, the objective of this research is to use both the FLAME and Kaggle datasets, thus prior to training both datasets will be merged. As the distribution of the classes end up being skewed, it will be performed as part of the preprocessing data augmentation in the images of the lower class (_No_Fire_), to perfectly balance both classes
 
 ### Data Augmentation Transformations
 
 > All random transformations have a probability of 50% of happening
 
-- A reduction of the brightness by 50%
-- A random rotation of 45º
+- A reduction or increase of brightness and contrast within a range of 0.75-1.25. The final number is defined by a uniform probability
+- A random rotation of 5º
 - A random horizontal flip and a random vertical flip
 
 ## Model
 
 As mentioned in the cnn architectures section \ref{cnn-arch}, the architecture that the FLAME researchers used was the Xception architecture, which improves over its previous version called Inception, which improves primarily the performance while keeping the same amount of parameters. Nevertheless, the architecture could be consider _old_, being published in 2017 and many other architectures that have improve accuracy, or just other models which already had better performance than this case.
 
-Due to the former, if we want to improve the performance of the classifier it's recommended that we attempt to use other architectures. For this case the models consider to test will be _EfficientNet_ and _ReXNet_. With these models instead of training randomized weights we will do transfer learning on a model trained using the ImageNet dataset, training only the top layer which is a densely connected layer in both cases.
-
-### EfficientNet
-
-An architecture published in September 2019, that wanted to tackle the problem of scaling up an architecture by having a smaller amount of parameters, but also by keeping/increasing the accuracy of the model, this was able by the use of _compound coefficient_ \cite{Tan2020}.
-
-### ReXNet
-
-An architecture proposed in July 2020, aiming to follow the trend of creating accurate and lightweight architectures, distinguishing themselves by the use of _representational bottlenecks_. The result was quite good improving the accuracy when doing transfer learning from trained models using the COCO dataset, while keeping a small amount of parameters to train \cite{Han2020}.
+Due to the former, if we want to improve the performance of the classifier it's recommended that we attempt to use other architectures. For this case the models consider to test will be _EfficientNet_ and _ReXNet_. With these models instead of training randomized weights we will do transfer learning on a model trained using the ImageNet dataset \cite{timm}, training only the top layer which is a densely connected layer in both cases.
 
 ## Training
 
@@ -32,24 +24,30 @@ For the training must things will be very straightforward, the validation will b
 
 ### Optimizer and Criterion/Loss Function
 
-The optimizer chosen for the training is the Adam optimizer. Meanwhile, the criterion used to calculate the loss of the model will be due to being a binary classification problem, the binary crossentropy loss function with logits, meaning that a Sigmoid function will be used as a final activation function and based on this the loss function will calculate the current loss.
+The optimizer chosen for the training is the Adam optimizer. Meanwhile, the criterion used to calculate the loss of the model will be due to being a binary classification problem, the binary cross-entropy loss function with logits, meaning that a Sigmoid function will be used as a final activation function and based on this the loss function will calculate the current loss.
 
 ### Hyperparameters
 
-- Batch-size: 28
-- Learning Rate: 2e-3
-- Max epochs: 10
+- Batch-size: 32
+- Learning Rate: 5e-4
+- Max epochs: 15
 
 ### Callbacks
 
-- _EarlyStopping_, a callback to stop the training if the validation loss have increased or decreased by little values in the last three epochs
-- _LRScheduler_, this callback will reduce the learning rate every epoch in a ration of 9e-1
+- _LRScheduler_, this callback modifies the current learning rate based on the current epoch, leading to a function that has the following structure
+
+```
+if epoch <= num_warmup_steps:
+    return np.log(max_lr / lr) / np.log(num_warmup_steps)
+return np.log(min_lr / max_lr) / np.log(num_training_steps)
+```
 
 ### Transformations
 
 > All random transformations have a probability of 50% of happening. And the random transformations are only for the training dataset
 
 - Resize the image to a size of (254, 254)
-- Random horizontal flip
-- Random vertical flip
-- Normalization
+- A reduction or increase of brightness and contrast within a range of 0.75-1.25. The final number is defined by a uniform probability
+- A random rotation of 5º
+- A random horizontal flip and a random vertical flip
+- Normalization using the mean and std of each channel of the ImageNet dataset
