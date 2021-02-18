@@ -29,7 +29,7 @@ The optimizer chosen for the training is the Adam optimizer. Meanwhile, the crit
 ### Hyperparameters
 
 - Batch-size: 32
-- Learning Rate: 5e-4
+- Learning Rate: 5e-5
 - Max epochs: 15
 
 ### Callbacks
@@ -38,9 +38,13 @@ The optimizer chosen for the training is the Adam optimizer. Meanwhile, the crit
 
 ```
 if epoch <= num_warmup_steps:
-    return np.log(max_lr / lr) / np.log(num_warmup_steps)
-return np.log(min_lr / max_lr) / np.log(num_training_steps)
+    return log(max_lr / lr) /
+           log(num_warmup_steps)
+return log(min_lr / max_lr) /
+       log(num_training_steps)
 ```
+
+Using as _max_lr_: 5e-3, _min_lr_: 1e-5, _num_warmup_steps_: 6 and _num_training_steps_: 9
 
 ### Transformations
 

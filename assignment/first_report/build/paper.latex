@@ -1,86 +1,536 @@
-% Options for packages loaded elsewhere
-\PassOptionsToPackage{unicode}{hyperref}
-\PassOptionsToPackage{hyphens}{url}
+%% This is a skeleton file demonstrating the use of IEEEtran.cls
+%% (requires IEEEtran.cls version 1.8b or later) with an IEEE
+%% Computer Society journal paper.
+%%
+%% Support sites:
+%% http://www.michaelshell.org/tex/ieeetran/
+%% http://www.ctan.org/pkg/ieeetran
+%% and
+%% http://www.ieee.org/
+
+% *** Authors should verify (and, if needed, correct) their LaTeX system  ***
+% *** with the testflow diagnostic prior to trusting their LaTeX platform ***
+% *** with production work. The IEEE's font choices and paper sizes can   ***
+% *** trigger bugs that do not appear when using other class files.       ***                          ***
+% The testflow support page is at:
+% http://www.michaelshell.org/tex/testflow/
+
+\documentclass[10pt,journal,compsoc]{IEEEtran}
 %
-\documentclass[
-]{article}
-\usepackage{lmodern}
-\usepackage{amssymb,amsmath}
-\usepackage{ifxetex,ifluatex}
-\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
-  \usepackage[T1]{fontenc}
-  \usepackage[utf8]{inputenc}
-  \usepackage{textcomp} % provide euro and other symbols
-\else % if luatex or xetex
-  \usepackage{unicode-math}
-  \defaultfontfeatures{Scale=MatchLowercase}
-  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+% If IEEEtran.cls has not been installed into the LaTeX system files,
+% manually specify the path to it like:
+% \documentclass[10pt,journal,compsoc]{../sty/IEEEtran}
+
+% Some very useful LaTeX packages include:
+% (uncomment the ones you want to load)
+
+% *** MISC UTILITY PACKAGES ***
+%
+%\usepackage{ifpdf}
+% Heiko Oberdiek's ifpdf.sty is very useful if you need conditional
+% compilation based on whether the output is pdf or dvi.
+% usage:
+% \ifpdf
+%   % pdf code
+% \else
+%   % dvi code
+% \fi
+% The latest version of ifpdf.sty can be obtained from:
+% http://www.ctan.org/pkg/ifpdf
+% Also, note that IEEEtran.cls V1.7 and later provides a builtin
+% \ifCLASSINFOpdf conditional that works the same way.
+% When switching from latex to pdflatex and vice-versa, the compiler may
+% have to be run twice to clear warning/error messages.
+
+% *** CITATION PACKAGES ***
+%
+\ifCLASSOPTIONcompsoc
+  % IEEE Computer Society needs nocompress option
+  % requires cite.sty v4.0 or later (November 2003)
+  \usepackage[nocompress]{cite}
+\else
+  % normal IEEE
+  \usepackage{cite}
 \fi
-% Use upquote if available, for straight quotes in verbatim environments
-\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
-\IfFileExists{microtype.sty}{% use microtype if available
-  \usepackage[]{microtype}
-  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
-}{}
+
+% *** GRAPHICS RELATED PACKAGES ***
+%
+\ifCLASSINFOpdf
+  \usepackage[pdftex]{graphicx}
+  % declare the path(s) where your graphic files are
+  % and their extensions so you won't have to specify these with
+  % every instance of \includegraphics
+  \graphicspath{{../pdf/}{../imgaes/}}
+  \DeclareGraphicsExtensions{.pdf,.jpeg,.png}
+\else
+  % or other class option (dvipsone, dvipdf, if not using dvips). graphicx
+  % will default to the driver specified in the system graphics.cfg if no
+  % driver is specified.
+  % \usepackage[dvips]{graphicx}
+  % declare the path(s) where your graphic files are
+  % \graphicspath{{../eps/}}
+  % and their extensions so you won't have to specify these with
+  % every instance of \includegraphics
+  % \DeclareGraphicsExtensions{.eps}
+\fi
+
+% *** MATH PACKAGES ***
+% \usepackage{amsmath}
+
+% *** ALIGNMENT PACKAGES ***
+%
+\usepackage{array}
+
+% *** SUBFIGURE PACKAGES ***
+\ifCLASSOPTIONcompsoc
+  \usepackage[caption=false,font=footnotesize,labelfont=sf,textfont=sf]{subfig}
+\else
+  \usepackage[caption=false,font=footnotesize]{subfig}
+\fi
+% The latest version and documentation of subfig.sty can be obtained at:
+% http://www.ctan.org/pkg/subfig
+
+% *** FLOAT PACKAGES ***
+%
+\usepackage{dblfloatfix}
+% The latest version can be found at:
+% http://www.ctan.org/pkg/dblfloatfix
+
+\ifCLASSOPTIONcaptionsoff
+  \usepackage[nomarkers]{endfloat}
+ \let\MYoriglatexcaption\caption
+ \renewcommand{\caption}[2][\relax]{\MYoriglatexcaption[#2]{#2}}
+\fi
+% The latest version of endfloat.sty and its documentation can obtained at:
+% http://www.ctan.org/pkg/endfloat
+
+% *** PDF, URL AND HYPERLINK PACKAGES ***
+%
+\usepackage{url}
+% The latest version and documentation can be obtained at:
+% http://www.ctan.org/pkg/url
+% Basically, \url{my_url_here}.
+
+% correct bad hyphenation here
+% \hyphenation{op-tical net-works semi-conduc-tor}
+
+\usepackage[unicode=true]{hyperref}
+
+% Include images
+\usepackage{graphicx}
+
+% For tables
+\usepackage{longtable,xtab,booktabs}
+
 \makeatletter
-\@ifundefined{KOMAClassName}{% if non-KOMA class
-  \IfFileExists{parskip.sty}{%
-    \usepackage{parskip}
-  }{% else
-    \setlength{\parindent}{0pt}
-    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
-}{% if KOMA class
-  \KOMAoptions{parskip=half}}
+\let\oldlt\longtable
+\let\endoldlt\endlongtable
+\def\longtable{\@ifnextchar[\longtable@i \longtable@ii}
+\def\longtable@i[#1]{\begin{figure}[t]
+\onecolumn
+\begin{minipage}{0.5\textwidth}
+\oldlt[#1]
+}
+\def\longtable@ii{\begin{figure}[t]
+\onecolumn
+\begin{minipage}{0.5\textwidth}
+\oldlt
+}
+\def\endlongtable{\endoldlt
+\end{minipage}
+\twocolumn
+\end{figure}}
 \makeatother
-\usepackage{xcolor}
-\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
-\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
-\hypersetup{
-  pdftitle={Fire Forest Detection Using UAV Images},
-  pdfkeywords={CNN, Deep Learning, Fire Forest},
-  hidelinks,
-  pdfcreator={LaTeX via pandoc}}
-\urlstyle{same} % disable monospaced font for URLs
-\setlength{\emergencystretch}{3em} % prevent overfull lines
+
+% For listing
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
-\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
-
-\title{Fire Forest Detection Using UAV Images}
-\author{}
-\date{}
 
 \begin{document}
-\maketitle
+%
+% paper title
+% Titles are generally capitalized except for words such as a, an, and, as,
+% at, but, by, for, in, nor, of, on, or, the, to and up, which are usually
+% not capitalized unless they are the first or last word of the title.
+% Linebreaks \\ can be used within to get better formatting as desired.
+% Do not put math or special symbols in the title.
+\title{Wildfires Detection Using UAV Images}
+
+% author names and IEEE memberships
+% note positions of commas and nonbreaking spaces ( ~ ) LaTeX will not break
+% a structure at a ~ so this keeps an author's name from being broken across
+% two lines.
+% use \thanks{} to gain access to the first footnote area
+% a separate \thanks must be used for each paragraph as LaTeX2e's \thanks
+% was not built to handle multiple paragraphs
+
+\author{Ricardo~Gonzalez,~\IEEEmembership{Fellow,~IEEE,}}
+
+% The paper headers
+\markboth{Journal of \LaTeX\ Class Files,~Vol.~14, No.~8, August~2015}%
+{Shell \MakeLowercase{\textit{et al.}}: Bare Demo of IEEEtran.cls for Computer Society Journals}
+
+% for Computer Society papers, we must declare the abstract and index terms
+% PRIOR to the title within the \IEEEtitleabstractindextext IEEEtran
+% command as these need to go into the title area created by \maketitle.
+% As a general rule, do not put math, special symbols or citations
+% in the abstract or keywords.
+\IEEEtitleabstractindextext{%
 \begin{abstract}
 This my abstract And this is how it ends
 \end{abstract}
 
-\IEEEraisesectionheading{\section{Introduction}\label{sec:introduction}}
+% Note that keywords are not normally used for peerreview papers.
+\begin{IEEEkeywords}
+    CNN;
+    Deep Learning;
+    Wildfires\end{IEEEkeywords}}
 
-\IEEEPARstart{T}{his} demo file is intended to serve as a `starter file'
-for IEEE Computer Society journal papers produced under \LaTeX~using
-IEEEtran.cls version 1.8b and later. \% You must have at least 2 lines
-in the paragraph with the drop letter \% (should never be an issue) I
-wish you the best of success.
+% make the title area
+\maketitle
 
-\hfill mds
+% To allow for easy dual compilation without having to reenter the
+% abstract/keywords data, the \IEEEtitleabstractindextext text will
+% not be used in maketitle, but will appear (i.e., to be "transported")
+% here as \IEEEdisplaynontitleabstractindextext when the compsoc
+% or transmag modes are not selected <OR> if conference mode is selected
+% - because all conference papers position the abstract like regular
+% papers do.
+\IEEEdisplaynontitleabstractindextext
+% \IEEEdisplaynontitleabstractindextext has no effect when using
+% compsoc or transmag under a non-conference mode.
 
-\hfill August 26, 2015
+% For peer review papers, you can put extra information on the cover
+% page as needed:
+% \ifCLASSOPTIONpeerreview
+% \begin{center} \bfseries EDICS Category: 3-BBND \end{center}
+% \fi
+%
+% For peerreview papers, this IEEEtran command inserts a page break and
+% creates the second title. It will be ignored for other modes.
+\IEEEpeerreviewmaketitle
 
-\hypertarget{subsection-heading}{%
-\subsection{Subsection Heading}\label{subsection-heading}}
+\IEEEraisesectionheading{\section{Introduction}\label{introduction}}
 
-Some text
+\IEEEPARstart{C}{onvolutional} neural networks (CNN's) currently are one
+of the must explored topics due to their high efficiency in several
+areas of ML, in particular Computer Vision and Image Recognition. This
+led to the creation of popular datasets such as MNIST and ImageNet,
+which are used nowadays to introduce the topic or to pre-train the CNN's
+to be able to perform \emph{Transfer Learning} for more specific tasks.
+This had led to the researchers to not only improve the performance of
+the CNN's but also found a use for them, one of these cases have been
+for the detection of Wildfires.
 
-\hypertarget{subsubsection-heading}{%
-\subsubsection{Subsubsection Heading}\label{subsubsection-heading}}
+Wildfires currently are on of the must dangerous natural disasters that
+are threating the world. According to an investigation done by the NOAA
+(National Oceanic and Atmospheric Administration), the emissions
+produced by the wildfires often lead to harmful pollution not only in
+the area near the wildfire but also can extent even farther from the
+area, harming humans and other specials alike \cite{NOAA}. In addition
+to that, there are ecosystems which fauna and flora are being threatened
+due to the fires and to human intervention. Being that the case of the
+Amazon Rainforest, where the mentioned causes alongside droughts, could
+led to a possible ``tipping point'' where the Reinforces would be
+unsustainable in the case that there's no effective intervention of the
+matter \cite{Malhi}.
 
-Some text here
+Due to the formerly mentioned there have been attempts by the scientific
+community to develop models that can detect based on the image if there
+is fire or not. Leading to the creation of datasets such as FLAME, a
+dataset created and provided by the IEEE \cite{IEEE-Flame}, or less
+academic but still important FIRE dataset hosted on Kaggle which is also
+home of several images showing environment with and without fire
+\cite{Saied}.
+
+Nevertheless, the models are not very accurate, as an example the model
+trained with the FLAME dataset had only a 76\% accuracy
+\cite{IEEE-Flame}, showing that there are still are of improvement in
+the regard. And with the knowledge that the FLAME model was trained only
+with the FLAME dataset, it's possible that using both the FLAME and
+Kaggle dataset in addition to some data augmentation and a new model it
+will be possible to improve the score previously obtained solely by the
+FLAME dataset.
+
+\hypertarget{background-literature-review}{%
+\section{Background / Literature
+Review}\label{background-literature-review}}
+
+\hypertarget{convolutional-neural-network}{%
+\subsection{Convolutional Neural
+Network}\label{convolutional-neural-network}}
+
+Are a type of Neural Networks commonly used for the areas of Image
+Recognition and Computer Vision, this type of networks have the main
+feature of being divided in several deeply connected
+\emph{convolutional} and \emph{pooling} layers, to finally end with a
+\emph{classifier} which is a fully connected layer comparable to a layer
+of traditional Multi-Layer Perceptron (MLP).
+
+\hypertarget{cnn-architectures}{%
+\subsubsection{\texorpdfstring{CNN Architectures
+\label{cnn-arch}}{CNN Architectures }}\label{cnn-architectures}}
+
+As CNN's are one of the state of the art topics in research nowadays,
+there have been many popular architectures that either have very high
+performance, or have very little parameters with the objective of having
+a lightweight model with good performance. For developing actual
+applications for a problem researchers actually use this predefined
+architectures to solve the problem they're facing as this provides the
+advantages of being a proven useful architecture.
+
+In addition that due to their popularity people train these models with
+popular datasets so researchers can use these pre-trained weights
+enabling to do \emph{transfer learning}, which is when using an already
+trained model, retrained the top layer to be able to have a good
+performance in the new problem.
+
+Actually in the case of the FLAME research done, it's mentioned in the
+paper that the model that achieved a 76\% of accuracy was using an
+architecture called Xception \cite{Shamsoshoara2020}.
+
+Another example of an architecture is EfficientNet published in
+September 2019, that wanted to tackle the problem of scaling up an
+architecture by having a smaller amount of parameters, but also by
+keeping/increasing the accuracy of the model, this was able by the use
+of \emph{compound coefficient} \cite{Tan2020}.
+
+Also it exists the architecture of ReXNet which was proposed in July
+2020, aiming to follow the trend of creating accurate and lightweight
+architectures, distinguishing themselves by the use of
+\emph{representational bottlenecks}. The result was quite good improving
+the accuracy when doing transfer learning from trained models using the
+COCO dataset, while keeping a small amount of parameters to train
+\cite{Han2020}.
+
+\hypertarget{data-augmentation}{%
+\subsection{Data augmentation}\label{data-augmentation}}
+
+Is a method that allows to increase the amount of data that we have in a
+dataset, allowing to be persistent being that you generate new data
+based on the previous one and save it on the same dataset. Or add
+randomness prior to training a batch, making that every epoch and batch
+should not consist of the same data in the same order \cite{Van2001}.
+
+For images datasets, normally the transformation/augmentations done to
+increase the dataset is by performing modifications in the same image
+being by simple image transformations such as shearing, rotation and
+translation. But it also may be the modification of the brightness,
+flipping the image vertically or horizontally, or by cropping it
+\cite{Perez2017}.
+
+\hypertarget{methods}{%
+\section{Methods}\label{methods}}
+
+\hypertarget{dataset}{%
+\subsection{Dataset}\label{dataset}}
+
+As mentioned in the introduction \ref{introduction}, the objective of
+this research is to use both the FLAME and Kaggle datasets, thus prior
+to training both datasets will be merged. As the distribution of the
+classes end up being skewed, it will be performed as part of the
+preprocessing data augmentation in the images of the lower class
+(\emph{No\_Fire}), to perfectly balance both classes
+
+\hypertarget{data-augmentation-transformations}{%
+\subsubsection{Data Augmentation
+Transformations}\label{data-augmentation-transformations}}
+
+\begin{quote}
+All random transformations have a probability of 50\% of happening
+\end{quote}
+
+\begin{itemize}
+\tightlist
+\item
+  A reduction or increase of brightness and contrast within a range of
+  0.75-1.25. The final number is defined by a uniform probability
+\item
+  A random rotation of 5º
+\item
+  A random horizontal flip and a random vertical flip
+\end{itemize}
+
+\hypertarget{model}{%
+\subsection{Model}\label{model}}
+
+As mentioned in the cnn architectures section \ref{cnn-arch}, the
+architecture that the FLAME researchers used was the Xception
+architecture, which improves over its previous version called Inception,
+which improves primarily the performance while keeping the same amount
+of parameters. Nevertheless, the architecture could be consider
+\emph{old}, being published in 2017 and many other architectures that
+have improve accuracy, or just other models which already had better
+performance than this case.
+
+Due to the former, if we want to improve the performance of the
+classifier it's recommended that we attempt to use other architectures.
+For this case the models consider to test will be \emph{EfficientNet}
+and \emph{ReXNet}. With these models instead of training randomized
+weights we will do transfer learning on a model trained using the
+ImageNet dataset \cite{timm}, training only the top layer which is a
+densely connected layer in both cases.
+
+\hypertarget{training}{%
+\subsection{Training}\label{training}}
+
+For the training must things will be very straightforward, the
+validation will be checked splitting the training dataset into 80\%
+training and 20\% validation, just like in the FLAME paper. In addition
+this training dataset will also have a set of transformations both to do
+data augmentation and to normalize the data, this with the intention to
+not always have the same data in a batch every epoch and give diversity
+and randomness to the training.
+
+\hypertarget{optimizer-and-criterionloss-function}{%
+\subsubsection{Optimizer and Criterion/Loss
+Function}\label{optimizer-and-criterionloss-function}}
+
+The optimizer chosen for the training is the Adam optimizer. Meanwhile,
+the criterion used to calculate the loss of the model will be due to
+being a binary classification problem, the binary cross-entropy loss
+function with logits, meaning that a Sigmoid function will be used as a
+final activation function and based on this the loss function will
+calculate the current loss.
+
+\hypertarget{hyperparameters}{%
+\subsubsection{Hyperparameters}\label{hyperparameters}}
+
+\begin{itemize}
+\tightlist
+\item
+  Batch-size: 32
+\item
+  Learning Rate: 5e-5
+\item
+  Max epochs: 15
+\end{itemize}
+
+\hypertarget{callbacks}{%
+\subsubsection{Callbacks}\label{callbacks}}
+
+\begin{itemize}
+\tightlist
+\item
+  \emph{LRScheduler}, this callback modifies the current learning rate
+  based on the current epoch, leading to a function that has the
+  following structure
+\end{itemize}
+
+\begin{verbatim}
+if epoch <= num_warmup_steps:
+    return np.log(max_lr / lr) / np.log(num_warmup_steps)
+return np.log(min_lr / max_lr) / np.log(num_training_steps)
+\end{verbatim}
+
+Using as \emph{max\_lr}: 5e-3, \emph{min\_lr}: 1e-5,
+\emph{num\_warmup\_steps}: 6 and \emph{num\_training\_steps}: 9
+
+\hypertarget{transformations}{%
+\subsubsection{Transformations}\label{transformations}}
+
+\begin{quote}
+All random transformations have a probability of 50\% of happening. And
+the random transformations are only for the training dataset
+\end{quote}
+
+\begin{itemize}
+\tightlist
+\item
+  Resize the image to a size of (254, 254)
+\item
+  A reduction or increase of brightness and contrast within a range of
+  0.75-1.25. The final number is defined by a uniform probability
+\item
+  A random rotation of 5º
+\item
+  A random horizontal flip and a random vertical flip
+\item
+  Normalization using the mean and std of each channel of the ImageNet
+  dataset
+\end{itemize}
+
+\hypertarget{results}{%
+\section{Results}\label{results}}
+
+\hypertarget{rexnet-results}{%
+\subsection{ReXNet results}\label{rexnet-results}}
+
+\begin{longtable}[]{@{}ll@{}}
+\caption{Final ReXNet model metrics}\tabularnewline
+\toprule
+Dataset & (Loss) Accuracy \\
+\midrule
+\endfirsthead
+\toprule
+Dataset & (Loss) Accuracy \\
+\midrule
+\endhead
+Training & (0.0293) 99.62 \\
+Validation & (0.0153) 99.62 \\
+Testing & (-) 71.46 \\
+\bottomrule
+\end{longtable}
+
+\hypertarget{efficientnet-results}{%
+\subsection{EfficientNet results}\label{efficientnet-results}}
+
+\begin{longtable}[]{@{}ll@{}}
+\caption{Final EfficientNet model metrics}\tabularnewline
+\toprule
+Dataset & (Loss) Accuracy \\
+\midrule
+\endfirsthead
+\toprule
+Dataset & (Loss) Accuracy \\
+\midrule
+\endhead
+Training & (0.0582) 98.28 \\
+Validation & (0.0530) 98.32 \\
+Testing & (-) 61.46 \\
+\bottomrule
+\end{longtable}
+
+\hypertarget{best-model-vs-flames-model}{%
+\subsection{Best Model vs FLAME's
+model}\label{best-model-vs-flames-model}}
+
+As shown with the tables 1 and 2, it's evident that the best model that
+was trained is the ReXNet nevertheless the results overall doesn't seem
+as favorable, the new model shows a current accuracy of 71\%, being that
+a 7\% decrease in the accuracy compared to the model done by the FLAME
+team. Nevertheless this seems to be a case of over-fitting as the
+current model outperforms FLAME's, with a significantly decrease in both
+the validation and training loss, showing also an increase in the
+accuracy.
+
+Some other things it should be consider is that due to hardware
+constraints and to be 100\% to transfer learning, it was only trained
+the top layer of the CNN. This brought improvements, such that it was
+necessary to train the model in less epochs and probably in less time in
+the same hardware not only due to the use of transfer learning but also
+due to the nature of the architecture itself, nevertheless it could also
+be the reason that it's difficult to tune for a better generalization
+more specific to our current situation. This shows the advantages and
+disadvantages that can bring transfer learning.
 
 \hypertarget{conclusion}{%
 \section{Conclusion}\label{conclusion}}
 
 This is my conclusion
 
+% can use a bibliography generated by BibTeX as a .bbl file
+% BibTeX documentation can be easily obtained at:
+% http://mirror.ctan.org/biblio/bibtex/contrib/doc/
+% The IEEEtran BibTeX style support page is at:
+% http://www.michaelshell.org/tex/ieeetran/bibtex/
+%\bibliographystyle{IEEEtran}
+% argument is your BibTeX string definitions and bibliography database(s)
+%\bibliography{IEEEabrv,../bib/paper}
+%
+% <OR> manually copy in the resultant .bbl file
+% set second argument of \begin to the number of references
+% (used to reserve space for the reference number labels box)
+\bibliographystyle{IEEEtran}
+\bibliography{bibliography}
 \end{document}

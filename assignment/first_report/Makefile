@@ -9,15 +9,18 @@ METADATA = metadata.yml
 OUTPUT = build
 
 FLAGS = --bibliography=bibliography.bib \
-		-s \
-		-f markdown
+	--listings \
+	-s \
+	-f markdown
 
-FLAGS_PDF = --template=template.latex --pdf-engine=tectonic
+FLAGS_PDF = --template=template.latex \
+	    --pdf-engine=tectonic \
+	    --include-in-header=preamble.latex
 
 all: pdf
 
 latex:
-	pandoc -o $(OUTPUT)/paper.latex $(FLAGS) $(FILES) $(METADATA)
+	pandoc -o $(OUTPUT)/paper.latex $(FLAGS) $(FLAGS_PDF) $(FILES) $(METADATA)
 
 pdf:
 	pandoc -o $(OUTPUT)/paper.pdf $(FLAGS) $(FLAGS_PDF) $(FILES) $(METADATA)
