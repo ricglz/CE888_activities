@@ -17,13 +17,16 @@
 
 % *** GRAPHICS RELATED PACKAGES ***
 %
-\usepackage{graphicx}
+\usepackage{graphicx,caption}
+\graphicspath{{./images}}
+\DeclareGraphicsExtensions{.pdf,.jpeg,.png}
 
 % *** MATH PACKAGES ***
 % \usepackage{amsmath}
 
 % *** ALIGNMENT PACKAGES ***
 %
+\usepackage{float}
 \usepackage{array}
 
 % *** SUBFIGURE PACKAGES ***
@@ -31,40 +34,16 @@
 % The latest version and documentation of subfig.sty can be obtained at:
 % http://www.ctan.org/pkg/subfig
 
-% *** FLOAT PACKAGES ***
-%
-\usepackage{dblfloatfix}
-% The latest version can be found at:
-% http://www.ctan.org/pkg/dblfloatfix
-
 % *** PDF, URL AND HYPERLINK PACKAGES ***
 %
 \usepackage{url}
 
 \usepackage[unicode=true]{hyperref}
 
-% For tables
-\usepackage{longtable,booktabs}
+\usepackage{csquotes}
 
-\makeatletter
-\let\oldlt\longtable
-\let\endoldlt\endlongtable
-\def\longtable{\@ifnextchar[\longtable@i \longtable@ii}
-\def\longtable@i[#1]{\begin{figure}[t]
-\onecolumn
-\begin{minipage}{0.5\textwidth}
-\oldlt[#1]
-}
-\def\longtable@ii{\begin{figure}[t]
-\onecolumn
-\begin{minipage}{0.5\textwidth}
-\oldlt
-}
-\def\endlongtable{\endoldlt
-\end{minipage}
-\twocolumn
-\end{figure}}
-\makeatother
+% For tables
+\usepackage{booktabs}
 
 % For listing
 \providecommand{\tightlist}{%
@@ -77,6 +56,13 @@
   language=Python,
   basicstyle=\small,
 }
+
+\makeatletter
+\def\lst@makecaption{%
+  \def\@captype{table}%
+  \@makecaption
+}
+\makeatother
 
 \makeatletter
 \def\lst@makecaption{%

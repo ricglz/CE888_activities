@@ -34,17 +34,15 @@ The optimizer chosen for the training is the Adam optimizer. Meanwhile, the crit
 
 ### Callbacks
 
-- _LRScheduler_, this callback modifies the current learning rate based on the current epoch, leading to a function that has the following structure
+- _LRScheduler_, this callback modifies the current learning rate based on the current epoch, leading to a function that has the following structure, using as _max_lr_: 5e-3, _min_lr_: 1e-5, _num_warmup_steps_: 6 and _num_training_steps_: 9
 
-```
+```python
 if epoch <= num_warmup_steps:
     return log(max_lr / lr) /
            log(num_warmup_steps)
 return log(min_lr / max_lr) /
        log(num_training_steps)
 ```
-
-Using as _max_lr_: 5e-3, _min_lr_: 1e-5, _num_warmup_steps_: 6 and _num_training_steps_: 9
 
 ### Transformations
 

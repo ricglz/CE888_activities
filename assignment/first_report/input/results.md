@@ -1,32 +1,49 @@
 # Results
 
-## ReXNet results
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|l|}
+\toprule
+Model & Accuracy & Loss \\
+\midrule
+ReXNet & 99.62 & 0.0293 \\
+EfficientNet & 98.28 & 0.0582 \\
+FLAME & 96.79 & 0.0857 \\
+\bottomrule
+\end{tabular}
+\caption{Model's accuracies and losses in training dataset}
+\label{tab-1}
+\end{table}
 
-<!-- ![ReXNet training model progress](images/rexnet_training.png) -->
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|l|}
+\toprule
+Model & Accuracy & Loss \\
+\midrule
+ReXNet & 99.62 & 0.0136 \\
+EfficientNet & 98.32 & 0.053 \\
+FLAME & 94.31 & 0.1506 \\
+\bottomrule
+\end{tabular}
+\caption{Model's accuracies and losses in validation dataset}
+\label{tab-2}
+\end{table}
 
-| Dataset    | (Loss) Accuracy |
-| -          | -               |
-| Training   | (0.0293) 99.62  |
-| Validation | (0.0153) 99.62  |
-| Testing    | (-)      71.46  |
-Table: Final ReXNet model metrics
-
-<!-- ![ReXNet confusion matrix](images/rexnet_cm.png) -->
-
-## EfficientNet results
-
-<!-- ![EfficientNet training model progress](images/efficientnet_training.png) -->
-
-| Dataset    | (Loss) Accuracy |
-| -          | -               |
-| Training   | (0.0582) 98.28  |
-| Validation | (0.0530) 98.32  |
-| Testing    | (-)      61.46  |
-Table: Final EfficientNet model metrics
-
-<!-- ![EfficientNet confusion matrix](images/efficientnet_cm.png) -->
-
-## Best Model vs FLAME's model
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|}
+\toprule
+Model & Accuracy \\
+\midrule
+ReXNet & 71.46 \\
+EfficientNet & 61.46 \\
+FLAME & 76 \\
+\bottomrule
+\end{tabular}
+\caption{Model's accuracies in test dataset}
+\label{tab-3}
+\end{table}
 
 As shown with the tables 1 and 2, it's evident that the best model that was trained is the ReXNet nevertheless the results overall doesn't seem as favorable, the new model shows a current accuracy of 71%, being that a 7% decrease in the accuracy compared to the model done by the FLAME team. Nevertheless this seems to be a case of over-fitting as the current model outperforms FLAME's, with a significantly decrease in both the validation and training loss, showing also an increase in the accuracy.
 

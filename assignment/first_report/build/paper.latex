@@ -8,71 +8,18 @@
 %% and
 %% http://www.ieee.org/
 
-% *** Authors should verify (and, if needed, correct) their LaTeX system  ***
-% *** with the testflow diagnostic prior to trusting their LaTeX platform ***
-% *** with production work. The IEEE's font choices and paper sizes can   ***
-% *** trigger bugs that do not appear when using other class files.       ***                          ***
-% The testflow support page is at:
-% http://www.michaelshell.org/tex/testflow/
-
 \documentclass[10pt,journal,compsoc]{IEEEtran}
-%
-% If IEEEtran.cls has not been installed into the LaTeX system files,
-% manually specify the path to it like:
-% \documentclass[10pt,journal,compsoc]{../sty/IEEEtran}
-
-% Some very useful LaTeX packages include:
-% (uncomment the ones you want to load)
-
-% *** MISC UTILITY PACKAGES ***
-%
-%\usepackage{ifpdf}
-% Heiko Oberdiek's ifpdf.sty is very useful if you need conditional
-% compilation based on whether the output is pdf or dvi.
-% usage:
-% \ifpdf
-%   % pdf code
-% \else
-%   % dvi code
-% \fi
-% The latest version of ifpdf.sty can be obtained from:
-% http://www.ctan.org/pkg/ifpdf
-% Also, note that IEEEtran.cls V1.7 and later provides a builtin
-% \ifCLASSINFOpdf conditional that works the same way.
-% When switching from latex to pdflatex and vice-versa, the compiler may
-% have to be run twice to clear warning/error messages.
 
 % *** CITATION PACKAGES ***
 %
-\ifCLASSOPTIONcompsoc
-  % IEEE Computer Society needs nocompress option
-  % requires cite.sty v4.0 or later (November 2003)
-  \usepackage[nocompress]{cite}
-\else
-  % normal IEEE
-  \usepackage{cite}
-\fi
+% normal IEEE
+\usepackage{cite}
 
 % *** GRAPHICS RELATED PACKAGES ***
 %
-\ifCLASSINFOpdf
-  \usepackage[pdftex]{graphicx}
-  % declare the path(s) where your graphic files are
-  % and their extensions so you won't have to specify these with
-  % every instance of \includegraphics
-  \graphicspath{{../pdf/}{../imgaes/}}
-  \DeclareGraphicsExtensions{.pdf,.jpeg,.png}
-\else
-  % or other class option (dvipsone, dvipdf, if not using dvips). graphicx
-  % will default to the driver specified in the system graphics.cfg if no
-  % driver is specified.
-  % \usepackage[dvips]{graphicx}
-  % declare the path(s) where your graphic files are
-  % \graphicspath{{../eps/}}
-  % and their extensions so you won't have to specify these with
-  % every instance of \includegraphics
-  % \DeclareGraphicsExtensions{.eps}
-\fi
+\usepackage{graphicx,caption}
+\graphicspath{{./images}}
+\DeclareGraphicsExtensions{.pdf,.jpeg,.png}
 
 % *** MATH PACKAGES ***
 % \usepackage{amsmath}
@@ -82,69 +29,46 @@
 \usepackage{array}
 
 % *** SUBFIGURE PACKAGES ***
-\ifCLASSOPTIONcompsoc
-  \usepackage[caption=false,font=footnotesize,labelfont=sf,textfont=sf]{subfig}
-\else
-  \usepackage[caption=false,font=footnotesize]{subfig}
-\fi
+\usepackage[caption=false,font=footnotesize]{subfig}
 % The latest version and documentation of subfig.sty can be obtained at:
 % http://www.ctan.org/pkg/subfig
-
-% *** FLOAT PACKAGES ***
-%
-\usepackage{dblfloatfix}
-% The latest version can be found at:
-% http://www.ctan.org/pkg/dblfloatfix
-
-\ifCLASSOPTIONcaptionsoff
-  \usepackage[nomarkers]{endfloat}
- \let\MYoriglatexcaption\caption
- \renewcommand{\caption}[2][\relax]{\MYoriglatexcaption[#2]{#2}}
-\fi
-% The latest version of endfloat.sty and its documentation can obtained at:
-% http://www.ctan.org/pkg/endfloat
 
 % *** PDF, URL AND HYPERLINK PACKAGES ***
 %
 \usepackage{url}
-% The latest version and documentation can be obtained at:
-% http://www.ctan.org/pkg/url
-% Basically, \url{my_url_here}.
-
-% correct bad hyphenation here
-% \hyphenation{op-tical net-works semi-conduc-tor}
 
 \usepackage[unicode=true]{hyperref}
 
-% Include images
-\usepackage{graphicx}
+\usepackage{csquotes}
 
 % For tables
-\usepackage{longtable,xtab,booktabs}
-
-\makeatletter
-\let\oldlt\longtable
-\let\endoldlt\endlongtable
-\def\longtable{\@ifnextchar[\longtable@i \longtable@ii}
-\def\longtable@i[#1]{\begin{figure}[t]
-\onecolumn
-\begin{minipage}{0.5\textwidth}
-\oldlt[#1]
-}
-\def\longtable@ii{\begin{figure}[t]
-\onecolumn
-\begin{minipage}{0.5\textwidth}
-\oldlt
-}
-\def\endlongtable{\endoldlt
-\end{minipage}
-\twocolumn
-\end{figure}}
-\makeatother
+\usepackage{booktabs}
 
 % For listing
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+% Verbatim
+\usepackage{listings}
+\lstset{
+  frame=single,
+  language=Python,
+  basicstyle=\small,
+}
+
+\makeatletter
+\def\lst@makecaption{%
+  \def\@captype{table}%
+  \@makecaption
+}
+\makeatother
+
+\makeatletter
+\def\lst@makecaption{%
+  \def\@captype{table}%
+  \@makecaption
+}
+\makeatother
 
 \begin{document}
 %
@@ -414,17 +338,17 @@ calculate the current loss.
 \item
   \emph{LRScheduler}, this callback modifies the current learning rate
   based on the current epoch, leading to a function that has the
-  following structure
+  following structure, using as \emph{max\_lr}: 5e-3, \emph{min\_lr}:
+  1e-5, \emph{num\_warmup\_steps}: 6 and \emph{num\_training\_steps}: 9
 \end{itemize}
 
-\begin{verbatim}
+\begin{lstlisting}[language=Python]
 if epoch <= num_warmup_steps:
-    return np.log(max_lr / lr) / np.log(num_warmup_steps)
-return np.log(min_lr / max_lr) / np.log(num_training_steps)
-\end{verbatim}
-
-Using as \emph{max\_lr}: 5e-3, \emph{min\_lr}: 1e-5,
-\emph{num\_warmup\_steps}: 6 and \emph{num\_training\_steps}: 9
+    return log(max_lr / lr) /
+           log(num_warmup_steps)
+return log(min_lr / max_lr) /
+       log(num_training_steps)
+\end{lstlisting}
 
 \hypertarget{transformations}{%
 \subsubsection{Transformations}\label{transformations}}
@@ -453,56 +377,50 @@ the random transformations are only for the training dataset
 \hypertarget{results}{%
 \section{Results}\label{results}}
 
-\hypertarget{rexnet-results}{%
-\subsection{ReXNet results}\label{rexnet-results}}
-
-\begin{longtable}[]{@{}ll@{}}
-\caption{Final ReXNet model metrics}\tabularnewline
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|l|}
 \toprule
-Dataset & (Loss) Accuracy \\
+Model & Accuracy & Loss \\
 \midrule
-\endfirsthead
-\toprule
-Dataset & (Loss) Accuracy \\
-\midrule
-\endhead
-Training & (0.0293) 99.62 \\
-Validation & (0.0153) 99.62 \\
-Testing & (-) 71.46 \\
+ReXNet & 99.62 & 0.0293 \\
+EfficientNet & 98.28 & 0.0582 \\
+FLAME & 96.79 & 0.0857 \\
 \bottomrule
-\end{longtable}
+\end{tabular}
+\caption{Model's accuracies and losses in training dataset}
+\label{tab-1}
+\end{table}
 
-\hypertarget{efficientnet-results}{%
-\subsection{EfficientNet results}\label{efficientnet-results}}
-
-\begin{longtable}[]{@{}ll@{}}
-\caption{Final EfficientNet model metrics}\tabularnewline
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|l|}
 \toprule
-Dataset & (Loss) Accuracy \\
+Model & Accuracy & Loss \\
 \midrule
-\endfirsthead
-\toprule
-Dataset & (Loss) Accuracy \\
-\midrule
-\endhead
-Training & (0.0582) 98.28 \\
-Validation & (0.0530) 98.32 \\
-Testing & (-) 61.46 \\
+ReXNet & 99.62 & 0.0136 \\
+EfficientNet & 98.32 & 0.053 \\
+FLAME & 94.31 & 0.1506 \\
 \bottomrule
-\end{longtable}
+\end{tabular}
+\caption{Model's accuracies and losses in validation dataset}
+\label{tab-2}
+\end{table}
 
-\hypertarget{best-model-vs-flames-model}{%
-\subsection{Best Model vs FLAME's
-model}\label{best-model-vs-flames-model}}
-
-As shown with the tables 1 and 2, it's evident that the best model that
-was trained is the ReXNet nevertheless the results overall doesn't seem
-as favorable, the new model shows a current accuracy of 71\%, being that
-a 7\% decrease in the accuracy compared to the model done by the FLAME
-team. Nevertheless this seems to be a case of over-fitting as the
-current model outperforms FLAME's, with a significantly decrease in both
-the validation and training loss, showing also an increase in the
-accuracy.
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|}
+\toprule
+Model & Accuracy \\
+\midrule
+ReXNet & 71.46 \\
+EfficientNet & 61.46 \\
+FLAME & 76 \\
+\bottomrule
+\end{tabular}
+\caption{Model's accuracies in test dataset}
+\label{tab-3}
+\end{table}
 
 Some other things it should be consider is that due to hardware
 constraints and to be 100\% to transfer learning, it was only trained
