@@ -15,7 +15,6 @@ FLAGS = --bibliography=bibliography.bib \
 
 FLAGS_PDF = --template=template.latex \
 	    --pdf-engine=tectonic \
-	    --include-in-header=preamble.latex
 
 all: pdf
 

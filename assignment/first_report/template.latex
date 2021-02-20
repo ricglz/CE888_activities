@@ -152,4 +152,26 @@ $body$
 % (used to reserve space for the reference number labels box)
 \bibliographystyle{IEEEtran}
 \bibliography{bibliography}
+
+\newpage
+
+\hypertarget{plan}{%
+\section{Plan}\label{plan}}
+
+\begin{itemize}
+\tightlist
+\item
+  \emph{Week 7 (March 1st-7th)}. Implement fine-tuning of both models to attempt to improve the accuracy
+\item
+  \emph{Week 8 (8th-14th)}. Implement initially implementation of RepVGG
+\item
+  \emph{Week 9 (15th-21st)}. Fine-tune RepVGG
+\item
+  \emph{Week 10 (22nd-28th)}. Investigate new ways to improve the score (probably using new datasets)
+\item
+  \emph{Week 11 and 12 (March 29th - April 12th)}. Implement techniques researched prior week
+\item
+  \emph{Week 13 (13th - 25th)}. Write research paper
+\end{itemize}
+
 \end{document}
