@@ -36,9 +36,8 @@
 
 % *** PDF, URL AND HYPERLINK PACKAGES ***
 %
-\usepackage{url}
-
-\usepackage[unicode=true]{hyperref}
+\usepackage[unicode=true,breaklinks]{hyperref}
+\urlstyle{same}
 
 \usepackage{csquotes}
 

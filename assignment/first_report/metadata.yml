@@ -1,10 +1,20 @@
 ---
 abstract: |
-  This my abstract
-  And this is how it ends
+  In this paper it will be explored the idea if it's
+  possible to improve the accuracy of the FLAME model,
+  capable of fire detection; by using modern
+  architectures and adding more diversity to the dataset
+  by adding new images and augmenting the current ones.
+
+  This resulted in not yet achieving the desired accuracy,
+  but showing potential, considering the possible reduce
+  of computational resources and the overall small amount
+  of parameters of the trained model
 keywords:
   - CNN
   - 'Deep Learning'
+  - 'Image Recognition'
+  - 'Image Classification'
   - Wildfires
 title: 'Wildfires Detection Using UAV Images'
 tables: yes
