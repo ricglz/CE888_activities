@@ -89,7 +89,7 @@
 % a separate \thanks must be used for each paragraph as LaTeX2e's \thanks
 % was not built to handle multiple paragraphs
 
-\author{Ricardo~Gonzalez,~\IEEEmembership{Fellow,~IEEE,}}
+\author{Ricardo~Gonzalez, 2003297}
 
 % The paper headers
 \markboth{Journal of \LaTeX\ Class Files,~Vol.~14, No.~8, August~2015}%

@@ -1,8 +1,10 @@
 # Methods
 
+Following it will be described the methods used for each of the sections that we used for the research. If you're actually interested in the code this can be found in the github repo \footnote{\url{https://github.com/ricglz/CE888_activities/tree/main/assignment}}
+
 ## Dataset
 
-As mentioned in the introduction \ref{introduction}, the objective of this research is to use both the FLAME and Kaggle datasets, thus prior to training both datasets will be merged. As the distribution of the classes end up being skewed, it will be performed as part of the preprocessing data augmentation in the images of the lower class (_No_Fire_), to perfectly balance both classes
+As mentioned in the section \ref{introduction}, the objective of this research is to use both the FLAME and Kaggle datasets, thus prior to training both datasets will be merged. As the distribution of the classes end up being skewed, it will be performed as part of the preprocessing data augmentation in the images of the lower class (_No_Fire_), to perfectly balance both classes
 
 ### Data Augmentation Transformations
 
@@ -14,7 +16,7 @@ As mentioned in the introduction \ref{introduction}, the objective of this resea
 
 ## Model
 
-As mentioned in the cnn architectures section \ref{cnn-arch}, the architecture that the FLAME researchers used was the Xception architecture, which improves over its previous version called Inception, which improves primarily the performance while keeping the same amount of parameters. Nevertheless, the architecture could be consider _old_, being published in 2017 and many other architectures that have improve accuracy, or just other models which already had better performance than this case.
+As mentioned in the section \ref{cnn-arch}, the architecture that the FLAME researchers used was the Xception architecture, which improves over its previous version called Inception, which improves primarily the performance while keeping the same amount of parameters. Nevertheless, the architecture could be consider _old_, being published in 2017 and many other architectures that have improve accuracy, or just other models which already had better performance than this case.
 
 Due to the former, if we want to improve the performance of the classifier it's recommended that we attempt to use other architectures. For this case the models consider to test will be _EfficientNet_ and _ReXNet_. With these models instead of training randomized weights we will do transfer learning on a model trained using the ImageNet dataset \cite{timm}, training only the top layer which is a densely connected layer in both cases.
 
