@@ -3,6 +3,7 @@ from glob import glob
 from os import path, mkdir, remove
 from pathlib import Path
 from shutil import move
+
 from sklearn.model_selection import train_test_split
 from tqdm import tqdm
 import numpy as np
@@ -10,6 +11,7 @@ import numpy as np
 from torchvision.datasets import ImageFolder
 import torchvision.transforms as T
 import torchvision.utils as t_utils
+from pytorch_lightning import seed_everything
 
 data_path = './Flame'
 
@@ -25,6 +27,7 @@ def save_image(img, label: str, index: int, prefix: str):
     t_utils.save_image(img, img_path)
 
 def resize_dataset(ds_path: str):
+    print(f'Resizing {ds_path}')
     dataset = ImageFolder(ds_path, T.Compose([resize, T.ToTensor()]))
     for index, (img_path, _) in enumerate(tqdm(dataset.imgs)):
         t_utils.save_image(dataset[index][0], img_path)
@@ -46,6 +49,7 @@ def get_minor_klass(train_ds: ImageFolder):
     return minor_klass, images_to_save
 
 def balance_dataset():
+    print('Balancing dataset')
     transforms = T.Compose([
       resize,
       T.ColorJitter(brightness=0.25, contrast=0.25),
@@ -65,6 +69,7 @@ def balance_dataset():
         save_image(img, label, save_img_index, 'balance')
 
 def half_the_data():
+    """Half the data only in training path because validation is more important"""
     transforms = T.Compose([resize, T.ToTensor()])
     train_ds = ImageFolder(training_path, transforms)
     files = list(map(lambda a: a[0], train_ds.samples))
@@ -74,6 +79,7 @@ def half_the_data():
         remove(file_to_erase)
 
 def split_training_dataset():
+    print('Splitting dataset')
     if not path.exists(validation_path):
         mkdir(validation_path)
         for klass in classes:
@@ -89,25 +95,25 @@ def split_training_dataset():
         new_path = path.join(validation_path, klass, filename)
         move(img_path, new_path)
 
-def count_training_dataset():
-    train_ds = ImageFolder(training_path)
-    targets = np.array(train_ds.targets)
+def count_dataset(dir_path: str):
+    print(f'Counting data inside {dir_path}')
+    dataset = ImageFolder(dir_path)
+    targets = np.array(dataset.targets)
     fire_data_count = np.count_nonzero(targets == 0)
     non_fire_data_count = np.count_nonzero(targets == 1)
-    tqdm.write(f'Fire data: {fire_data_count}')
-    tqdm.write(f'Non-fire data: {non_fire_data_count}')
-    tqdm.write(f'Total: {fire_data_count + non_fire_data_count}')
+    print(f'Fire data: {fire_data_count}')
+    print(f'Non-fire data: {non_fire_data_count}')
+    print(f'Total: {fire_data_count + non_fire_data_count}')
 
 def main():
-    tqdm.write('Resizing training dataset')
-    resize_dataset(training_path)
-    tqdm.write('Resizing test dataset')
-    resize_dataset(test_path)
-    tqdm.write('Balancing training dataset')
-    balance_dataset()
-    tqdm.write('Splitting dataset')
-    split_training_dataset()
-    count_training_dataset()
+    seed_everything(42)
+    # resize_dataset(training_path)
+    # resize_dataset(test_path)
+    # clear_balanced()
+    # balance_dataset()
+    # split_training_dataset()
+    half_the_data()
+    count_dataset(training_path)
 
 if __name__ == "__main__":
     main()
