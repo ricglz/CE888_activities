@@ -1,3 +1,6 @@
+"""Module containing trainer logic"""
+from argparse import ArgumentParser
+
 from pytorch_lightning.utilities import xla_device
 from torch import cuda
 import pytorch_lightning as pl
@@ -44,3 +47,13 @@ class Trainer():
     def train_and_test(self, model: PretrainedModel, epochs: int, datamodule):
         last_trainer = self._fit_cycle(model, epochs, datamodule)
         last_trainer.test(model, datamodule)
+
+    @staticmethod
+    def add_argparse_args(parent_parser):
+        parser = ArgumentParser(parents=[parent_parser], add_help=False)
+        parser.add_argument('--fast_dev_run', action='store_true')
+        return parser
+
+    @staticmethod
+    def from_argparse_args(args):
+        return Trainer(args.model_name, args.fast_dev_run)

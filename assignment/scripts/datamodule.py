@@ -64,12 +64,12 @@ class FlameDataModule(LightningDataModule):
         return self._general_dataloader(self.test_ds)
 
     @staticmethod
-    def add_model_specific_args(parent_parser):
+    def add_argparse_args(parent_parser):
         parser = ArgumentParser(parents=[parent_parser], add_help=False)
         parser.add_argument('--batch_size', type=int, default=32)
         parser.add_argument('--no_minified', action='store_false')
         return parser
 
     @staticmethod
-    def from_argparse_args(parser):
-        return FlameDataModule(parser.batch_size, parser.no_minified)
+    def from_argparse_args(args):
+        return FlameDataModule(args.batch_size, args.no_minified)

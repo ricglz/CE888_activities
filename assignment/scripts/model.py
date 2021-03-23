@@ -18,7 +18,7 @@ class PretrainedModel(LightningModule):
 
         self.save_hyperparameters()
         self.base = create_model(
-            self.hparams.name,
+            self.hparams.model_name,
             pretrained=True,
             num_classes=1,
             drop_rate=self.hparams.drop_rate
@@ -68,7 +68,7 @@ class PretrainedModel(LightningModule):
         return OneCycleLR(
             optimizer,
             self.hparams.lr,
-            self.hparams.epochs * self.hparams.steps_per_epoch,
+            self.hparams.epochs * self.hparams.steps,
             pct_start=self.hparams.pct_start,
             anneal_strategy=self.hparams.anneal_strategy,
             base_momentum=self.hparams.base_momentum,
@@ -123,9 +123,9 @@ class PretrainedModel(LightningModule):
         self._on_end_epochs('test')
 
     @staticmethod
-    def add_model_specific_args(parent_parser):
+    def add_argparse_args(parent_parser):
         parser = ArgumentParser(parents=[parent_parser], add_help=False)
-        parser.add_argument('--name', type=str, required=True)
+        parser.add_argument('--model_name', type=str, required=True)
         parser.add_argument('--lr', type=float, required=True)
         parser.add_argument('--drop_rate', type=float, default=0.4)
         parser.add_argument('--weight_decay', type=float, default=0)
