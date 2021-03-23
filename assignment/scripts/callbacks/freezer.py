@@ -5,15 +5,15 @@ from torch.nn.modules.batchnorm import _BatchNorm
 import pytorch_lightning.callbacks as pl_callbacks
 
 class Freezer(pl_callbacks.BaseFinetuning):
+    steps = 1
+    train_bn = False
     trainable_layers = []
 
-    def __init__(
-        self, steps=1, unfreeze_per_step=37, train_bn=False, epochs=40
-    ):
-        steps = min(steps, epochs - 1)
-        self.steps = ceil(epochs / (steps + 1))
-        self.unfreeze_per_step = unfreeze_per_step
-        self.train_bn = train_bn
+    def __init__(self, epochs=40):
+        self.unfreeze_per_step = 46 if epochs >= 60 else \
+                                 37 if epochs >= 20 else \
+                                 28 if epochs >= 5 else 19
+        self.step_size = ceil(epochs / (self.steps + 1))
 
     @staticmethod
     def flatten_children(module):
@@ -62,7 +62,7 @@ class Freezer(pl_callbacks.BaseFinetuning):
     def finetune_function(self, pl_module, epoch, optimizer, _opt_idx):
         trainable_layers_len = len(self.trainable_layers)
         is_empty = trainable_layers_len == 0
-        is_finetune_epoch = epoch % self.steps == 0 and epoch != 0
+        is_finetune_epoch = epoch % self.step_size == 0 and epoch != 0
         if not is_finetune_epoch or is_empty:
             return
         to_be_trained_layers = []
