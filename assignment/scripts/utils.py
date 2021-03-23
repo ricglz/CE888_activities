@@ -13,7 +13,8 @@ def unzip_file(zip_path, dest_path):
         for member in tqdm(zip_file.infolist(), desc='Extracting '):
             zip_file.extract(member, dest_path)
 
-def get_data_dir():
+def get_data_dir(minified=True):
+    """Gets the directory where the data is contained"""
     general_dir = '.'
     data_dir = general_dir + '/Flame'
     if IN_COLAB and not path.exists(data_dir):
