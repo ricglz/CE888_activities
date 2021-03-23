@@ -31,9 +31,8 @@ class Trainer():
         accelerator = cls.get_accelerator()
         callbacks = cls.get_callbacks(model_name, max_epochs)
         return pl.Trainer(
-            max_epochs=max_epochs, deterministic=True, benchmark=True,
-            callbacks=callbacks, precision=16, stochastic_weight_avg=False,
-            **accelerator, **kwargs)
+            max_epochs=max_epochs, deterministic=True, callbacks=callbacks,
+            precision=16, stochastic_weight_avg=False, **accelerator, **kwargs)
 
     def _create_trainer(self, max_epochs: int) -> pl.Trainer:
         return self.create_trainer(
