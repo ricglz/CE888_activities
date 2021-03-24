@@ -2,7 +2,7 @@ program: train.py
 method: random
 metric:
   goal: maximize
-  name: test_Accuracy
+  name: test_score
   target: 0.92
 parameters:
   epochs:
@@ -48,10 +48,8 @@ parameters:
     min: 1000
     max: 100000
   three_phase:
-    distribution: categorical
-    values:
-    - true
-    - false
+    distribution: constant
+    value: false
   anneal_strategy:
     distribution: categorical
     values:
