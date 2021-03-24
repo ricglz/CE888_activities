@@ -57,9 +57,7 @@ class Trainer():
 
     def train_and_test(self, model: PretrainedModel, epochs: int, datamodule):
         last_trainer = self._fit_cycle(model, epochs, datamodule)
-        best_path = last_trainer.checkpoint_callback.best_model_path
-        model.load_from_checkpoint(best_path)
-        last_trainer.test(model, datamodule=datamodule, ckpt_path=None)
+        last_trainer.test(model, datamodule=datamodule)
 
     @staticmethod
     def add_argparse_args(parent_parser):

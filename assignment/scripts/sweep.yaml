@@ -9,16 +9,12 @@ parameters:
     distribution: constant
     value: 5
   model_name:
-    distribution: categorical
-    values:
-    - rexnet_200
-    - gernet_m
-    - tf_efficientnet_b4
-    - repvgg_b0
+    distribution: constant
+    value: rexnet_200
   lr:
     distribution: log_uniform
     min: -9.0
-    max: -2.31
+    max: -0.0001
   drop_rate:
     distribution: uniform
     min: 0.3
@@ -61,9 +57,12 @@ parameters:
     - 16
     - 32
   stages:
-    distribution: int_uniform
-    min: 1
-    max: 5
+    distribution: categorical
+    values:
+      - 1
+      - 2
+      - 3
+      - 5
   train_bn:
     distribution: categorical
     values:
