@@ -2,7 +2,7 @@ program: train.py
 method: random
 metric:
   goal: maximize
-  name: val_score
+  name: test_Accuracy
   target: 0.92
 parameters:
   epochs:
