@@ -16,7 +16,7 @@ class PretrainedModel(LightningModule):
     def __init__(self, hparams):
         super().__init__()
 
-        self.save_hyperparameters()
+        self.save_hyperparameters(hparams)
         self.base = create_model(
             self.hparams.model_name,
             pretrained=True,
