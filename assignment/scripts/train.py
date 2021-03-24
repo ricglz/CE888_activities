@@ -22,16 +22,15 @@ def get_args():
     return parser.parse_args()
 
 def main():
-    wandb.init(project='Fire-Detection', entity='ricglz')
     args = get_args()
-    wandb.config.update(args)
 
+    wandb.init(project='Fire-Detection', entity='ricglz')
+    wandb.config.update(args)
     seed_everything(args.seed)
 
     datamodule = FlameDataModule.from_argparse_args(args)
     model = PretrainedModel(args)
     trainer = Trainer.from_argparse_args(args)
-
     wandb.watch(model)
 
     trainer.train_and_test(model, args.epochs, datamodule)
