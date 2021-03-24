@@ -20,7 +20,10 @@ def get_data_dir(minified=True):
     if IN_COLAB and not path.exists(data_dir):
         drive_path = '/content/gdrive'
         drive.mount(drive_path, force_remount=False)
-        zip_file = 'Minified-Flame-2.zip'
+        zip_file = 'Minified-Flame.zip' if minified else 'Flame.zip'
         zip_path = path.join(drive_path, 'MyDrive/Essex/Datasets/zipped', zip_file)
         unzip_file(zip_path, general_dir)
     return data_dir
+
+if __name__ == "__main__":
+    get_data_dir()
