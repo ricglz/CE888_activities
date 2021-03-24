@@ -8,11 +8,9 @@ class Freezer(pl_callbacks.BaseFinetuning):
     train_bn = False
     trainable_layers = []
 
-    def __init__(self, epochs=40):
-        self.unfreeze_per_step = 27 if epochs >= 60 else \
-                                 25 if epochs >= 20 else \
-                                 23 if epochs >= 5 else 21
-        self.step_size = ceil(epochs / 2)
+    def __init__(self, epochs=40, stages=2, unfreeze_per_step=21, train_bn=False):
+        self.unfreeze_per_step = unfreeze_per_step
+        self.step_size = ceil(epochs / stages)
 
     @staticmethod
     def flatten_children(module):

@@ -1,0 +1,77 @@
+program: train.py
+method: random
+metric:
+  goal: maximize
+  name: val_score
+  target: 0.92
+parameters:
+  epochs:
+    distribution: constant
+    value: 5
+  model_name:
+    distribution: categorical
+    values:
+    - rexnet_200
+    - gernet_m
+    - tf_efficientnet_b4
+    - repvgg_b0
+  lr:
+    distribution: log_uniform
+    min: -9.0
+    max: -2.31
+  drop_rate:
+    distribution: uniform
+    min: 0.3
+    max: 0.5
+  weight_decay:
+    distribution: uniform
+    min: 0
+    max: 0.0001
+  pct_start:
+    distribution: uniform
+    min: 0.4
+    max: 0.6
+  base_momentum:
+    distribution: uniform
+    min: 0.75
+    max: 0.85
+  max_momentum:
+    distribution: uniform
+    min: 0.9
+    max: 1
+  div_factor:
+    distribution: uniform
+    min: 5
+    max: 50
+  final_div_factor:
+    distribution: uniform
+    min: 1000
+    max: 100000
+  three_phase:
+    distribution: categorical
+    values:
+    - true
+    - false
+  anneal_strategy:
+    distribution: categorical
+    values:
+    - linear
+    - cos
+  precision:
+    distribution: categorical
+    values:
+    - 16
+    - 32
+  stages:
+    distribution: int_uniform
+    min: 1
+    max: 5
+  train_bn:
+    distribution: categorical
+    values:
+    - true
+    - false
+  unfreeze_per_step:
+    distribution: int_uniform
+    min: 21
+    max: 31

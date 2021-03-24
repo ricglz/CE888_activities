@@ -1,38 +1,50 @@
 """Module containing trainer logic"""
 from argparse import ArgumentParser
+from dataclasses import dataclass
 
 from pytorch_lightning.utilities import xla_device
+from pytorch_lightning.loggers import WandbLogger
 from torch import cuda
 import pytorch_lightning as pl
 
 from callbacks import get_checkpoint, Freezer, ProgressBar
 from model import PretrainedModel
 
+@dataclass
 class Trainer():
-    def __init__(self, model_name: str, fast_dev_run=False):
-        self.fast_dev_run = fast_dev_run
-        self.model_name = model_name
+    fast_dev_run = False
+    model_name: str
+    precision = 16
+    stages = 2
+    train_bn = False
+    unfreeze_per_step = 21
 
-    @staticmethod
-    def get_callbacks(model_name: str, epochs: int) -> list:
+    def get_callbacks(self, model_name: str, epochs: int) -> list:
         checkpoint = get_checkpoint(model_name)
-        return [checkpoint, Freezer(epochs=epochs), ProgressBar()]
+        freezer = Freezer(
+            epochs,
+            self.stages,
+            self.unfreeze_per_step,
+            self.train_bn
+        )
+        return [checkpoint, freezer, ProgressBar()]
 
     @staticmethod
     def get_accelerator() -> object:
         tpu_device_exists = xla_device.XLADeviceUtils().tpu_device_exists()
         has_gpu = cuda.is_available()
 
-        return {'tpu_cores': 8} if tpu_device_exists else \
+        return {'tpu_cores': 1} if tpu_device_exists else \
                {'gpus': cuda.device_count()} if has_gpu else {}
 
-    @classmethod
-    def create_trainer(cls, model_name, max_epochs=1, **kwargs):
-        accelerator = cls.get_accelerator()
-        callbacks = cls.get_callbacks(model_name, max_epochs)
+    def create_trainer(self, model_name, max_epochs=1, **kwargs):
+        accelerator = self.get_accelerator()
+        callbacks = self.get_callbacks(model_name, max_epochs)
+        logger = WandbLogger()
         return pl.Trainer(
             max_epochs=max_epochs, deterministic=True, callbacks=callbacks,
-            precision=16, stochastic_weight_avg=False, **accelerator, **kwargs)
+            precision=self.precision, stochastic_weight_avg=False, logger=logger,
+            **accelerator, **kwargs)
 
     def _create_trainer(self, max_epochs: int) -> pl.Trainer:
         return self.create_trainer(
@@ -51,6 +63,10 @@ class Trainer():
     def add_argparse_args(parent_parser):
         parser = ArgumentParser(parents=[parent_parser], add_help=False)
         parser.add_argument('--fast_dev_run', action='store_true')
+        parser.add_argument('--precision', type=int, choices=[16, 32], default=16)
+        parser.add_argument('--stages', type=int, default=2)
+        parser.add_argument('--train_bn', action='store_true')
+        parser.add_argument('--unfreeze_per_step', type=int, default=21)
         return parser
 
     @staticmethod
