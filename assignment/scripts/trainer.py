@@ -71,4 +71,10 @@ class Trainer():
 
     @staticmethod
     def from_argparse_args(args):
-        return Trainer(args.model_name, args.fast_dev_run)
+        trainer = Trainer(args.model_name)
+        trainer.fast_dev_run = args.fast_dev_run
+        trainer.precision = args.precision
+        trainer.stages = args.stages
+        trainer.train_bn = args.train_bn
+        trainer.unfreeze_per_step = args.unfreeze_per_step
+        return trainer
