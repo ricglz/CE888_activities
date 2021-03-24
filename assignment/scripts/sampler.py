@@ -31,6 +31,7 @@ class BalancedBatchSampler(Sampler):
                 self.dataset[label].append(random.choice(self.dataset[label]))
 
         self.keys = list(self.dataset.keys())
+        self.reset_indices()
 
     def reset_indices(self):
         """Resets the indices for a new iteration"""
@@ -41,7 +42,7 @@ class BalancedBatchSampler(Sampler):
         return dataset.targets[idx]
 
     def __len__(self):
-        return self.balanced_max*len(self.keys)
+        return self.balanced_max * len(self.keys)
 
     def __iter__(self):
         if self.shuffle:

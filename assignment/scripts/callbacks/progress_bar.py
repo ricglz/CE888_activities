@@ -2,13 +2,11 @@
 from time import time
 
 from tqdm import tqdm
-import pytorch_lightning.callbacks as pl_callbacks
+from pytorch_lightning.callbacks import ProgressBarBase
 
-class ProgressBar(pl_callbacks.ProgressBarBase):
-    def __init__(self):
-        super().__init__()
-        self.epoch_time = 0
-        self.stage_time = 0
+class ProgressBar(ProgressBarBase):
+    epoch_time = 0
+    stage_time = 0
 
     def disable(self):
         pass

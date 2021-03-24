@@ -8,7 +8,8 @@ def get_checkpoint(model_name: str):
     """Gets the checkpoint callback for the function"""
     return ModelCheckpoint(
         dirpath=path.join(get_model_dir(), model_name),
-        monitor='val_score',
+        filename='{epoch:02d}-{val_score:.4f}',
         mode='max',
-        filename='{epoch:02d}-{val_score:.4f}'
+        monitor='val_score',
+        save_weights_only=True,
     )
