@@ -133,7 +133,7 @@ class PretrainedModel(LightningModule):
         parser.add_argument('--max_momentum', type=float, default=0.9)
         parser.add_argument('--div_factor', type=float, default=25)
         parser.add_argument('--final_div_factor', type=float, default=1e4)
-        parser.add_argument('--three_phase', action='store_true')
+        parser.add_argument('--three_phase', type=bool, default=False)
         parser.add_argument(
             '--anneal_strategy',
             type=str,

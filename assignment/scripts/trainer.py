@@ -65,7 +65,7 @@ class Trainer():
         parser.add_argument('--fast_dev_run', action='store_true')
         parser.add_argument('--precision', type=int, choices=[16, 32], default=16)
         parser.add_argument('--stages', type=int, default=2)
-        parser.add_argument('--train_bn', action='store_true')
+        parser.add_argument('--train_bn', type=bool, default=False)
         parser.add_argument('--unfreeze_per_step', type=int, default=21)
         return parser
 
