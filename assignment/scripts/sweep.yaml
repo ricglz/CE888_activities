@@ -14,10 +14,10 @@ parameters:
   lr:
     distribution: log_uniform
     min: -6.9077
-    max: -0.0001
+    max: -1.2
   drop_rate:
     distribution: uniform
-    min: 0.3
+    min: 0.31
     max: 0.45
   weight_decay:
     distribution: uniform
@@ -42,7 +42,7 @@ parameters:
   final_div_factor:
     distribution: uniform
     min: 10000
-    max: 60000
+    max: 50000
   three_phase:
     distribution: constant
     value: false
@@ -66,5 +66,5 @@ parameters:
     - false
   unfreeze_per_step:
     distribution: int_uniform
-    min: 21
-    max: 31
+    min: 15
+    max: 25
