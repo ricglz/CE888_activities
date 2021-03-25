@@ -17,7 +17,7 @@ parameters:
     max: -1.2
   drop_rate:
     distribution: uniform
-    min: 0.31
+    min: 0.38
     max: 0.45
   weight_decay:
     distribution: uniform
@@ -26,7 +26,7 @@ parameters:
   pct_start:
     distribution: uniform
     min: 0.4
-    max: 0.54
+    max: 0.5
   base_momentum:
     distribution: uniform
     min: 0.75
@@ -42,7 +42,7 @@ parameters:
   final_div_factor:
     distribution: uniform
     min: 10000
-    max: 50000
+    max: 40000
   three_phase:
     distribution: constant
     value: false
@@ -66,5 +66,5 @@ parameters:
     - false
   unfreeze_per_step:
     distribution: int_uniform
-    min: 15
+    min: 17
     max: 25
