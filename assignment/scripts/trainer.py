@@ -57,7 +57,7 @@ class Trainer():
 
     def train_and_test(self, model: PretrainedModel, epochs: int, datamodule):
         last_trainer = self._fit_cycle(model, epochs, datamodule)
-        last_trainer.test(model, datamodule=datamodule)
+        last_trainer.test(datamodule=datamodule)
 
     @staticmethod
     def add_argparse_args(parent_parser):
