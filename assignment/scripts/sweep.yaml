@@ -13,12 +13,12 @@ parameters:
     value: rexnet_200
   lr:
     distribution: log_uniform
-    min: -9.0
+    min: -6.9077
     max: -0.0001
   drop_rate:
     distribution: uniform
     min: 0.3
-    max: 0.5
+    max: 0.45
   weight_decay:
     distribution: uniform
     min: 0
@@ -26,7 +26,7 @@ parameters:
   pct_start:
     distribution: uniform
     min: 0.4
-    max: 0.6
+    max: 0.54
   base_momentum:
     distribution: uniform
     min: 0.75
@@ -41,8 +41,8 @@ parameters:
     max: 50
   final_div_factor:
     distribution: uniform
-    min: 1000
-    max: 100000
+    min: 10000
+    max: 60000
   three_phase:
     distribution: constant
     value: false
@@ -57,12 +57,8 @@ parameters:
     - 16
     - 32
   stages:
-    distribution: categorical
-    values:
-      - 1
-      - 2
-      - 3
-      - 5
+    distribution: constant
+    value: 5
   train_bn:
     distribution: categorical
     values:
