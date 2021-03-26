@@ -21,9 +21,8 @@ parameters:
     distribution: constant
     value: 0.44100955014505216
   weight_decay:
-    distribution: uniform
-    min: 0.00001
-    max: 0.00005
+    distribution: constant
+    value: 4.041986697646435e-05
   pct_start:
     distribution: constant
     value: 0.42730167827520565
