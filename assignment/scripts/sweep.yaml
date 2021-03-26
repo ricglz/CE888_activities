@@ -13,7 +13,7 @@ parameters:
     value: rexnet_200
   lr:
     distribution: log_uniform
-    min: -5.2983
+    min: -4.0169
     max: -1.2
   drop_rate:
     distribution: uniform
@@ -22,11 +22,11 @@ parameters:
   weight_decay:
     distribution: uniform
     min: 0
-    max: 0.0001
+    max: 0.00005
   pct_start:
     distribution: uniform
-    min: 0.4
-    max: 0.48
+    min: 0.403
+    max: 0.465
   base_momentum:
     distribution: uniform
     min: 0.75
@@ -37,7 +37,7 @@ parameters:
     max: 1
   div_factor:
     distribution: uniform
-    min: 5
+    min: 10
     max: 50
   final_div_factor:
     distribution: uniform
@@ -67,4 +67,4 @@ parameters:
   unfreeze_per_step:
     distribution: int_uniform
     min: 17
-    max: 25
+    max: 24
