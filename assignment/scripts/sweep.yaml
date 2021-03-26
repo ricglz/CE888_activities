@@ -1,43 +1,48 @@
 program: train.py
-method: grid
+method: bayes
 metric:
   goal: maximize
   name: test_score
   target: 0.92
 parameters:
   epochs:
-    distribution: categorical
-    values:
-      - 5
-      - 10
-      - 20
+    distribution: constant
+    value: 5
   model_name:
     distribution: constant
     value: rexnet_200
   lr:
-    distribution: constant
-    value: 0.04056258042139802
+    distribution: log_uniform
+    min: -7.4185
+    max: -1.6094
   drop_rate:
-    distribution: constant
-    value: 0.44100955014505216
+    distribution: log_uniform
+    min: -1.1394342832
+    max: -0.7985076962
   weight_decay:
-    distribution: constant
-    value: 4.041986697646435e-05
+    distribution: log_uniform
+    min: -9.9034875525
+    max: -7.6009024595
   pct_start:
-    distribution: constant
-    value: 0.42730167827520565
+    distribution: log_uniform
+    min: -0.9162907319
+    max: -0.7550225843
   base_momentum:
-    distribution: constant
-    value: 0.8051269571918493
+    distribution: log_uniform
+    min: -0.2876820725
+    max: -0.1625189295
   max_momentum:
-    distribution: constant
-    value: 0.9787278998760306
+    distribution: log_uniform
+    min: -0.09431067947
+    max: 0
   div_factor:
-    distribution: constant
-    value: 5.196672299209114
+    distribution: uniform
+    min: 5
+    max: 48
   final_div_factor:
-    distribution: constant
-    value: 20286.066023493106
+    distribution: uniform
+    min: 10000
+    max: 40000
   three_phase:
     distribution: constant
     value: false
@@ -63,9 +68,6 @@ parameters:
     - true
     - false
   unfreeze_per_step:
-    distribution: categorical
-    values:
-      - 15
-      - 18
-      - 21
-      - 24
+    distribution: int_uniform
+    min: 17
+    max: 24
