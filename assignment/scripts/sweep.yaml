@@ -6,8 +6,9 @@ metric:
   target: 0.92
 parameters:
   epochs:
-    distribution: constant
-    value: 5
+    distribution: int_uniform
+    min: 5
+    max: 10
   model_name:
     distribution: constant
     value: rexnet_200
@@ -21,7 +22,7 @@ parameters:
     max: 0.45
   weight_decay:
     distribution: uniform
-    min: 0
+    min: 0.00001
     max: 0.00005
   pct_start:
     distribution: uniform
@@ -38,7 +39,7 @@ parameters:
   div_factor:
     distribution: uniform
     min: 10
-    max: 50
+    max: 40
   final_div_factor:
     distribution: uniform
     min: 10000
@@ -66,5 +67,5 @@ parameters:
     - false
   unfreeze_per_step:
     distribution: int_uniform
-    min: 17
+    min: 20
     max: 24
