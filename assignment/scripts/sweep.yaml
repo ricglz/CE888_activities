@@ -1,71 +1,72 @@
 program: train.py
-method: random
+method: grid
 metric:
   goal: maximize
   name: test_score
   target: 0.92
 parameters:
   epochs:
-    distribution: int_uniform
-    min: 5
-    max: 10
+    distribution: categorical
+    values:
+      - 5
+      - 10
+      - 20
   model_name:
     distribution: constant
     value: rexnet_200
   lr:
-    distribution: log_uniform
-    min: -4.0169
-    max: -1.2
+    distribution: constant
+    value: 0.04056258042139802
   drop_rate:
-    distribution: uniform
-    min: 0.38
-    max: 0.45
+    distribution: constant
+    value: 0.44100955014505216
   weight_decay:
     distribution: uniform
     min: 0.00001
     max: 0.00005
   pct_start:
-    distribution: uniform
-    min: 0.403
-    max: 0.465
+    distribution: constant
+    value: 0.42730167827520565
   base_momentum:
-    distribution: uniform
-    min: 0.75
-    max: 0.85
+    distribution: constant
+    value: 0.8051269571918493
   max_momentum:
-    distribution: uniform
-    min: 0.91
-    max: 1
+    distribution: constant
+    value: 0.9787278998760306
   div_factor:
-    distribution: uniform
-    min: 10
-    max: 40
+    distribution: constant
+    value: 5.196672299209114
   final_div_factor:
-    distribution: uniform
-    min: 10000
-    max: 40000
+    distribution: constant
+    value: 20286.066023493106
   three_phase:
     distribution: constant
     value: false
   anneal_strategy:
     distribution: categorical
     values:
-    - linear
-    - cos
+      - cos
+      - linear
   precision:
     distribution: categorical
     values:
-    - 16
-    - 32
+      - 16
+      - 32
   stages:
-    distribution: constant
-    value: 5
+    distribution: categorical
+    values:
+      - 2
+      - 3
+      - 5
   train_bn:
     distribution: categorical
     values:
     - true
     - false
   unfreeze_per_step:
-    distribution: int_uniform
-    min: 20
-    max: 24
+    distribution: categorical
+    values:
+      - 15
+      - 18
+      - 21
+      - 24
