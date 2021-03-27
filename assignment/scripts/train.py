@@ -24,7 +24,7 @@ def get_args():
 def main():
     args = get_args()
 
-    wandb.init(project='Fire-Detection', entity='ricglz')
+    wandb.init(project='repo-assignment_scripts', entity='ricglz')
     wandb.config.update(args)
     seed_everything(args.seed)
 
