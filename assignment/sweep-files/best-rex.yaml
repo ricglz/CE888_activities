@@ -1,0 +1,68 @@
+method: random
+metric:
+  goal: maximize
+  name: test_score
+  target: 0.92
+parameters:
+  anneal_strategy:
+    distribution: categorical
+    values:
+      - linear
+      - cos
+  base_momentum:
+    distribution: uniform
+    min: 0.764845
+    max: 0.845355
+  div_factor:
+    distribution: uniform
+    min: 6.3337399441
+    max: 10.5562332401
+  drop_rate:
+    distribution: uniform
+    max: 0.42714
+    min: 0.38646
+  epochs:
+    distribution: constant
+    value: 5
+  final_div_factor:
+    distribution: uniform
+    min: 10808.7842836677
+    max: 11946.5510503696
+  lr:
+    distribution: log_uniform
+    min: -3.2214551835
+    max: -2.9146499279
+  max_momentum:
+    distribution: uniform
+    min: 0.880555
+    max: 0.973245
+  model_name:
+    distribution: constant
+    value: rexnet_200
+  pct_start:
+    distribution: uniform
+    min: 0.413725
+    max: 0.457275
+  precision:
+    distribution: categorical
+    values:
+      - 16
+      - 32
+  stages:
+    distribution: constant
+    value: 5
+  three_phase:
+    distribution: constant
+    value: false
+  train_bn:
+    distribution: constant
+    value: false
+  unfreeze_per_step:
+    distribution: int_uniform
+    min: 15
+    max: 21
+  weight_decay:
+    distribution: log_uniform
+    min: -11.5185299998
+    max: -10.4215271427
+program: train.py

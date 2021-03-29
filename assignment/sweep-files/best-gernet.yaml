@@ -1,0 +1,72 @@
+method: random
+metric:
+  goal: maximize
+  name: test_score
+  target: 0.92
+parameters:
+  anneal_strategy:
+    distribution: categorical
+    values:
+      - linear
+      - cos
+  base_momentum:
+    distribution: uniform
+    min: 0.7784550922
+    max: 0.85
+  div_factor:
+    distribution: uniform
+    min: 41.4599533226
+    max: 45.8241589356
+  drop_rate:
+    distribution: uniform
+    min: 0.4583822602
+    max: 0.5066330245
+  epochs:
+    distribution: constant
+    value: 5
+  final_div_factor:
+    distribution: uniform
+    min: 35556.1921580735
+    max: 39298.9492273444
+  lr:
+    distribution: log_uniform
+    min: -3.2204666415
+    max: -2.9137555327
+  max_momentum:
+    distribution: uniform
+    min: 0.8572182715
+    max: 0.9474517738
+  model_name:
+    distribution: constant
+    value: gernet_m
+  pct_start:
+    distribution: uniform
+    min: 0.4662364807
+    max: 0.5153140049
+  precision:
+    distribution: categorical
+    values:
+      - 16
+      - 32
+  stages:
+    distribution: categorical
+    values:
+      - 3
+      - 5
+  three_phase:
+    distribution: constant
+    value: false
+  train_bn:
+    distribution: categorical
+    values:
+      - false
+      - true
+  unfreeze_per_step:
+    distribution: int_uniform
+    min: 12
+    max: 18
+  weight_decay:
+    distribution: log_uniform
+    min: -10.1462156867
+    max: -9.1799094309
+program: train.py
