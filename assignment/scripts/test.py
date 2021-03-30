@@ -12,6 +12,7 @@ def get_args():
     parser = ArgumentParser()
     parser.add_argument('--checkpoint_path', type=str)
     parser.add_argument('--model_name', type=str, default='rexnet_200')
+    parser.add_argument('--seed', type=int, default=42)
 
     parser = FlameDataModule.add_argparse_args(parser)
     parser = PretrainedModel.add_argparse_args(parser)
