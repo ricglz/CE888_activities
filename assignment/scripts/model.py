@@ -49,6 +49,12 @@ class PretrainedModel(LightningModule):
         self.freeze()
         Freezer.make_trainable(self.base.get_classifier())
 
+    @property
+    def total_steps(self):
+        dataset_size = 61312 if self.hparams.no_minified else 30656
+        steps_per_epoch = dataset_size // self.hparams.batch_size
+        return steps_per_epoch * self.hparams.epochs
+
     @staticmethod
     def build_metrics():
         general_metrics = [
@@ -85,7 +91,7 @@ class PretrainedModel(LightningModule):
         return OneCycleLR(
             optimizer,
             self.hparams.lr,
-            self.hparams.epochs * self.hparams.steps,
+            self.total_steps,
             pct_start=self.hparams.pct_start,
             anneal_strategy=self.hparams.anneal_strategy,
             base_momentum=self.hparams.base_momentum,
