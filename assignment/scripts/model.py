@@ -42,6 +42,7 @@ class PretrainedModel(LightningModule):
         self.metrics = self.build_metrics()
         self.transform = T.Compose([
             T.RandomHorizontalFlip(),
+            T.RandomVerticalFlip()
         ])
 
     def just_train_classifier(self):
