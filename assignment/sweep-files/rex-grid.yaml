@@ -1,4 +1,4 @@
-method: grid
+method: bayes
 metric:
   goal: maximize
   name: test_score
@@ -17,15 +17,15 @@ parameters:
     distribution: constant
     value: 0.4068513486859972
   epochs:
-    distribution: categorical
-    values:
-      - 5
-      - 10
-      - 15
-      - 20
+    distribution: constant
+    value: 5
   final_div_factor:
     distribution: constant
     value: 11916.417733845818
+  gradient_clip:
+    distribution: uniform
+    min: 0
+    max: 1
   lr:
     distribution: constant
     value: 0.04056258042139802

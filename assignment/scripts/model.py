@@ -51,7 +51,7 @@ class PretrainedModel(LightningModule):
 
     @property
     def total_steps(self):
-        dataset_size = 30656 if self.hparams.no_minified else 61312
+        dataset_size = 30689 if self.hparams.no_minified else 61378
         steps_per_epoch = dataset_size // self.hparams.batch_size
         return steps_per_epoch * self.hparams.epochs
 
