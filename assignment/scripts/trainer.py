@@ -13,6 +13,7 @@ from model import PretrainedModel
 @dataclass
 class Trainer():
     fast_dev_run = False
+    gradient_clip = 0.0
     model_name: str
     precision = 16
     stages = 2
@@ -44,7 +45,7 @@ class Trainer():
         return pl.Trainer(
             max_epochs=max_epochs, deterministic=True, callbacks=callbacks,
             precision=self.precision, stochastic_weight_avg=False, logger=logger,
-            **accelerator, **kwargs)
+            gradient_clip_val=self.gradient_clip, **accelerator, **kwargs)
 
     def _create_trainer(self, max_epochs: int) -> pl.Trainer:
         return self.create_trainer(
@@ -59,6 +60,9 @@ class Trainer():
         last_trainer = self._fit_cycle(model, epochs, datamodule)
         last_trainer.test(datamodule=datamodule)
 
+    def test(self, model: PretrainedModel, datamodule):
+        self.create_trainer(0).test(model=model, datamodule=datamodule)
+
     @staticmethod
     def add_argparse_args(parent_parser):
         parser = ArgumentParser(parents=[parent_parser], add_help=False)
@@ -67,6 +71,7 @@ class Trainer():
         parser.add_argument('--stages', type=int, default=2)
         parser.add_argument('--train_bn', type=bool, default=False)
         parser.add_argument('--unfreeze_per_step', type=int, default=21)
+        parser.add_argument('--gradient_clip', type=float, default=0.0)
         return parser
 
     @staticmethod
@@ -77,4 +82,5 @@ class Trainer():
         trainer.stages = args.stages
         trainer.train_bn = args.train_bn
         trainer.unfreeze_per_step = args.unfreeze_per_step
+        trainer.gradient_clip = args.gradient_clip
         return trainer

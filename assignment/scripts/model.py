@@ -4,13 +4,27 @@ from argparse import ArgumentParser
 from pytorch_lightning import LightningModule
 from pytorch_lightning.metrics import Accuracy, F1, MetricCollection
 from timm import create_model
+
+import torch
 from torch import stack, sigmoid
 from torch.nn import BCEWithLogitsLoss, ModuleDict
 from torch.optim import SGD
 from torch.optim.lr_scheduler import OneCycleLR
 import torchvision.transforms as T
 
+from numpy import random
+
 from callbacks import Freezer
+
+def partial_mixup(tensor, gamma: float, indices):
+    if tensor.size(0) != indices.size(0):
+        raise RuntimeError("Size mismatch!")
+    perm_input = tensor[indices]
+    return tensor.mul(gamma).add(perm_input, alpha=1-gamma)
+
+def mixup(x, y, gamma: float):
+    indices = torch.randperm(x.size(0), device=x.device, dtype=torch.long)
+    return partial_mixup(x, gamma, indices), partial_mixup(y, gamma, indices)
 
 class PretrainedModel(LightningModule):
     def __init__(self, hparams):
@@ -28,7 +42,6 @@ class PretrainedModel(LightningModule):
         self.metrics = self.build_metrics()
         self.transform = T.Compose([
             T.RandomHorizontalFlip(),
-            T.RandomVerticalFlip()
         ])
 
     def just_train_classifier(self):
@@ -48,8 +61,11 @@ class PretrainedModel(LightningModule):
             'val_metrics': metric.clone(),
         })
 
-    def forward(self, x):
-        return self.base(x).squeeze(-1)
+    def forward(self, x, tta = 0):
+        if tta == 0:
+            return self.model(x).squeeze(-1)
+        y_hat_stack = stack([self(self.transform(x)) for _ in range(tta)])
+        return y_hat_stack.mean(dim=0)
 
     # Configurations
     def configure_optimizers(self):
@@ -88,9 +104,13 @@ class PretrainedModel(LightningModule):
 
     def _on_step(self, batch, dataset):
         x, y = batch
-        y_hat = self(x)
+        if dataset == 'train':
+            gamma = random.beta(self.hparams.alpha + 1, self.hparams.alpha)
+            x, y = mixup(x, y, gamma)
+        tta = self.hparams.tta if dataset == 'test' else 0
+        y_hat = self(x, tta)
         loss = self.criterion(y_hat, y.float())
-        self._update_metrics(y_hat, y, dataset)
+        self._update_metrics(y_hat, batch[1], dataset)
         self.log(f'{dataset}_loss', loss, prog_bar=True)
         return loss
 
@@ -125,15 +145,17 @@ class PretrainedModel(LightningModule):
     @staticmethod
     def add_argparse_args(parent_parser):
         parser = ArgumentParser(parents=[parent_parser], add_help=False)
-        parser.add_argument('--lr', type=float, required=True)
-        parser.add_argument('--drop_rate', type=float, default=0.4)
-        parser.add_argument('--weight_decay', type=float, default=0)
-        parser.add_argument('--pct_start', type=float, default=0.5)
+        parser.add_argument('--alpha', type=float, default=0)
         parser.add_argument('--base_momentum', type=float, default=0.825)
-        parser.add_argument('--max_momentum', type=float, default=0.9)
         parser.add_argument('--div_factor', type=float, default=25)
+        parser.add_argument('--drop_rate', type=float, default=0.4)
         parser.add_argument('--final_div_factor', type=float, default=1e4)
+        parser.add_argument('--lr', type=float, required=True)
+        parser.add_argument('--max_momentum', type=float, default=0.9)
+        parser.add_argument('--pct_start', type=float, default=0.5)
         parser.add_argument('--three_phase', type=bool, default=False)
+        parser.add_argument('--tta', type=int, default=0)
+        parser.add_argument('--weight_decay', type=float, default=0)
         parser.add_argument(
             '--anneal_strategy',
             type=str,
