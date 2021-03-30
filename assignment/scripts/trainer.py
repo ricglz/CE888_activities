@@ -61,7 +61,8 @@ class Trainer():
         last_trainer.test(datamodule=datamodule)
 
     def test(self, model: PretrainedModel, datamodule):
-        self.create_trainer(0).test(model=model, datamodule=datamodule)
+        trainer = self.create_trainer(model.hparams.model_name)
+        trainer.test(model=model, datamodule=datamodule)
 
     @staticmethod
     def add_argparse_args(parent_parser):

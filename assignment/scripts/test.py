@@ -31,6 +31,7 @@ def main():
             args.checkpoint_path,
     )
     model.hparams.tta = args.tta
+    model.hparams.model_name = args.model_name
     trainer = Trainer.from_argparse_args(args)
 
     trainer.test(model, datamodule)
