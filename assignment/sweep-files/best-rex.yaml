@@ -30,8 +30,8 @@ parameters:
     max: 11946.5510503696
   lr:
     distribution: log_uniform
-    min: -3.2214551835
-    max: -2.9146499279
+    min: -3.0603824243
+    max: -2.7689174315
   max_momentum:
     distribution: uniform
     min: 0.880555

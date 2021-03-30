@@ -63,7 +63,7 @@ class PretrainedModel(LightningModule):
 
     def forward(self, x, tta = 0):
         if tta == 0:
-            return self.model(x).squeeze(-1)
+            return self.base(x).squeeze(-1)
         y_hat_stack = stack([self(self.transform(x)) for _ in range(tta)])
         return y_hat_stack.mean(dim=0)
 

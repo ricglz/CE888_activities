@@ -5,31 +5,31 @@ metric:
   target: 0.92
 parameters:
   anneal_strategy:
-    distribution: categorical
+    distribution: constant
     value: linear
   base_momentum:
     distribution: uniform
-    min: 0.7829320508
-    max: 0.8653459509
+    min: 0.8220786534
+    max: 0.88
   div_factor:
     distribution: uniform
     min: 30.9983681571
     max: 46.4975522357
   drop_rate:
     distribution: uniform
-    min: 0.4120977285
-    max: 0.4554764367
+    min: 0.4327026149
+    max: 0.4782502585
   epochs:
     distribution: constant
     value: 5
   final_div_factor:
     distribution: uniform
-    min: 44321.0806232891
-    max: 48986.4575310037
+    min: 46537.1346544535
+    max: 51435.7804075539
   lr:
     distribution: log_uniform
-    min: -4.245294366
-    max: -3.8409806168
+    min: -4.0330296476
+    max: -3.648931586
   max_momentum:
     distribution: uniform
     min: 0.880992855
@@ -39,18 +39,16 @@ parameters:
     value: repvgg_b0
   pct_start:
     distribution: uniform
-    min: 0.4425017022
-    max: 0.4890808288
+    min: 0.4203766171
+    max: 0.4646267873
   precision:
     distribution: categorical
     values:
       - 16
       - 32
   stages:
-    distribution: categorical
-    values:
-      - 3
-      - 5
+    distribution: constant
+    value: 5
   three_phase:
     distribution: constant
     value: false
@@ -61,8 +59,8 @@ parameters:
       - true
   unfreeze_per_step:
     distribution: int_uniform
-    min: 16
-    max: 22
+    min: 19
+    max: 25
   weight_decay:
     distribution: log_uniform
     min: -10.1961349097
