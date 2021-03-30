@@ -104,9 +104,9 @@ class PretrainedModel(LightningModule):
 
     def _on_step(self, batch, dataset):
         x, y = batch
-        if dataset == 'train':
-            gamma = random.beta(self.hparams.alpha + 1, self.hparams.alpha)
-            x, y = mixup(x, y, gamma)
+        # if dataset == 'train':
+        #     gamma = random.beta(self.hparams.alpha + 1, self.hparams.alpha)
+        #     x, y = mixup(x, y, gamma)
         tta = self.hparams.tta if dataset == 'test' else 0
         y_hat = self(x, tta)
         loss = self.criterion(y_hat, y.float())
