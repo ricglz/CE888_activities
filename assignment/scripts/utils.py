@@ -1,5 +1,8 @@
+"""Module containing utility functions"""
+from argparse import ArgumentParser
 from os import path
 from zipfile import ZipFile
+
 from tqdm import tqdm
 
 try:
@@ -26,4 +29,8 @@ def get_data_dir(minified=True):
     return data_dir
 
 if __name__ == "__main__":
-    get_data_dir()
+    parser = ArgumentParser()
+    parser.add_argument('--no_minified', action='store_false')
+    args = parser.parse_args()
+
+    get_data_dir(args.no_minified)
