@@ -1,0 +1,78 @@
+method: random
+metric:
+  goal: maximize
+  name: test_score
+  target: 0.92
+parameters:
+  anneal_strategy:
+    distribution: categorical
+    values:
+      - linear
+      - cos
+  base_momentum:
+    distribution: uniform
+    min: 0.75
+    max: 0.85
+  div_factor:
+    distribution: uniform
+    min: 5
+    max: 125
+  drop_rate:
+    distribution: uniform
+    min: 0.3
+    max: 0.7
+  epochs:
+    distribution: constant
+    value: 5
+  final_div_factor:
+    distribution: uniform
+    min: 1000
+    max: 100000
+  lr:
+    distribution: log_uniform
+    min: -13.815510558
+    max: -0.1053605157
+  max_momentum:
+    distribution: uniform
+    min: 0.85
+    max: 1
+  model_name:
+    distribution: constant
+    value: tf_efficientnet_b4
+  optimizer:
+    distribution: categorical
+    values:
+      - adam
+      - sgd
+      - rmsprop
+  pct_start:
+    distribution: uniform
+    min: 0.3
+    max: 0.7
+  precision:
+    distribution: categorical
+    values:
+      - 16
+      - 32
+  stages:
+    distribution: categorical
+    values:
+      - 3
+      - 5
+  three_phase:
+    distribution: constant
+    value: false
+  train_bn:
+    distribution: categorical
+    values:
+      - false
+      - true
+  unfreeze_per_step:
+    distribution: int_uniform
+    min: 15
+    max: 24
+  weight_decay:
+    distribution: log_uniform
+    min: -13.815510558
+    max: -0.1053605157
+program: train.py
