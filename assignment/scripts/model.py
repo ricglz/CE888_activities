@@ -163,6 +163,7 @@ class PretrainedModel(LightningModule):
         parser.add_argument('--max_momentum', type=float, default=0.9)
         parser.add_argument('--pct_start', type=float, default=0.5)
         parser.add_argument('--three_phase', type=bool, default=False)
+        parser.add_argument('--tta', type=int, default=0)
         parser.add_argument('--weight_decay', type=float, default=0)
         parser.add_argument(
             '--anneal_strategy',
