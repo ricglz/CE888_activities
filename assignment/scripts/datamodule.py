@@ -1,5 +1,6 @@
 """Contains the datamodule class"""
 from argparse import ArgumentParser
+from multiprocessing import cpu_count
 from os import path
 
 from pytorch_lightning import LightningDataModule
@@ -48,8 +49,8 @@ class FlameDataModule(LightningDataModule):
 
     def _general_dataloader(self, dataset, **kwargs):
         return DataLoader(
-            dataset, batch_size=self.batch_size, num_workers=2, drop_last=True,
-            pin_memory=True, **kwargs)
+            dataset, batch_size=self.batch_size, num_workers=cpu_count(),
+            drop_last=True, pin_memory=True, **kwargs)
 
     def train_dataloader(self):
         sampler = BalancedBatchSampler(self.train_ds, shuffle=True)
