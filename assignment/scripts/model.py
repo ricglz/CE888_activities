@@ -8,7 +8,7 @@ from timm import create_model
 import torch
 from torch import stack, sigmoid
 from torch.nn import BCEWithLogitsLoss, ModuleDict
-from torch.optim import SGD
+from torch.optim import Adam, RMSprop, SGD
 from torch.optim.lr_scheduler import OneCycleLR
 import torchvision.transforms as T
 
@@ -77,7 +77,9 @@ class PretrainedModel(LightningModule):
     # Configurations
     def configure_optimizers(self):
         parameters = filter(lambda p: p.requires_grad, self.parameters())
-        optimizer = SGD(
+        optimizer_class = SGD if self.hparams.optimizer == 'sgd' else \
+                          Adam if self.hparams.optimizer == 'adam' else RMSprop
+        optimizer = optimizer_class(
             parameters,
             self.hparams.lr,
             weight_decay=self.hparams.weight_decay
@@ -161,12 +163,17 @@ class PretrainedModel(LightningModule):
         parser.add_argument('--max_momentum', type=float, default=0.9)
         parser.add_argument('--pct_start', type=float, default=0.5)
         parser.add_argument('--three_phase', type=bool, default=False)
-        parser.add_argument('--tta', type=int, default=0)
         parser.add_argument('--weight_decay', type=float, default=0)
         parser.add_argument(
             '--anneal_strategy',
             type=str,
             default='linear',
             choices=['linear', 'cos']
+        )
+        parser.add_argument(
+            '--optimizer',
+            type=str,
+            default='sgd',
+            choices=['sgd', 'adam', 'rmsprop']
         )
         return parser
