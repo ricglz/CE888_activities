@@ -56,7 +56,9 @@ class PretrainedModel(LightningModule):
         return steps_per_epoch * self.hparams.epochs
 
     def general_div_factor(self, div_factor):
-        return div_factor * self.hparams.epochs / 5
+        epochs = self.hparams.epochs
+        value = div_factor * epochs / 5
+        return value if epochs <= 5 else value * epochs ** 2
 
     @property
     def div_factor(self):
