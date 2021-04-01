@@ -29,9 +29,8 @@ def main():
     datamodule = FlameDataModule.from_argparse_args(args)
     model = PretrainedModel.load_from_checkpoint(
             args.checkpoint_path,
+            tta=args.tta
     )
-    model.hparams.tta = args.tta
-    model.hparams.model_name = args.model_name
     trainer = Trainer.from_argparse_args(args)
 
     trainer.test(model, datamodule)
