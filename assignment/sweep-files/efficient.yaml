@@ -15,50 +15,43 @@ parameters:
     max: 0.85
   div_factor:
     distribution: uniform
-    min: 5
+    min: 60
     max: 125
   drop_rate:
     distribution: uniform
     min: 0.3
-    max: 0.7
+    max: 0.48
   epochs:
     distribution: constant
     value: 5
   final_div_factor:
     distribution: uniform
-    min: 1000
-    max: 100000
+    min: 30000
+    max: 80000
   lr:
     distribution: log_uniform
-    min: -13.815510558
-    max: -0.1053605157
+    min: -7.4185809027
+    max: -1.2039728043
   max_momentum:
     distribution: uniform
-    min: 0.85
-    max: 1
+    min: 0.86
+    max: 0.99
   model_name:
     distribution: constant
     value: tf_efficientnet_b4
   optimizer:
-    distribution: categorical
-    values:
-      - adam
-      - sgd
-      - rmsprop
+    distribution: constant
+    value: adam
   pct_start:
     distribution: uniform
-    min: 0.3
-    max: 0.7
+    min: 0.33
+    max: 0.68
   precision:
-    distribution: categorical
-    values:
-      - 16
-      - 32
+    distribution: constant
+    value: 16
   stages:
-    distribution: categorical
-    values:
-      - 3
-      - 5
+    distribution: constant
+    value: 5
   three_phase:
     distribution: constant
     value: false
@@ -69,10 +62,10 @@ parameters:
       - true
   unfreeze_per_step:
     distribution: int_uniform
-    min: 15
+    min: 17
     max: 24
   weight_decay:
     distribution: log_uniform
     min: -13.815510558
-    max: -0.1053605157
+    max: -5.8091429903
 program: train.py
