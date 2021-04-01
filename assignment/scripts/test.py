@@ -10,8 +10,9 @@ from trainer import Trainer
 
 def get_args():
     parser = ArgumentParser()
-    parser.add_argument('--checkpoint_path', type=str)
+    parser.add_argument('--checkpoint_path', type=str, required=True)
     parser.add_argument('--model_name', type=str, default='rexnet_200')
+    parser.add_argument('--seed', type=int, default=42)
     parser.add_argument('--tta', type=int, default=0)
 
     parser = FlameDataModule.add_argparse_args(parser)
