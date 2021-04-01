@@ -41,8 +41,8 @@ class PretrainedModel(LightningModule):
         self.criterion = BCEWithLogitsLoss()
         self.metrics = self.build_metrics()
         self.transform = T.Compose([
-            T.RandomHorizontalFlip(),
-            T.RandomVerticalFlip()
+            T.RandomVerticalFlip(),
+            T.RandomRotation(degrees=45),
         ])
 
     def just_train_classifier(self):
