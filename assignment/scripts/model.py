@@ -55,6 +55,17 @@ class PretrainedModel(LightningModule):
         steps_per_epoch = dataset_size // self.hparams.batch_size
         return steps_per_epoch * self.hparams.epochs
 
+    def general_div_factor(self, div_factor):
+        return div_factor / 5 * self.hparams.epochs
+
+    @property
+    def div_factor(self):
+        return self.general_div_factor(self.hparams.div_factor)
+
+    @property
+    def final_div_factor(self):
+        return self.general_div_factor(self.hparams.final_div_factor)
+
     @staticmethod
     def build_metrics():
         general_metrics = [
@@ -98,8 +109,8 @@ class PretrainedModel(LightningModule):
             anneal_strategy=self.hparams.anneal_strategy,
             base_momentum=self.hparams.base_momentum,
             max_momentum=self.hparams.max_momentum,
-            div_factor=self.hparams.div_factor,
-            final_div_factor=self.hparams.final_div_factor,
+            div_factor=self.div_factor,
+            final_div_factor=self.final_div_factor,
             three_phase=self.hparams.three_phase
         )
 
