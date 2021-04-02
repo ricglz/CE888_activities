@@ -8,6 +8,7 @@ from torch.utils.data import DataLoader
 from torchvision.datasets import ImageFolder
 import torchvision.transforms as T
 
+from auto_augment import AutoAugment
 from sampler import BalancedBatchSampler
 from utils import get_data_dir
 
@@ -26,7 +27,7 @@ class FlameDataModule(LightningDataModule):
         normalize = T.Normalize([0.485, 0.456, 0.406],
                                 [0.229, 0.224, 0.225])
         to_tensor = T.ToTensor()
-        augmentations = [T.auto_augment] if auto_augment else [
+        augmentations = [AutoAugment()] if auto_augment else [
             T.ColorJitter(brightness=0.1, contrast=0.1),
             T.RandomRotation(degrees=45),
             T.RandomHorizontalFlip(),
@@ -70,9 +71,9 @@ class FlameDataModule(LightningDataModule):
     @staticmethod
     def add_argparse_args(parent_parser):
         parser = ArgumentParser(parents=[parent_parser], add_help=False)
+        parser.add_argument('--auto_augment', type=bool, default=False)
         parser.add_argument('--batch_size', type=int, default=32)
         parser.add_argument('--no_minified', action='store_false')
-        parser.add_argument('--auto_augment', type=bool, default=False)
         return parser
 
     @staticmethod
