@@ -82,4 +82,4 @@ class FlameDataModule(LightningDataModule):
 
     @staticmethod
     def from_argparse_args(args):
-        return FlameDataModule(args.batch_size, args.no_minified, args.auto_augment)
+        return FlameDataModule(args)
