@@ -126,9 +126,9 @@ class PretrainedModel(LightningModule):
 
     def _on_step(self, batch, dataset):
         x, y = batch
-        # if dataset == 'train':
-        #     gamma = random.beta(self.hparams.alpha + 1, self.hparams.alpha)
-        #     x, y = mixup(x, y, gamma)
+        if dataset == 'train' and self.hparams.mixup:
+            gamma = random.beta(self.hparams.alpha + 1, self.hparams.alpha)
+            x, y = mixup(x, y, gamma)
         tta = self.hparams.tta if dataset == 'test' else 0
         y_hat = self(x, tta)
         loss = self.criterion(y_hat, y.float())
@@ -174,6 +174,7 @@ class PretrainedModel(LightningModule):
         parser.add_argument('--final_div_factor', type=float, default=1e4)
         parser.add_argument('--lr', type=float, required=True)
         parser.add_argument('--max_momentum', type=float, default=0.9)
+        parser.add_argument('--mixup', type=bool, default=False)
         parser.add_argument('--pct_start', type=float, default=0.5)
         parser.add_argument('--three_phase', type=bool, default=False)
         parser.add_argument('--tta', type=int, default=0)
