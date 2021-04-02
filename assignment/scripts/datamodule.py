@@ -19,15 +19,17 @@ class FlameDataModule(LightningDataModule):
     test_ds = None
     val_ds = None
 
-    def __init__(self, batch_size=32, minified=True, auto_augment=False):
+    def __init__(self, args):
         super().__init__()
-        self.batch_size = batch_size
-        self.minified = minified
+        self.batch_size = args.batch_size
+        self.minified = args.minified
         resize = T.Resize((224, 224))
         normalize = T.Normalize([0.485, 0.456, 0.406],
                                 [0.229, 0.224, 0.225])
         to_tensor = T.ToTensor()
-        augmentations = [AutoAugment()] if auto_augment else [
+        augmentations = [
+            AutoAugment(args.magnitude, args.amount)
+        ] if args.auto_augment else [
             T.ColorJitter(brightness=0.1, contrast=0.1),
             T.RandomRotation(degrees=45),
             T.RandomHorizontalFlip(),
@@ -71,8 +73,10 @@ class FlameDataModule(LightningDataModule):
     @staticmethod
     def add_argparse_args(parent_parser):
         parser = ArgumentParser(parents=[parent_parser], add_help=False)
+        parser.add_argument('--amount', type=int, default=2)
         parser.add_argument('--auto_augment', type=bool, default=False)
         parser.add_argument('--batch_size', type=int, default=32)
+        parser.add_argument('--magnitude', type=int, default=0)
         parser.add_argument('--no_minified', action='store_false')
         return parser
 
