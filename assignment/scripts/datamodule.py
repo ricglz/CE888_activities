@@ -22,7 +22,7 @@ class FlameDataModule(LightningDataModule):
     def __init__(self, args):
         super().__init__()
         self.batch_size = args.batch_size
-        self.minified = args.minified
+        self.minified = not args.no_minified
         resize = T.Resize((224, 224))
         normalize = T.Normalize([0.485, 0.456, 0.406],
                                 [0.229, 0.224, 0.225])
