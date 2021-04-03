@@ -25,11 +25,10 @@ class AutoAugment(T.AutoAugment):
         Returns:
             params required by the autoaugment transformation
         """
-        policy_id = torch.randint(transform_num, (1,)).item()
-        probs = torch.rand((transform_num,))
-        signs = torch.randint(2, (transform_num,))
+        probs = torch.rand((transform_num,)).detach()
+        signs = torch.randint(2, (transform_num,)).detach()
 
-        return policy_id, probs, signs
+        return probs, signs
 
     def forward(self, img):
         fill = self.fill
@@ -39,10 +38,10 @@ class AutoAugment(T.AutoAugment):
             elif fill is not None:
                 fill = [float(f) for f in fill]
 
-        transform_id, probs, signs = self.get_params(self.amount)
         transforms = sample(self.actual_transforms, self.amount)
+        probs, signs = self.get_params(self.amount)
 
-        for i, (op_name, p, magnitude_id) in enumerate(transforms[transform_id]):
+        for i, (op_name, p, magnitude_id) in enumerate(transforms):
             if probs[i] <= p:
                 magnitudes, signed = self._get_op_meta(op_name)
                 magnitude = float(magnitudes[magnitude_id].item()) \
