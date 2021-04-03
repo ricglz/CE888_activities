@@ -21,7 +21,7 @@ def get_args():
     return parser.parse_args()
 
 def main():
-    args = get_args()
+    args = vars(get_args())
 
     wandb.init(project='repo-assignment_scripts', entity='ricglz')
     seed_everything(args.seed)
