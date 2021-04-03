@@ -21,7 +21,7 @@ def get_args():
     return parser.parse_args()
 
 def main():
-    args = vars(get_args())
+    args = get_args()
 
     wandb.init(project='repo-assignment_scripts', entity='ricglz')
     seed_everything(args.seed)
@@ -29,7 +29,7 @@ def main():
     datamodule = FlameDataModule.from_argparse_args(args)
     model = PretrainedModel.load_from_checkpoint(
         args.checkpoint_path,
-        **args
+        **vars(args)
     )
     trainer = Trainer.from_argparse_args(args)
 
