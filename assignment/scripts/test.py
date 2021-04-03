@@ -28,8 +28,8 @@ def main():
 
     datamodule = FlameDataModule.from_argparse_args(args)
     model = PretrainedModel.load_from_checkpoint(
-            args.checkpoint_path,
-            tta=args.tta
+        args.checkpoint_path,
+        **args
     )
     trainer = Trainer.from_argparse_args(args)
 
