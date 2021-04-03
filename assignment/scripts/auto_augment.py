@@ -31,4 +31,6 @@ class AutoAugment(T.AutoAugment):
 
     def forward(self, img):
         self.transforms = [sample(self.actual_transforms, self.amount)]
+        transform_id, probs, signs = self.get_params(len(self.transforms))
+        print(transform_id, probs.shape, signs.shape)
         return super().forward(img)
