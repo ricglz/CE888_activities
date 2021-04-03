@@ -1,5 +1,6 @@
 """Model module"""
 from argparse import ArgumentParser
+from operator import itemgetter
 
 from pytorch_lightning import LightningModule
 from pytorch_lightning.metrics import Accuracy, F1, MetricCollection
@@ -14,6 +15,7 @@ import torchvision.transforms as T
 
 from numpy import random
 
+from auto_augment import AutoAugment
 from callbacks import Freezer
 
 def partial_mixup(tensor, gamma: float, indices):
@@ -40,7 +42,13 @@ class PretrainedModel(LightningModule):
 
         self.criterion = BCEWithLogitsLoss()
         self.metrics = self.build_metrics()
-        self.transform = T.Compose([
+        self.transform = self.build_transforms()
+
+    def build_transforms(self):
+        hparams = self.hparams
+        return AutoAugment(
+            hparams.magnitude, hparams.amount, hparams.probability
+        ) if hparams.auto_augment else T.Compose([
             T.RandomVerticalFlip(),
             T.RandomRotation(degrees=45),
         ])
