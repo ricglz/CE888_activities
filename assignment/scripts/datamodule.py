@@ -78,6 +78,7 @@ class FlameDataModule(LightningDataModule):
         parser.add_argument('--batch_size', type=int, default=32)
         parser.add_argument('--magnitude', type=int, default=0)
         parser.add_argument('--no_minified', action='store_false')
+        parser.add_argument('--probability', type=float, default=0.5)
         return parser
 
     @staticmethod

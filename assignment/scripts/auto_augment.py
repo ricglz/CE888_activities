@@ -7,15 +7,15 @@ from torchvision import transforms as T
 from torchvision.transforms import functional as F
 
 class AutoAugment(T.AutoAugment):
-    def __init__(self, magnitude=0, amount=2):
+    def __init__(self, magnitude=0, amount=2, probability=0.5):
         super().__init__()
         self.actual_transforms = (
-            ('Invert', 0.5, None),
-            ('Rotate', 0.5, magnitude),
-            ('ShearX', 0.5, magnitude),
-            ('ShearY', 0.5, magnitude),
-            ('TranslateX', 0.5, magnitude),
-            ('TranslateY', 0.5, magnitude),
+            ('Invert', probability, None),
+            ('Rotate', probability, magnitude),
+            ('ShearX', probability, magnitude),
+            ('ShearY', probability, magnitude),
+            ('TranslateX', probability, magnitude),
+            ('TranslateY', probability, magnitude),
         )
         self.amount = amount
 
