@@ -18,7 +18,7 @@ from numpy import random
 from auto_augment import AutoAugment
 from callbacks import Freezer
 
-def partial_mixup(tensor, gamma: float, indices):
+def partial_mixup(tensor: torch.Tensor, gamma: float, indices):
     if tensor.size(0) != indices.size(0):
         raise RuntimeError("Size mismatch!")
     perm_input = tensor[indices]
@@ -135,7 +135,7 @@ class PretrainedModel(LightningModule):
     def _on_step(self, batch, dataset):
         x, y = batch
         if dataset == 'train' and self.hparams.mixup:
-            gamma = random.beta(self.hparams.alpha + 1, self.hparams.alpha)
+            gamma = random.beta(self.hparams.alpha, self.hparams.alpha)
             x, y = mixup(x, y, gamma)
         tta = self.hparams.tta if dataset == 'test' else 0
         y_hat = self(x, tta)
