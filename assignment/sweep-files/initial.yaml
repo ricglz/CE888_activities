@@ -16,30 +16,46 @@ parameters:
     distribution: constant
     value: false
   base_momentum:
-    distribution: constant
-    value: 0.8
+    distribution: categorical
+    values:
+      - 0.75
+      - 0.8
+      - 0.85
   div_factor:
     distribution: categorical
     values:
+      - 6
+      - 12
       - 25
-      - 125
+      - 50
+      - 100
   drop_rate:
     distribution: categorical
     values:
       - 0.4
       - 0.5
+      - 0.6
   epochs:
     distribution: constant
     value: 5
   final_div_factor:
-    distribution: constant
-    value: 5000
+    distribution: categorical
+    values:
+      - 2500
+      - 5000
+      - 10000
+      - 20000
   lr:
-    distribution: constant
-    value: 0.001
+    distribution: categorical
+    values:
+      - 0.1
+      - 0.01
+      - 0.001
+      - 0.0001
   max_momentum:
     distribution: categorical
     values:
+      - 0.85
       - 0.9
       - 0.95
   magnitude:
@@ -47,13 +63,19 @@ parameters:
     value: 0
   model_name:
     distribution: constant
-    value: tf_efficientnet_b4
+    value: repvgg_b0
   optimizer:
-    distribution: constant
-    value: rmsprop
+    distribution: categorical
+    values:
+      - adam
+      - sgd
+      - rmsprop
   pct_start:
-    distribution: constant
-    value: 0.5
+    distribution: categorical
+    values:
+      - 0.4
+      - 0.5
+      - 0.6
   precision:
     distribution: constant
     value: 16
@@ -61,8 +83,10 @@ parameters:
     distribution: constant
     value: 0
   stages:
-    distribution: constant
-    value: 5
+    distribution: categorical
+    values:
+      - 3
+      - 5
   three_phase:
     distribution: constant
     value: false
@@ -72,11 +96,15 @@ parameters:
       - false
       - true
   unfreeze_per_step:
-    distribution: constant
-    value: 18
+    distribution: categorical
+    values:
+      - 15
+      - 18
+      - 21
   weight_decay:
     distribution: categorical
     values:
       - 1.0e-6
       - 1.0e-4
+      - 1.0e-2
 program: train.py

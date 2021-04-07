@@ -1,0 +1,73 @@
+method: grid
+metric:
+  goal: maximize
+  name: test_score
+  target: 0.92
+parameters:
+  amount:
+    distribution: categorical
+    values:
+      - 1
+      - 2
+      - 3
+      - 4
+      - 5
+      - 6
+  auto_augment:
+    distribution: constant
+    value: true
+  checkpoint_path:
+    distribution: constant
+    value: best_rexnet_2.ckpt
+  magnitude:
+    distribution: categorical
+    values:
+      - 0
+      - 1
+      - 2
+      - 3
+      - 4
+      - 5
+      - 6
+      - 7
+      - 8
+      - 9
+  model_name:
+    distribution: constant
+    value: rexnet_200
+  probability:
+    distribution: categorical
+    values:
+      - 0.1
+      - 0.2
+      - 0.3
+      - 0.4
+      - 0.5
+      - 0.6
+      - 0.7
+      - 0.8
+      - 0.9
+      - 1
+  tta:
+    distribution: categorical
+    values:
+      - 2
+      - 3
+      - 4
+      - 5
+      - 6
+      - 7
+      - 8
+      - 9
+      - 10
+      - 11
+      - 12
+      - 13
+      - 14
+      - 15
+      - 16
+      - 17
+      - 18
+      - 19
+      - 20
+program: test.py

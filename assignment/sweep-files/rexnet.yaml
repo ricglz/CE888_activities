@@ -1,36 +1,49 @@
-method: bayes
+method: random
 metric:
   goal: maximize
   name: test_score
   target: 0.92
 parameters:
+  alpha:
+    distribution: uniform
+    min: 0
+    max: 0.5
+  amount:
+    distribution: constant
+    value: 4
   anneal_strategy:
     distribution: constant
     value: cos
+  auto_augment:
+    distribution: constant
+    value: true
   base_momentum:
     distribution: constant
     value: 0.75
   div_factor:
-    distribution: uniform
-    min: 110
-    max: 140
+    distribution: constant
+    value: 136.9506039556886
   drop_rate:
     distribution: constant
-    value: 0.45
+    value: 0.5114522420592951
   epochs:
     distribution: constant
     value: 5
   final_div_factor:
-    distribution: uniform
-    min: 45000
-    max: 55000
+    distribution: constant
+    value: 3425.262369490455
   lr:
-    distribution: log_uniform
-    min: -6.0412259098
-    max: -4.9428211989
+    distribution: constant
+    value: 0.00014670432106350987
   max_momentum:
     distribution: constant
-    value: 0.86
+    value: 0.9
+  magnitude:
+    distribution: constant
+    value: 0
+  mixup:
+    distribution: constant
+    value: true
   model_name:
     distribution: constant
     value: rexnet_200
@@ -39,10 +52,13 @@ parameters:
     value: adam
   pct_start:
     distribution: constant
-    value: 0.4
+    value: 0.6456106503367648
   precision:
     distribution: constant
     value: 16
+  probability:
+    distribution: constant
+    value: 0.168
   stages:
     distribution: constant
     value: 5
@@ -54,8 +70,8 @@ parameters:
     value: true
   unfreeze_per_step:
     distribution: constant
-    value: 23
+    value: 20
   weight_decay:
     distribution: constant
-    value: 2.9333484016517308e-05
+    value: 0.0031698048580218337
 program: train.py
