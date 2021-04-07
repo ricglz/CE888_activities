@@ -1,12 +1,10 @@
 """Model module"""
 from argparse import ArgumentParser
-from operator import itemgetter
 
 from pytorch_lightning import LightningModule
 from pytorch_lightning.metrics import Accuracy, F1, MetricCollection
 from timm import create_model
 
-import torch
 from torch import stack, sigmoid
 from torch.nn import BCEWithLogitsLoss, ModuleDict
 from torch.optim import Adam, RMSprop, SGD
@@ -17,16 +15,7 @@ from numpy import random
 
 from auto_augment import AutoAugment
 from callbacks import Freezer
-
-def partial_mixup(tensor: torch.Tensor, gamma: float, indices):
-    if tensor.size(0) != indices.size(0):
-        raise RuntimeError("Size mismatch!")
-    perm_input = tensor[indices]
-    return tensor.mul(gamma).add(perm_input, alpha=1-gamma)
-
-def mixup(x, y, gamma: float):
-    indices = torch.randperm(x.size(0), device=x.device, dtype=torch.long)
-    return partial_mixup(x, gamma, indices), partial_mixup(y, gamma, indices)
+from mixup import mixup
 
 class PretrainedModel(LightningModule):
     def __init__(self, hparams):
