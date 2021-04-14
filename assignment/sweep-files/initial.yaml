@@ -4,9 +4,25 @@ metric:
   name: test_score
   target: 0.92
 parameters:
+  alpha:
+    distribution: categorical
+    values:
+      - 0.1
+      - 0.2
+      - 0.4
+      - 0.8
+      - 1.6
+      - 3.2
+      - 6.4
   amount:
-    distribution: constant
-    value: 1
+    distribution: categorical
+    values:
+      - 1
+      - 2
+      - 3
+      - 4
+      - 5
+      - 6
   anneal_strategy:
     distribution: categorical
     values:
@@ -14,7 +30,7 @@ parameters:
       - cos
   auto_augment:
     distribution: constant
-    value: false
+    value: true
   base_momentum:
     distribution: categorical
     values:
@@ -59,11 +75,24 @@ parameters:
       - 0.9
       - 0.95
   magnitude:
+    distribution: categorical
+    values:
+      - 0
+      - 1
+      - 2
+      - 3
+      - 4
+      - 5
+      - 6
+      - 7
+      - 8
+      - 9
+  mixup:
     distribution: constant
-    value: 0
+    value: true
   model_name:
     distribution: constant
-    value: repvgg_b0
+    value: gernet_m
   optimizer:
     distribution: categorical
     values:
@@ -80,16 +109,25 @@ parameters:
     distribution: constant
     value: 16
   probability:
-    distribution: constant
-    value: 0
+    distribution: categorical
+    values:
+      - 0.1
+      - 0.2
+      - 0.3
+      - 0.4
+      - 0.5
+      - 0.6
+      - 0.7
+      - 0.8
+      - 0.9
   stages:
     distribution: categorical
     values:
       - 3
       - 5
   three_phase:
-    distribution: constant
-    value: false
+    distribution: categorical
+    values: false
   train_bn:
     distribution: categorical
     values:

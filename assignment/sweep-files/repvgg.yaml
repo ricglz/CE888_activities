@@ -1,18 +1,12 @@
-method: random
+method: grid
 metric:
   goal: maximize
   name: test_score
   target: 0.92
 parameters:
   amount:
-    distribution: categorical
-    values:
-      - 1
-      - 2
-      - 3
-      - 4
-      - 5
-      - 6
+    distribution: constant
+    value: 1
   anneal_strategy:
     distribution: constant
     value: cos
@@ -24,35 +18,25 @@ parameters:
     value: 0.75
   div_factor:
     distribution: constant
-    value: 78.71688672127563
+    value: 107.821634748448
   drop_rate:
     distribution: constant
-    value: 0.6
+    value: 0.5521644213079804
   epochs:
     distribution: constant
     value: 5
   final_div_factor:
     distribution: constant
-    value: 6060.445999837097
+    value: 4214.278172363302
   lr:
     distribution: constant
-    value: 8.613109684971513e-5
+    value: 4.232377349263747e-05
   max_momentum:
     distribution: constant
     value: 0.95
   magnitude:
-    distribution: categorical
-    values:
-      - 0
-      - 1
-      - 2
-      - 3
-      - 4
-      - 5
-      - 6
-      - 7
-      - 8
-      - 9
+    distribution: constant
+    value: 0
   model_name:
     distribution: constant
     value: repvgg_b0
@@ -61,24 +45,13 @@ parameters:
     value: rmsprop
   pct_start:
     distribution: constant
-    value: 0.6
+    value: 0.5460617542974741
   precision:
     distribution: constant
     value: 16
   probability:
-    distribution: categorical
-    values:
-      - 0
-      - 0.1
-      - 0.2
-      - 0.3
-      - 0.4
-      - 0.5
-      - 0.6
-      - 0.7
-      - 0.8
-      - 0.9
-      - 1
+    distribution: constant
+    value: 0.935518284965351
   stages:
     distribution: constant
     value: 5
@@ -89,9 +62,25 @@ parameters:
     distribution: constant
     value: false
   unfreeze_per_step:
-    distribution: constant
-    value: 18
+    distribution: categorical
+    # value: 18
+    values:
+      - 10
+      - 11
+      - 12
+      - 13
+      - 14
+      - 15
+      - 16
+      - 17
+      - 18
+      - 19
+      - 20
+      - 21
+      - 22
+      - 23
+      - 24
   weight_decay:
     distribution: constant
-    value: 1.0e-4
+    value: 2.3364177320858828e-5
 program: train.py

@@ -5,45 +5,44 @@ metric:
   target: 0.92
 parameters:
   alpha:
-    distribution: uniform
-    min: 0
-    max: 0.5
+    distribution: constant
+    value: 0
   amount:
     distribution: constant
-    value: 4
+    value: 0
   anneal_strategy:
     distribution: constant
-    value: cos
+    value: linear
   auto_augment:
     distribution: constant
-    value: true
+    value: false
   base_momentum:
     distribution: constant
     value: 0.75
   div_factor:
     distribution: constant
-    value: 136.9506039556886
+    value: 125
   drop_rate:
     distribution: constant
-    value: 0.5114522420592951
+    value: 0.45
   epochs:
     distribution: constant
     value: 5
   final_div_factor:
     distribution: constant
-    value: 3425.262369490455
+    value: 50000
   lr:
     distribution: constant
-    value: 0.00014670432106350987
+    value: 0.004119499702902298
   max_momentum:
     distribution: constant
-    value: 0.9
+    value: 0.86
   magnitude:
     distribution: constant
     value: 0
   mixup:
     distribution: constant
-    value: true
+    value: false
   model_name:
     distribution: constant
     value: rexnet_200
@@ -52,13 +51,17 @@ parameters:
     value: adam
   pct_start:
     distribution: constant
-    value: 0.6456106503367648
+    value: 0.4
   precision:
     distribution: constant
     value: 16
   probability:
     distribution: constant
-    value: 0.168
+    value: 0
+  seed:
+    distribution: int_uniform
+    min: 0
+    max: 1048576
   stages:
     distribution: constant
     value: 5
@@ -70,8 +73,8 @@ parameters:
     value: true
   unfreeze_per_step:
     distribution: constant
-    value: 20
+    value: 23
   weight_decay:
     distribution: constant
-    value: 0.0031698048580218337
+    value: 2.9333484016517308e-05
 program: train.py

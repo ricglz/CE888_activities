@@ -1,46 +1,63 @@
-method: random
+method: bayes
 metric:
   goal: maximize
   name: test_score
   target: 0.92
 parameters:
+  alpha:
+    distribution: constant
+    value: 0.5744321989173924
+  amount:
+    distribution: constant
+    value: 2
   anneal_strategy:
     distribution: constant
-    value: cos
+    value: linear
+  auto_augment:
+    distribution: constant
+    value: true
   base_momentum:
     distribution: constant
-    value: 0.8486963288120284
+    value: 0.803882723289862
   div_factor:
     distribution: constant
-    value: 42.748
+    value: 31.4201606048242
   drop_rate:
-    distribution: uniform
-    # value: 0.4639236025057483
-    min: 0.4
-    max: 0.5
+    distribution: constant
+    value: 0.5
   epochs:
     distribution: constant
     value: 5
   final_div_factor:
     distribution: constant
-    value: 38588.004
+    value: 16402.157233057304
   lr:
     distribution: constant
-    value: 0.04044
+    value: 0.003783500003151901
   max_momentum:
     distribution: constant
-    value: 0.8850698162839707
+    value: 0.9133642909401706
+  magnitude:
+    distribution: constant
+    value: 6
+  mixup:
+    distribution: constant
+    value: true
   model_name:
     distribution: constant
     value: gernet_m
+  optimizer:
+    distribution: constant
+    value: adam
   pct_start:
-    distribution: uniform
-    # value: 0.4782853880655741
-    min: 0.4
-    max: 0.5
+    distribution: constant
+    value: 0.6
   precision:
     distribution: constant
     value: 16
+  probability:
+    distribution: constant
+    value: 0.355478645161292
   stages:
     distribution: constant
     value: 5
@@ -49,13 +66,13 @@ parameters:
     value: false
   train_bn:
     distribution: constant
-    value: false
+    value: true
   unfreeze_per_step:
-    distribution: int_uniform
-    # value: 13
-    min: 10
-    max: 16
-  weight_decay:
     distribution: constant
-    value: 3.444342571395491e-05
+    value: 18
+  weight_decay:
+    distribution: log_uniform
+    # value: 1.0e-4
+    min: -11.512925465
+    max: -6.907755279
 program: train.py

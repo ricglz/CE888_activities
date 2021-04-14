@@ -1,3 +1,4 @@
+name: 'Efficientnet TTA sweep - 2'
 method: grid
 metric:
   goal: maximize
@@ -5,51 +6,26 @@ metric:
   target: 0.92
 parameters:
   amount:
-    distribution: categorical
-    values:
-      - 1
-      - 2
-      - 3
-      - 4
-      - 5
-      - 6
+    distribution: constant
+    value: 2
   auto_augment:
     distribution: constant
     value: true
   checkpoint_path:
     distribution: constant
-    value: best_rexnet_2.ckpt
+    value: best_efficientnet.ckpt
   magnitude:
-    distribution: categorical
-    values:
-      - 0
-      - 1
-      - 2
-      - 3
-      - 4
-      - 5
-      - 6
-      - 7
-      - 8
-      - 9
+    distribution: constant
+    value: 1
   model_name:
     distribution: constant
-    value: rexnet_200
+    value: tf_efficientnet_b4
   probability:
-    distribution: categorical
-    values:
-      - 0.1
-      - 0.2
-      - 0.3
-      - 0.4
-      - 0.5
-      - 0.6
-      - 0.7
-      - 0.8
-      - 0.9
-      - 1
+    distribution: constant
+    value: 0.1
   tta:
     distribution: categorical
+    # value: 2
     values:
       - 2
       - 3
