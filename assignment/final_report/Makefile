@@ -15,10 +15,10 @@ FLAGS_PDF = --template=template.latex \
 all: pdf
 
 latex:
-	pandoc -o $(OUTPUT)/proposal.latex $(FLAGS) $(FLAGS_PDF) $(FILES)
+	pandoc -o $(OUTPUT)/paper.latex $(FLAGS) $(FLAGS_PDF) $(FILES)
 
 pdf:
-	pandoc -o $(OUTPUT)/proposal.pdf $(FLAGS) $(FLAGS_PDF) $(FILES)
+	pandoc -o $(OUTPUT)/paper.pdf $(FLAGS) $(FLAGS_PDF) $(FILES)
 
 clean:
 	rm build/*
