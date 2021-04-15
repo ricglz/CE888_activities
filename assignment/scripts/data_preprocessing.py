@@ -1,6 +1,6 @@
 """Module for preprocess the dataset"""
 from glob import glob
-from os import path, mkdir, remove
+from os import listdir, mkdir, path, remove, system
 from pathlib import Path
 from shutil import move
 
@@ -13,6 +13,13 @@ import torchvision.transforms as T
 import torchvision.utils as t_utils
 from pytorch_lightning import seed_everything
 
+from utils import unzip_file
+
+try:
+    from kaggleDownloader import get_dataset
+except ImportError:
+    pass
+
 data_path = './Flame'
 
 classes = ['Fire', 'No_Fire']
@@ -20,6 +27,38 @@ training_path = path.join(data_path, 'Training')
 test_path = path.join(data_path, 'Test')
 resize = T.Resize((224, 224))
 validation_path = path.join(data_path, 'Validation')
+
+def download_kaggle():
+    '''
+    Downloads the kaggle fire dataset:
+    https://www.kaggle.com/phylake1337/fire-dataset
+    '''
+    if get_dataset is None:
+        return
+    get_dataset('kaggle datasets download -d phylake1337/fire-dataset')
+    transforms = T.Compose([resize, T.ToTensor()])
+    extra_data = ImageFolder('/content/fire_dataset', transforms)
+    for index, (img, label) in enumerate(tqdm(extra_data)):
+        save_image(img, label, index, 'extra_dataset')
+
+def download_dunnings():
+    '''
+    Downloads the dunnings fire dataset:
+    https://collections.durham.ac.uk/downloads/r2d217qp536
+    '''
+    system(
+        'curl -Lk https://collections.durham.ac.uk/downloads/r2d217qp536 > extra_dataset.zip'
+    )
+    unzip_file('./extra_dataset.zip', '.')
+    extra_training_data_path = '/content/fire-dataset-dunnings/images-224x224/train'
+    class_mappings = [('fire', 'Fire'), ('nofire', 'No_Fire')]
+    for old_class, new_class in tqdm(class_mappings):
+        old_path = path.join(extra_training_data_path, old_class)
+        new_path = path.join(training_path, new_class)
+        for filename in listdir(old_path):
+            old_file_path = path.join(old_path, filename)
+            new_file_path = path.join(new_path, filename)
+            move(old_file_path, new_file_path)
 
 def save_image(img, label: str, index: int, prefix: str):
     klass = classes[label]
@@ -107,11 +146,13 @@ def count_dataset(dir_path: str):
 
 def main():
     seed_everything(42)
-    # resize_dataset(training_path)
-    # resize_dataset(test_path)
-    # clear_balanced()
-    # balance_dataset()
-    # split_training_dataset()
+    resize_dataset(training_path)
+    resize_dataset(test_path)
+    download_kaggle()
+    download_dunnings()
+    clear_balanced()
+    balance_dataset()
+    split_training_dataset()
     half_the_data()
     count_dataset(training_path)
 
