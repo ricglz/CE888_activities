@@ -11,32 +11,19 @@
 \documentclass[10pt,journal,compsoc]{IEEEtran}
 
 % *** CITATION PACKAGES ***
-%
-% normal IEEE
 \usepackage{cite}
 
 % *** GRAPHICS RELATED PACKAGES ***
-%
-\usepackage{graphicx,caption}
-
-% *** MATH PACKAGES ***
-% \usepackage{amsmath}
+\usepackage{graphicx,subcaption}
+\graphicspath{{./img}}
+\DeclareGraphicsExtensions{.pdf,.jpeg,.png}
 
 % *** ALIGNMENT PACKAGES ***
-%
-\usepackage{float}
-\usepackage{array}
-
-% *** SUBFIGURE PACKAGES ***
-\usepackage[caption=false,font=footnotesize]{subfig}
-% The latest version and documentation of subfig.sty can be obtained at:
-% http://www.ctan.org/pkg/subfig
+\usepackage{float, array}
 
 % *** PDF, URL AND HYPERLINK PACKAGES ***
-%
-\usepackage[unicode=true,breaklinks]{hyperref}
+\usepackage[unicode=true,breaklinks,hidelinks]{hyperref}
 \urlstyle{same}
-
 \usepackage{csquotes}
 
 % For tables
@@ -89,8 +76,8 @@
 \author{Ricardo~Gonzalez, 2003297}
 
 % The paper headers
-\markboth{Journal of \LaTeX\ Class Files,~Vol.~14, No.~8, August~2015}%
-{Shell \MakeLowercase{\textit{et al.}}: Bare Demo of IEEEtran.cls for Computer Society Journals}
+% \markboth{Journal of \LaTeX\ Class Files,~Vol.~14, No.~8, August~2015}%
+% {Shell \MakeLowercase{\textit{et al.}}: Bare Demo of IEEEtran.cls for Computer Society Journals}
 
 % for Computer Society papers, we must declare the abstract and index terms
 % PRIOR to the title within the \IEEEtitleabstractindextext IEEEtran
@@ -149,3 +136,4 @@ $body$
 % (used to reserve space for the reference number labels box)
 \bibliographystyle{IEEEtran}
 \bibliography{bibliography}
+\end{document}
