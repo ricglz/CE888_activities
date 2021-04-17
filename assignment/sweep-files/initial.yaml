@@ -39,8 +39,9 @@ parameters:
   lr:
     distribution: categorical
     values:
-      - 0.001
-      - 0.0001
+      - 1.0e-2
+      - 1.0e-3
+      - 1.0e-4
   max_momentum:
     distribution: categorical
     values:
@@ -58,6 +59,7 @@ parameters:
   pct_start:
     distribution: categorical
     values:
+      - 0.3
       - 0.4
       - 0.5
       - 0.6
