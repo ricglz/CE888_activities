@@ -5,12 +5,15 @@ from pytorch_lightning import LightningModule
 from pytorch_lightning.metrics import Accuracy, F1, MetricCollection
 
 from torch import stack, sigmoid
-from torch.nn import BCEWithLogitsLoss, ModuleDict
+from torch.nn import BCEWithLogitsLoss, CrossEntropyLoss, ModuleDict
+from torch.nn.functional import log_softmax
 from torch.optim import Adam, RMSprop, SGD
 from torch.optim.lr_scheduler import OneCycleLR
 import torchvision.transforms as T
 
 from timm import create_model
+from timm.data import Mixup
+from timm.loss import SoftTargetCrossEntropy
 
 from auto_augment import AutoAugment
 from callbacks import Freezer
@@ -21,16 +24,32 @@ class PretrainedModel(LightningModule):
         super().__init__()
 
         self.save_hyperparameters(hparams)
-        self.base = create_model(
-            self.hparams.model_name,
-            pretrained=True,
-            num_classes=1,
-            drop_rate=self.hparams.drop_rate
-        )
 
+        if hparams.mixup:
+            self.base = create_model(
+                self.hparams.model_name,
+                pretrained=True,
+                num_classes=2,
+                drop_rate=self.hparams.drop_rate
+            )
+
+            self.mixup = Mixup(hparams.alpha, num_classes=2)
+            self.train_criterion = SoftTargetCrossEntropy()
+            self.val_criterion = CrossEntropyLoss()
+            self.activation = log_softmax
+        else:
+            self.base = create_model(
+                self.hparams.model_name,
+                pretrained=True,
+                num_classes=1,
+                drop_rate=self.hparams.drop_rate
+            )
+
+            self.train_criterion = BCEWithLogitsLoss()
+            self.val_criterion = self.train_criterion
+            self.activation = sigmoid
         self.metrics = self.build_metrics()
         self.transform = self.build_transforms()
-        self.criterion = BCEWithLogitsLoss()
 
     def build_transforms(self):
         hparams = self.hparams
@@ -79,7 +98,7 @@ class PretrainedModel(LightningModule):
 
     def forward(self, x, tta = 0):
         if tta == 0:
-            return self.base(x).squeeze(-1)
+            return self.base(x)
         y_hat_stack = stack([self(self.transform(x)) for _ in range(tta)])
         return y_hat_stack.mean(dim=0)
 
@@ -117,17 +136,21 @@ class PretrainedModel(LightningModule):
         return self.metrics[f'{dataset}_metrics']
 
     def _update_metrics(self, y_hat, y, dataset):
-        proba = sigmoid(y_hat)
+        proba = self.activation(y_hat)
         self._get_dataset_metrics(dataset).update(proba, y)
 
     def _on_step(self, batch, dataset):
         x, y = batch
-        if dataset == 'train' and self.hparams.mixup and self.hparams.alpha > 0:
-            gamma = random.beta(self.hparams.alpha, self.hparams.alpha)
-            x, y = mixup(x, y, gamma)
+        is_train_dataset = dataset == 'train'
+        if is_train_dataset and self.hparams.mixup:
+            x, y = self.mixup(x, y)
         tta = self.hparams.tta if dataset == 'test' else 0
         y_hat = self(x, tta)
-        loss = self.criterion(y_hat, y.float())
+        if not self.hparams.mixup:
+            y_hat = y_hat.squeeze(-1)
+        criterion = self.train_criterion if is_train_dataset \
+                                         else self.val_criterion
+        loss = criterion(y_hat, y.float())
         self._update_metrics(y_hat, batch[1], dataset)
         self.log(f'{dataset}_loss', loss, prog_bar=True)
         return loss
