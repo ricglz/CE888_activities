@@ -7,7 +7,6 @@ from pytorch_lightning.metrics.functional import to_categorical
 
 from torch import stack, sigmoid
 from torch.nn import BCEWithLogitsLoss, ModuleDict
-from torch.nn.functional import log_softmax
 from torch.optim import Adam, RMSprop, SGD
 from torch.optim.lr_scheduler import OneCycleLR
 import torchvision.transforms as T
@@ -32,8 +31,6 @@ class PretrainedModel(LightningModule):
             drop_rate=self.hparams.drop_rate
         )
 
-        self.train_criterion = CrossEntropyLoss() if self.hparams.mixup else BCEWithLogitsLoss()
-        self.val_criterion = BCEWithLogitsLoss()
         self.metrics = self.build_metrics()
         self.transform = self.build_transforms()
         self.mixup = Mixup(self.hparams.alpha, num_classes=2)
@@ -123,10 +120,7 @@ class PretrainedModel(LightningModule):
         return self.metrics[f'{dataset}_metrics']
 
     def _update_metrics(self, y_hat, y, dataset):
-        train_mixup = isinstance(self.train_criterion, CrossEntropyLoss)
-        activation = log_softmax if dataset == 'train' and train_mixup \
-                                 else sigmoid
-        proba = activation(y_hat)
+        proba = sigmoid(y_hat)
         self._get_dataset_metrics(dataset).update(proba, y)
 
     def _on_step(self, batch, dataset):
