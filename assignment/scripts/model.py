@@ -30,6 +30,7 @@ class PretrainedModel(LightningModule):
 
         self.metrics = self.build_metrics()
         self.transform = self.build_transforms()
+        self.criterion = BCEWithLogitsLoss()
 
     def build_transforms(self):
         hparams = self.hparams
@@ -126,10 +127,7 @@ class PretrainedModel(LightningModule):
             x, y = mixup(x, y, gamma)
         tta = self.hparams.tta if dataset == 'test' else 0
         y_hat = self(x, tta)
-        if dataset == 'train':
-            loss = self.train_criterion(to_categorical(y_hat), y.float())
-        else:
-            loss = self.val_criterion(y_hat, y.float())
+        loss = self.criterion(y_hat, y.float())
         self._update_metrics(y_hat, batch[1], dataset)
         self.log(f'{dataset}_loss', loss, prog_bar=True)
         return loss
