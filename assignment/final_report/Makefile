@@ -1,6 +1,9 @@
 FILES = input/introduction.md \
 	input/background.md \
-	input/methods.md \
+	input/dataset.md \
+	input/model.md \
+	input/training.md \
+	input/tuning.md \
 	input/results.md \
 	input/conclusion.md
 
