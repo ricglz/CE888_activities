@@ -3,13 +3,15 @@ from argparse import ArgumentParser
 
 from pytorch_lightning import LightningModule
 from pytorch_lightning.metrics import Accuracy, F1, MetricCollection
-from timm import create_model
 
 from torch import stack, sigmoid
 from torch.nn import BCEWithLogitsLoss, ModuleDict
 from torch.optim import Adam, RMSprop, SGD
 from torch.optim.lr_scheduler import OneCycleLR
 import torchvision.transforms as T
+
+from timm import create_model
+from timm.data import Mixup
 
 from numpy import random
 
@@ -32,6 +34,7 @@ class PretrainedModel(LightningModule):
         self.criterion = BCEWithLogitsLoss()
         self.metrics = self.build_metrics()
         self.transform = self.build_transforms()
+        self.mixup = Mixup(self.hparams.alpha, num_classes=2)
 
     def build_transforms(self):
         hparams = self.hparams
@@ -124,8 +127,9 @@ class PretrainedModel(LightningModule):
     def _on_step(self, batch, dataset):
         x, y = batch
         if dataset == 'train' and self.hparams.mixup and self.hparams.alpha > 0:
-            gamma = random.beta(self.hparams.alpha, self.hparams.alpha)
-            x, y = mixup(x, y, gamma)
+            # gamma = random.beta(self.hparams.alpha, self.hparams.alpha)
+            # x, y = mixup(x, y, gamma)
+            x, y = self.mixup(x, y)
         tta = self.hparams.tta if dataset == 'test' else 0
         y_hat = self(x, tta)
         loss = self.criterion(y_hat, y.float())
