@@ -3,6 +3,7 @@ from argparse import ArgumentParser
 
 from pytorch_lightning import LightningModule
 from pytorch_lightning.metrics import Accuracy, F1, MetricCollection
+from pytorch_lightning.metrics.functional import to_categorical
 
 from torch import stack, sigmoid
 from torch.nn import BCEWithLogitsLoss, ModuleDict
@@ -14,8 +15,6 @@ import torchvision.transforms as T
 from timm import create_model
 from timm.data import Mixup
 from timm.loss import SoftTargetCrossEntropy as CrossEntropyLoss
-
-from numpy import random
 
 from auto_augment import AutoAugment
 from callbacks import Freezer
@@ -138,7 +137,10 @@ class PretrainedModel(LightningModule):
             x, y = self.mixup(x, y)
         tta = self.hparams.tta if dataset == 'test' else 0
         y_hat = self(x, tta)
-        loss = self.criterion(y_hat, y.float())
+        if dataset == 'train':
+            loss = self.train_criterion(to_categorical(y_hat), y.float())
+        else:
+            loss = self.val_criterion(y_hat, y.float())
         self._update_metrics(y_hat, batch[1], dataset)
         self.log(f'{dataset}_loss', loss, prog_bar=True)
         return loss
