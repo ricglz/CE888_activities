@@ -11,33 +11,19 @@
 \documentclass[10pt,journal,compsoc]{IEEEtran}
 
 % *** CITATION PACKAGES ***
-%
-% normal IEEE
-\usepackage[style=ieee]{biblatex}
-\addbibresource{./bibliography.bib}
+\usepackage{cite}
 
 % *** GRAPHICS RELATED PACKAGES ***
-%
-\usepackage{graphicx,caption}
-
-% *** MATH PACKAGES ***
-% \usepackage{amsmath}
+\usepackage{graphicx,subcaption}
+\graphicspath{{./img}}
+\DeclareGraphicsExtensions{.pdf,.jpeg,.png}
 
 % *** ALIGNMENT PACKAGES ***
-%
-\usepackage{float}
-\usepackage{array}
-
-% *** SUBFIGURE PACKAGES ***
-\usepackage[caption=false,font=footnotesize]{subfig}
-% The latest version and documentation of subfig.sty can be obtained at:
-% http://www.ctan.org/pkg/subfig
+\usepackage{float, array}
 
 % *** PDF, URL AND HYPERLINK PACKAGES ***
-%
-\usepackage[unicode=true,breaklinks]{hyperref}
+\usepackage[unicode=true,breaklinks,hidelinks]{hyperref}
 \urlstyle{same}
-
 \usepackage{csquotes}
 
 % For tables
@@ -90,8 +76,8 @@
 \author{Ricardo~Gonzalez, 2003297}
 
 % The paper headers
-\markboth{Journal of \LaTeX\ Class Files,~Vol.~14, No.~8, August~2015}%
-{Shell \MakeLowercase{\textit{et al.}}: Bare Demo of IEEEtran.cls for Computer Society Journals}
+% \markboth{Journal of \LaTeX\ Class Files,~Vol.~14, No.~8, August~2015}%
+% {Shell \MakeLowercase{\textit{et al.}}: Bare Demo of IEEEtran.cls for Computer Society Journals}
 
 % for Computer Society papers, we must declare the abstract and index terms
 % PRIOR to the title within the \IEEEtitleabstractindextext IEEEtran
@@ -178,8 +164,22 @@ less amount of epochs to be trained.
 \section{Background / Literature
 Review}\label{background-literature-review}}
 
+\hypertarget{mixed-precision-training}{%
+\subsection{Mixed-precision training}\label{mixed-precision-training}}
+
+One of the current problems that people are facing nowadays with DL is
+the amount of resources that it takes to train a model. Either because
+the architecture has a lot of parameters and takes a lot of memory of
+the GPU, or because it takes a lot of time to be trained due to the
+computational power it needs. To solve this problem
+\cite{micikevicius2018} proposed what is known as mixed-precision
+training, where instead of use the full-precision number of 8 bytes, it
+would use the 4 byte format. This led to a reduction of the amount of
+memory it took to train the model, in addition to a speedup in the time
+that the model took to be trained.
+
 \hypertarget{data-augmentation}{%
-\section{Data Augmentation}\label{data-augmentation}}
+\subsection{Data Augmentation}\label{data-augmentation}}
 
 Data Augmentation is a technique that improves the generalization of the
 network, this is done by performing manipulation of the data, being in
@@ -192,19 +192,19 @@ as it reduces the changes that the same batch have the same data each
 epoch \cite{perez2017}.
 
 \hypertarget{autoaugment}{%
-\subsection{AutoAugment}\label{autoaugment}}
+\subsubsection{AutoAugment}\label{autoaugment}}
 
 Nevertheless, one limitation this technique has its effectiveness
 depends on the augmentations done over the data and which will be its
 correct parameters, mainly its magnitude and probability. A solution of
-this limitation is proposed by \textcite{cubuk2019} who created a
-procedure called \emph{AutoAugment} that created a search space
-consisting of policy which consisted of sub-policies that decide which
-augmentation to do and which are its parameters. This resulted in an
-improvement of the previous state-of-the-art models.
+this limitation is proposed by \cite{cubuk2019} who created a procedure
+called \emph{AutoAugment} that created a search space consisting of
+policy which consisted of sub-policies that decide which augmentation to
+do and which are its parameters. This resulted in an improvement of the
+previous state-of-the-art models.
 
 \hypertarget{test-time-augmentation}{%
-\subsection{Test Time Augmentation}\label{test-time-augmentation}}
+\subsubsection{Test Time Augmentation}\label{test-time-augmentation}}
 
 Even though, data augmentation is commonly used only for the training
 phase it also has a purpose during the testing phase. This technique is
@@ -213,36 +213,193 @@ passed as an input for the model n times to result in a total of n
 outputs. With these outputs, then is performed a merge operation which
 normally is to perform a mean between all the outputs obtained. This
 merge result is then used to obtain the desired test metrics
-\cite{kim2020}
-
-\hypertarget{mixed-precision-training}{%
-\section{Mixed-precision training}\label{mixed-precision-training}}
-
-One of the current problems that people are facing nowadays with DL is
-the amount of resources that it takes to train a model. Either because
-the architecture has a lot of parameters and takes a lot of memory of
-the GPU, or because it takes a lot of time to be trained due to the
-computational power it needs. To solve this problem
-\textcite{micikevicius2018} proposed what is known as mixed-precision
-training, where instead of use the full-precision number of 8 bytes, it
-would use the 4 byte format. This led to a reduction of the amount of
-memory it took to train the model, in addition to a speedup in the time
-that the model took to be trained.
+\cite{kim2020}.
 
 \hypertarget{mixup}{%
-\section{Mixup}\label{mixup}}
+\subsection{Mixup}\label{mixup}}
 
-Is a technique that was proposed by \textcite{zhang2018} that was aimed
-to help in the stabilization of adversarial networks in generative
-model, nevertheless it has found success also in classification tasks.
-The technique consists of mixing both the data and labels of elements in
-the batch, resulting in an overall generalization of how it would look
-the distribution of the data of two different elements of the same or
-different class. An example of the result of mixup can be seen in
+\begin{figure}
+\centering
+\subcaptionbox{Before Mixup}{\includegraphics[width=0.2\textwidth]{img/before_mixup}}%
+\hfill
+\subcaptionbox{After Mixup}{\includegraphics[width=0.2\textwidth]{img/after_mixup}}%
+\caption{Example of transformation of an image when using mixup}
+\label{fig:mixup}
+\end{figure}
+
+Is a technique that was proposed by \cite{zhang2018} that was aimed to
+help in the stabilization of adversarial networks in generative model,
+nevertheless it has found success also in classification tasks. The
+technique consists of mixing both the data and labels of elements in the
+batch, resulting in an overall generalization of how it would look the
+distribution of the data of two different elements of the same or
+different class. An example of the result of mixup can be seen in figure
 \ref{fig:mixup}.
 
-\hypertarget{methods}{%
-\section{Methods}\label{methods}}
+\hypertarget{transfer-learning}{%
+\subsection{Transfer learning}\label{transfer-learning}}
+
+As said by \cite{torrey2010} ``Transfer learning is the improvement of
+learning in a new task through the transfer of knowledge from a related
+task that has already been learned''. This technique helps in reducing
+the amount of computational time to achieve the same or better accuracy.
+By using the weights of a model with the same architecture trained for
+another task, the model will use that prior knowledge to learn this new
+task faster, this has been proved by the examples of \cite{shao2018}
+
+\hypertarget{onecyclelr}{%
+\subsection{OneCycleLR}\label{onecyclelr}}
+
+\begin{figure}
+\centering
+\includegraphics[width=0.5\textwidth,height=\textheight]{img/one_cycle_lr}
+\caption{Behavior of the OneCycleLR}
+\end{figure}
+
+\hypertarget{methodology}{%
+\section{Methodology}\label{methodology}}
+
+\hypertarget{dataset}{%
+\subsection{Dataset}\label{dataset}}
+
+The dataset used was a merge between the datasets done by
+\cite{Flame2020}, \cite{saied2020} and \cite{dunnings18}. The code to
+perform the same preprocessing is fully available on Github
+\footnote{\url{https://github.com/ricglz/CE888_activities/blob/main/assignment/scripts/data_preprocessing.py}}.
+
+\hypertarget{flame-dataset}{%
+\subsubsection{FLAME dataset}\label{flame-dataset}}
+
+The FLAME dataset consists of 47,992 images that are labeled as having
+fire or not. 39,375 of the total amount of images are for
+training/validation. As can be seen at \ref{tab:1} the
+training/validation set, the labels are skewed towards the class with
+fire. These images were obtained by the researchers by extracting the
+frames of videos recorded by drones of forest areas \cite{Flame2020}.
+
+\begin{table}
+\centering
+\begin{tabular}{|l|c|c|r|}
+\toprule
+Dataset & Fire & No Fire & Total \\
+\midrule
+Train/Val & 25018 (63.54\%) & 14357 (36.46\%) & 39375 (100.00\%) \\
+Test & 5137 (59.61\%) & 3480 (40.39\%) & 8617 (100.00\%) \\
+\bottomrule
+\end{tabular}
+\caption{FLAME dataset distribution}
+\label{tab:1}
+\end{table}
+
+\hypertarget{kaggles-dataset}{%
+\subsubsection{Kaggle's dataset}\label{kaggles-dataset}}
+
+This dataset was created for a NASA challenge in 2018, the authors
+collected a total of 1,000 images all labeled for training data. These
+images contrary to the previous dataset are from a wide range of
+environments, from urban to rural areas. Nevertheless, the dataset is
+skewed, containing 755 images labeled as fire and the rest as no-fire
+\cite{saied2020}.
+
+\hypertarget{dunnings-dataset}{%
+\subsubsection{Dunning's dataset}\label{dunnings-dataset}}
+
+The dataset was created by Dunning et al.~consisting of 23,408 images
+for training. This dataset was created by merging other datasets and
+material from public videos \cite{dunnings18}. This dataset also has a
+skew over the fire images.
+
+\hypertarget{merging-datasets}{%
+\subsubsection{Merging datasets}\label{merging-datasets}}
+
+All the images of the Kaggle's and Dunning's dataset were merged into
+the training/validation dataset of flame.
+
+\hypertarget{balancing-the-datasets}{%
+\subsubsection{Balancing the datasets}\label{balancing-the-datasets}}
+
+After merging the datasets, the next part of the preprocessing was to
+balance the dataset. Because as mentioned in the prior sections all the
+datasets are skewed towards the label with fire. To balance the dataset,
+we over-sample the no fire class label by performing Data Augmentation
+over random samples of the label. The augmentations done to the dataset
+were brightness, contrast, rotation, horizontal and vertical flip. This
+resulted in a dataset containing 76,726 images with a perfect balance
+between the 2 classes.
+
+\hypertarget{dividing-trainingvalidation}{%
+\subsubsection{Dividing
+Training/Validation}\label{dividing-trainingvalidation}}
+
+The next step would be to split the training/validation dataset into its
+own predefined folders, this would help for always using the same images
+for training and validation, instead of random ones. Therefore the
+dataset
+\footnote{Dataset without halving training: \url{https://drive.google.com/file/d/1uv9vAl55IinuEMXHocnJQUhPbMikuSIX}}
+was split into 80\% training and 20\% validation, will keeping the
+balanced ratios between the labels.
+
+\hypertarget{reducing-the-amount-of-data-in-training}{%
+\subsubsection{Reducing the amount of data in
+training}\label{reducing-the-amount-of-data-in-training}}
+
+With a total of 61,378 images, there was a lot of data to process. If we
+want that the training would be as efficient as possible it was a lot of
+data to handle, in addition that most of images were very similar
+between each other, as these were frames extracted of videos. Then it
+was decided to cut the amount of training data into half, while keeping
+the ratio of classes as before. This was the last step for the creation
+of the dataset
+\footnote{Dataset after halving training: \url{https://drive.google.com/file/d/1RrO4boe9jHUsCY1l9Z55iG1sfydJzubs/view}}
+and resulted in a distribution as it shows in table \ref{tab:2}
+
+\begin{table}
+\centering
+\begin{tabular}{|l|c|c|r|}
+\toprule
+Dataset & Fire & No Fire & Total \\
+\midrule
+Train & 15341 (50\%) & 15341 (50\%) & 30682 (100.00\%) \\
+Validation & 7671 (50\%) & 7671 (50\%) & 15342 (100.00\%) \\
+Test & 5137 (59.61\%) & 3480 (40.39\%) & 8617 (100.00\%) \\
+\bottomrule
+\end{tabular}
+\caption{Dataset distribution after preprocessing}
+\label{tab:2}
+\end{table}
+
+\hypertarget{model}{%
+\subsection{Model}\label{model}}
+
+For this paper we will experiment with different architectures as the
+backbone of our model. Taking in consideration that
+\cite{shamsoshoara2020} used the Xception \cite{chollet2017}
+architecture as the backbone of their model, which could be considered
+as an old architecture it is important to look for newer models which
+are more efficient in terms of time of inference, training and amount of
+parameters.
+
+These conditions reduced the experimentation to the next architectures:
+EfficientNet \cite{tan2020}, ReXNet \cite{han2020}, GENet \cite{lin2020}
+and RepVGG \cite{ding2021}.
+
+With these architectures we will perform transfer learning to be able to
+learn from the current task. It must be mentioned that all of these
+architectures have already been trained and have been shared by
+\cite{timm2019} who have also shared the code to be able to used the
+models.
+
+\hypertarget{training}{%
+\subsection{Training}\label{training}}
+
+The model will be trained using Mixed Precision, in addition of using as
+learning scheduler the OneCycleLR. Also we used a special data loader
+which will create batches containing the same amount of random elements
+of each class. This was possible due to the previous work of
+\cite{galato2019}, who developed a similar sampler for their use case.
+
+\hypertarget{tuning}{%
+\subsection{Tuning}\label{tuning}}
 
 \hypertarget{results}{%
 \section{Results}\label{results}}
@@ -262,5 +419,6 @@ different class. An example of the result of mixup can be seen in
 % <OR> manually copy in the resultant .bbl file
 % set second argument of \begin to the number of references
 % (used to reserve space for the reference number labels box)
-\printbibliography{References}
+\bibliographystyle{IEEEtran}
+\bibliography{bibliography}
 \end{document}
