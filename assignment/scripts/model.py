@@ -37,6 +37,7 @@ class PretrainedModel(LightningModule):
             self.val_criterion = CrossEntropyLoss()
             self.activation = lambda y_val: softmax(y_val, dim=1)
         else:
+            self.hparams.mixup = None
             self.base = create_model(
                 self.hparams.model_name,
                 pretrained=True,
