@@ -24,7 +24,7 @@ class PretrainedModel(LightningModule):
 
         self.save_hyperparameters(hparams)
 
-        if self.hparams.mixup:
+        if hasattr(hparams, 'mixup') and hparams.mixup:
             self.base = create_model(
                 self.hparams.model_name,
                 pretrained=True,
