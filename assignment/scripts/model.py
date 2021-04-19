@@ -138,7 +138,7 @@ class PretrainedModel(LightningModule):
         proba = self.activation(y_hat)
         self._get_dataset_metrics(dataset).update(proba, y)
 
-    def _on_step(self, batch, dataset):
+    def _on_step(self, batch, dataset, dataloader_idx=None):
         x, y = batch
         is_train_dataset = dataset == 'train'
         if is_train_dataset and self.hparams.mixup:
@@ -178,10 +178,12 @@ class PretrainedModel(LightningModule):
     def validation_epoch_end(self, outputs):
         self._on_end_epochs('val')
 
-    def test_step(self, batch, *extra):
-        return self._on_step(batch, 'test')
+    def test_step(self, batch, _, dataloader_idx: int):
+        dataset = 'val' if dataloader_idx == 0 else 'test'
+        return self._on_step(batch, dataset)
 
     def test_epoch_end(self, outputs):
+        self._on_end_epochs('val')
         self._on_end_epochs('test')
 
     @staticmethod
