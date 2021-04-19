@@ -4,6 +4,8 @@
 
 <!-- Background information can also include summaries of important, relevant research studies. The key is to summarize for the reader what is known about the specific research problem before you conducted your analysis. This is accomplished with a general review of the foundational research literature (with citations) that report findings that inform your study's aims and objectives. -->
 
+<!-- TODO: Probably add information related to CNN and/or weight decays -->
+
 ## Mixed-precision training
 
 One of the current problems that people are facing nowadays with DL is the amount of resources that it takes to train a model. Either because the architecture has a lot of parameters and takes a lot of memory of the GPU, or because it takes a lot of time to be trained due to the computational power it needs. To solve this problem \cite{micikevicius2018} proposed what is known as mixed-precision training, where instead of use the full-precision number of 8 bytes, it would use the 4 byte format. This led to a reduction of the amount of memory it took to train the model, in addition to a speedup in the time that the model took to be trained.
@@ -21,6 +23,8 @@ Nevertheless, one limitation this technique has its effectiveness depends on the
 Even though, data augmentation is commonly used only for the training phase it also has a purpose during the testing phase. This technique is called Test Time Augmentation (TTA), in which the input is augmented and passed as an input for the model n times to result in a total of n outputs. With these outputs, then is performed a merge operation which normally is to perform a mean between all the outputs obtained. This merge result is then used to obtain the desired test metrics \cite{kim2020}.
 
 ## Mixup
+
+<!-- TODO: Add information related to the alpha value -->
 
 \begin{figure}
 \centering
