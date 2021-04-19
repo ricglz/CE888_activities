@@ -6,7 +6,7 @@ from pytorch_lightning.metrics import Accuracy, F1, MetricCollection
 
 from torch import stack, sigmoid
 from torch.nn import BCEWithLogitsLoss, CrossEntropyLoss, ModuleDict
-from torch.nn.functional import log_softmax
+from torch.nn.functional import softmax
 from torch.optim import Adam, RMSprop, SGD
 from torch.optim.lr_scheduler import OneCycleLR
 import torchvision.transforms as T
@@ -17,7 +17,6 @@ from timm.loss import SoftTargetCrossEntropy
 
 from auto_augment import AutoAugment
 from callbacks import Freezer
-from mixup import mixup
 
 class PretrainedModel(LightningModule):
     def __init__(self, hparams):
@@ -36,7 +35,7 @@ class PretrainedModel(LightningModule):
             self.mixup = Mixup(hparams.alpha, num_classes=2)
             self.train_criterion = SoftTargetCrossEntropy()
             self.val_criterion = CrossEntropyLoss()
-            self.activation = log_softmax
+            self.activation = lambda y_val: softmax(y_val, dim=1)
         else:
             self.base = create_model(
                 self.hparams.model_name,

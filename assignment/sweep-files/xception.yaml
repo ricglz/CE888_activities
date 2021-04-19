@@ -1,4 +1,4 @@
-method: bayes
+method: random
 metric:
   goal: maximize
   name: test_score
@@ -9,31 +9,31 @@ parameters:
     value: linear
   base_momentum:
     distribution: uniform
-    min: 0.725
     max: 0.81
+    min: 0.735
   div_factor:
     distribution: uniform
-    min: 50
-    max: 68
+    max: 64.78
+    min: 54
   drop_rate:
     distribution: uniform
-    min: 0.35
-    max: 0.54
+    max: 0.4658
+    min: 0.394
   epochs:
     distribution: constant
     value: 5
   final_div_factor:
     distribution: uniform
-    min: 16000
-    max: 30000
+    max: 28860
+    min: 16280
   lr:
-    distribution: log_uniform
-    min: -7.6009024595
-    max: -5.8091429903
+    distribution: uniform
+    max: 2.472e-3
+    min: 6.3e-4
   max_momentum:
     distribution: uniform
+    max: 0.925
     min: 0.875
-    max: 0.94
   model_name:
     distribution: constant
     value: xception
@@ -42,8 +42,8 @@ parameters:
     value: adam
   pct_start:
     distribution: uniform
+    max: 0.3953
     min: 0.35
-    max: 0.45
   stages:
     distribution: constant
     value: 5
@@ -52,10 +52,10 @@ parameters:
     value: true
   unfreeze_per_step:
     distribution: int_uniform
-    min: 23
-    max: 29
+    max: 31
+    min: 27
   weight_decay:
-    distribution: log_uniform
-    min: -9.9034875525
-    max: -7.6009024595
+    distribution: uniform
+    max: 1.923e-4
+    min: 9.339e-5
 program: train.py
