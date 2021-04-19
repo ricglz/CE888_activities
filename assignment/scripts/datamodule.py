@@ -51,6 +51,7 @@ class FlameDataModule(LightningDataModule):
 
     def setup(self, stage=None):
         self.train_ds = self.create_dataset('Training', self.train_transforms)
+        self.val_ds = self.create_dataset('Validation', self.transforms)
         self.test_ds = self.create_dataset('Test', self.transforms)
 
     def _general_dataloader(self, dataset, **kwargs):
@@ -65,7 +66,7 @@ class FlameDataModule(LightningDataModule):
         # return loader
 
     def val_dataloader(self):
-        return self._general_dataloader(self.test_ds)
+        return self._general_dataloader(self.val_ds), self._general_dataloader(self.test_ds)
 
     def test_dataloader(self):
         return self._general_dataloader(self.test_ds)

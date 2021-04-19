@@ -172,7 +172,7 @@ class PretrainedModel(LightningModule):
     def training_epoch_end(self, outputs):
         self._on_end_epochs('train')
 
-    def validation_step(self, batch, _batch_idx):
+    def validation_step(self, batch, _batch_idx, _dataloader_idx):
         return self._on_step(batch, 'val')
 
     def validation_epoch_end(self, outputs):
