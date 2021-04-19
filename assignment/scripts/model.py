@@ -150,7 +150,9 @@ class PretrainedModel(LightningModule):
             y_hat = y_hat.squeeze(-1)
         criterion = self.train_criterion if is_train_dataset \
                                          else self.val_criterion
-        loss = criterion(y_hat, y.float())
+        if not isinstance(criterion, CrossEntropyLoss):
+            y = y.float()
+        loss = criterion(y_hat, y)
         self._update_metrics(y_hat, batch[1], dataset)
         self.log(f'{dataset}_loss', loss, prog_bar=True)
         return loss
