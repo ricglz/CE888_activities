@@ -66,10 +66,10 @@ class FlameDataModule(LightningDataModule):
         # return loader
 
     def val_dataloader(self):
-        return self._general_dataloader(self.val_ds), self._general_dataloader(self.test_ds)
+        return self._general_dataloader(self.test_ds)
 
     def test_dataloader(self):
-        return self._general_dataloader(self.test_ds)
+        return self._general_dataloader(self.val_ds), self._general_dataloader(self.test_ds)
 
     @staticmethod
     def add_argparse_args(parent_parser):
