@@ -10,26 +10,26 @@ parameters:
   base_momentum:
     distribution: uniform
     max: 0.81
-    min: 0.735
+    min: 0.7367
   div_factor:
     distribution: uniform
     max: 64.78
     min: 54
   drop_rate:
     distribution: uniform
-    max: 0.4658
+    max: 0.4647
     min: 0.394
   epochs:
     distribution: constant
     value: 5
   final_div_factor:
     distribution: uniform
-    max: 28860
-    min: 16280
+    max: 27705.912
+    min: 18346.447
   lr:
     distribution: uniform
-    max: 2.472e-3
-    min: 6.3e-4
+    max: 2.236e-3
+    min: 7.169e-4
   max_momentum:
     distribution: uniform
     max: 0.925
@@ -57,5 +57,5 @@ parameters:
   weight_decay:
     distribution: uniform
     max: 1.923e-4
-    min: 9.339e-5
+    min: 1.439e-4
 program: train.py
