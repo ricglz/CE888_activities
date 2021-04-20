@@ -43,11 +43,8 @@ parameters:
     distribution: constant
     value: rexnet_200
   optimizer:
-    distribution: categorical
-    values:
-      - adam
-      - sgd
-      - rmsprop
+    distribution: constant
+    value: rmsprop
   pct_start:
     distribution: uniform
     min: 0.3

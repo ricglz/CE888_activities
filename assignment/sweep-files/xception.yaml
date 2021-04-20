@@ -28,7 +28,7 @@ parameters:
     min: 19518.034
   lr:
     distribution: uniform
-    max: 2.138e-3
+    max: 1.981e-3
     min: 7.169e-4
   max_momentum:
     distribution: uniform
@@ -53,7 +53,7 @@ parameters:
   unfreeze_per_step:
     distribution: int_uniform
     max: 31
-    min: 27
+    min: 28
   weight_decay:
     distribution: uniform
     max: 1.923e-4
