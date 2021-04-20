@@ -25,10 +25,10 @@ parameters:
   final_div_factor:
     distribution: uniform
     max: 27705.912
-    min: 18346.447
+    min: 19518.034
   lr:
     distribution: uniform
-    max: 2.236e-3
+    max: 2.138e-3
     min: 7.169e-4
   max_momentum:
     distribution: uniform

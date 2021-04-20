@@ -4,77 +4,68 @@ metric:
   name: test_score
   target: 0.92
 parameters:
-  alpha:
-    distribution: constant
-    value: 0
-  amount:
-    distribution: constant
-    value: 0
   anneal_strategy:
-    distribution: constant
-    value: linear
-  auto_augment:
-    distribution: constant
-    value: false
+    distribution: categorical
+    values:
+      - linear
+      - cos
   base_momentum:
+    distribution: uniform
+    min: 0.7
+    max: 0.8
+  checkpoint_path:
     distribution: constant
-    value: 0.75
+    value: best_rexnet.ckpt
   div_factor:
-    distribution: constant
-    value: 125
+    distribution: uniform
+    min: 113
+    max: 137
   drop_rate:
-    distribution: constant
-    value: 0.45
+    distribution: uniform
+    min: 0.35
+    max: 0.55
   epochs:
     distribution: constant
     value: 5
   final_div_factor:
-    distribution: constant
-    value: 50000
+    distribution: uniform
+    min: 45000
+    max: 55000
   lr:
-    distribution: constant
-    value: 0.004119499702902298
+    distribution: log_uniform
+    min: -7.8240460109
+    max: -5.2983173665
   max_momentum:
-    distribution: constant
-    value: 0.86
-  magnitude:
-    distribution: constant
-    value: 0
-  mixup:
-    distribution: constant
-    value: false
+    distribution: uniform
+    min: 0.8
+    max: 0.96
   model_name:
     distribution: constant
     value: rexnet_200
   optimizer:
-    distribution: constant
-    value: adam
+    distribution: categorical
+    values:
+      - adam
+      - sgd
+      - rmsprop
   pct_start:
-    distribution: constant
-    value: 0.4
-  precision:
-    distribution: constant
-    value: 16
-  probability:
-    distribution: constant
-    value: 0
-  seed:
-    distribution: int_uniform
-    min: 0
-    max: 1048576
+    distribution: uniform
+    min: 0.3
+    max: 0.4
   stages:
     distribution: constant
     value: 5
-  three_phase:
-    distribution: constant
-    value: false
   train_bn:
-    distribution: constant
-    value: true
+    distribution: categorical
+    values:
+      - true
+      - false
   unfreeze_per_step:
-    distribution: constant
-    value: 23
+    distribution: int_uniform
+    min: 21
+    max: 25
   weight_decay:
-    distribution: constant
-    value: 2.9333484016517308e-05
-program: train.py
+    distribution: log_uniform
+    min: -13.1223633774
+    max: -8.5171931914
+program: second_train.py
