@@ -4,10 +4,10 @@
 
 \begin{figure}[h]
 \centering
-\subcaptionbox{Train loss \label{fig:train-loss}}{\includegraphics[width=0.49\textwidth]{img/training_loss}}%
+\subcaptionbox{Training loss through steps \label{fig:train-loss}}{\includegraphics[width=0.49\textwidth]{img/training_loss}}%
 \hfill
-\subcaptionbox{Val loss \label{fig:val-loss}}{\includegraphics[width=0.49\textwidth]{img/validation_loss}}%
-\caption{Losses progression in training and validation datasets}
+\subcaptionbox{Validation loss through steps \label{fig:val-loss}}{\includegraphics[width=0.49\textwidth]{img/validation_loss}}%
+\caption{Progression of the loss in training and validation datasets}
 \label{fig:dataset-losses}
 \end{figure}
 
