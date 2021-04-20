@@ -1,8 +1,19 @@
 ---
-abstract: 'Pending abstract'
+abstract: |
+  Deep Learning and Convolutional Neural Networks are currently a popular topic
+  of research, leading to works that attempt to build models that can be used
+  in the world, instead of just being used in research. Nevertheless, there are
+  works that focuses on this but doesn't achieve a good performance, due to the
+  use of inefficient architectures or not applying techniques to improve the
+  training and reduce the resources used. In this work we will increase the
+  accuracy of our baseline model, by using newer architectures and by the use
+  of new techniques such as Mixed-Precision training, Mixup and Transfer
+  Learning. The result of this work were four new models that not only trained
+  in fewer amount of epochs, but also achieve higher accuracy than our baseline.
 keywords:
   - CNN
   - 'Deep Learning'
   - 'Image Classification'
-title: 'Improving Fire Detection with Efficient Training Techniques'
+  - 'Efficient Training'
+title: 'Flurry Flames and the Dataset on Fire'
 ---
