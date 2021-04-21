@@ -2,6 +2,7 @@
 from argparse import ArgumentParser
 from os import path
 from zipfile import ZipFile
+from distutils.util import strtobool
 
 from tqdm import tqdm
 
@@ -10,6 +11,10 @@ try:
     IN_COLAB = True
 except ImportError:
     IN_COLAB = False
+
+class CustomParser(ArgumentParser):
+    def add_bool_argument(self, flag: str):
+        self.add_argument(flag, type=strtobool, nargs='?', const=True, default=False)
 
 def unzip_file(zip_path, dest_path):
     with ZipFile(zip_path, 'r') as zip_file:

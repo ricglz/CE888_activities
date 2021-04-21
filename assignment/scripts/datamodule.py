@@ -1,5 +1,4 @@
 """Contains the datamodule class"""
-from argparse import ArgumentParser
 from multiprocessing import cpu_count
 from os import path
 
@@ -10,7 +9,7 @@ import torchvision.transforms as T
 
 from auto_augment import AutoAugment
 from sampler import BalancedBatchSampler
-from utils import get_data_dir
+from utils import get_data_dir, CustomParser as ArgumentParser
 
 class FlameDataModule(LightningDataModule):
     """Datamodule to handle and prepare the Flame dataset"""
@@ -75,7 +74,7 @@ class FlameDataModule(LightningDataModule):
     def add_argparse_args(parent_parser):
         parser = ArgumentParser(parents=[parent_parser], add_help=False)
         parser.add_argument('--amount', type=int, default=2)
-        parser.add_argument('--auto_augment', type=bool, default=False)
+        parser.add_bool_argument('--auto_augment')
         parser.add_argument('--batch_size', type=int, default=32)
         parser.add_argument('--magnitude', type=int, default=0)
         parser.add_argument('--no_minified', action='store_false')

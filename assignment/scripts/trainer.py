@@ -1,5 +1,4 @@
 """Module containing trainer logic"""
-from argparse import ArgumentParser
 from dataclasses import dataclass
 
 from pytorch_lightning.utilities import xla_device
@@ -9,6 +8,7 @@ import pytorch_lightning as pl
 
 from callbacks import get_checkpoint, Freezer, ProgressBar
 from model import PretrainedModel
+from utils import CustomParser as ArgumentParser
 
 @dataclass
 class Trainer():
@@ -70,7 +70,7 @@ class Trainer():
         parser.add_argument('--fast_dev_run', action='store_true')
         parser.add_argument('--precision', type=int, choices=[16, 32], default=16)
         parser.add_argument('--stages', type=int, default=2)
-        parser.add_argument('--train_bn', type=bool, default=False)
+        parser.add_bool_argument('--train_bn')
         parser.add_argument('--unfreeze_per_step', type=int, default=21)
         parser.add_argument('--gradient_clip', type=float, default=0.0)
         return parser
