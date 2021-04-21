@@ -2,7 +2,7 @@
 from argparse import ArgumentParser
 from os import path
 from zipfile import ZipFile
-from distutils.util import strtobool
+from distutils.util import strtobool as fake_strtobool
 
 from tqdm import tqdm
 
@@ -11,6 +11,8 @@ try:
     IN_COLAB = True
 except ImportError:
     IN_COLAB = False
+
+strtobool = lambda x: bool(fake_strtobool(x))
 
 class CustomParser(ArgumentParser):
     def add_bool_argument(self, flag: str):
