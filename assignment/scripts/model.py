@@ -24,32 +24,39 @@ class PretrainedModel(LightningModule):
 
         self.save_hyperparameters(hparams)
 
-        if hasattr(hparams, 'mixup') and hparams.mixup:
-            self.base = create_model(
-                self.hparams.model_name,
-                pretrained=True,
-                num_classes=2,
-                drop_rate=self.hparams.drop_rate
-            )
-
-            self.mixup = Mixup(hparams.alpha, num_classes=2)
-            self.train_criterion = SoftTargetCrossEntropy()
-            self.val_criterion = CrossEntropyLoss()
-            self.activation = lambda y_val: softmax(y_val, dim=1)
+        if not hasattr(self.hparams, 'mixup'):
+            self.hparams.mixup = False
+        if self.hparams.mixup:
+            self.build_mixup_model()
         else:
-            self.hparams.mixup = None
-            self.base = create_model(
-                self.hparams.model_name,
-                pretrained=True,
-                num_classes=1,
-                drop_rate=self.hparams.drop_rate
-            )
-
-            self.train_criterion = BCEWithLogitsLoss()
-            self.val_criterion = self.train_criterion
-            self.activation = sigmoid
+            self.build_normal_model()
         self.metrics = self.build_metrics()
         self.transform = self.build_transforms()
+
+    def build_mixup_model(self):
+        self.base = create_model(
+            self.hparams.model_name,
+            pretrained=True,
+            num_classes=2,
+            drop_rate=self.hparams.drop_rate
+        )
+
+        self.mixup = Mixup(self.hparams.alpha, num_classes=2)
+        self.train_criterion = SoftTargetCrossEntropy()
+        self.val_criterion = CrossEntropyLoss()
+        self.activation = lambda y_val: softmax(y_val, dim=1)
+
+    def build_normal_model(self):
+        self.base = create_model(
+            self.hparams.model_name,
+            pretrained=True,
+            num_classes=1,
+            drop_rate=self.hparams.drop_rate
+        )
+
+        self.train_criterion = BCEWithLogitsLoss()
+        self.val_criterion = self.train_criterion
+        self.activation = sigmoid
 
     def build_transforms(self):
         hparams = self.hparams
