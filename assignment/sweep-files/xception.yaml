@@ -4,36 +4,43 @@ metric:
   name: test_score
   target: 0.92
 parameters:
+  alpha:
+    distribution: uniform
+    min: 0.5992
+    max: 3.064
   anneal_strategy:
     distribution: constant
     value: linear
   base_momentum:
     distribution: uniform
-    max: 0.81
-    min: 0.7367
+    max: 0.7728
+    min: 0.758
   div_factor:
     distribution: uniform
-    max: 64.78
-    min: 54
+    max: 62.032
+    min: 57.255
   drop_rate:
     distribution: uniform
-    max: 0.4647
-    min: 0.394
+    max: 0.417
+    min: 0.4022
   epochs:
     distribution: constant
     value: 5
   final_div_factor:
     distribution: uniform
-    max: 27705.912
-    min: 19518.034
+    max: 26944.295
+    min: 23864.06
   lr:
     distribution: uniform
-    max: 1.981e-3
-    min: 7.169e-4
+    max: 1.344e-3
+    min: 9.25e-4
   max_momentum:
     distribution: uniform
-    max: 0.925
-    min: 0.875
+    max: 0.9238
+    min: 0.909
+  mixup:
+    distribution: constant
+    value: true
   model_name:
     distribution: constant
     value: xception
@@ -42,8 +49,8 @@ parameters:
     value: adam
   pct_start:
     distribution: uniform
-    max: 0.3953
-    min: 0.35
+    max: 0.3718
+    min: 0.3697
   stages:
     distribution: constant
     value: 5
@@ -52,10 +59,10 @@ parameters:
     value: true
   unfreeze_per_step:
     distribution: int_uniform
-    max: 31
+    max: 29
     min: 28
   weight_decay:
     distribution: uniform
-    max: 1.923e-4
-    min: 1.439e-4
+    max: 1.759e-4
+    min: 1.598e-4
 program: train.py

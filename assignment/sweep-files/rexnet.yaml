@@ -5,40 +5,38 @@ metric:
   target: 0.92
 parameters:
   anneal_strategy:
-    distribution: categorical
-    values:
-      - linear
-      - cos
+    distribution: constant
+    value: linear
   base_momentum:
     distribution: uniform
-    min: 0.7
-    max: 0.8
+    min: 0.7497
+    max: 0.769
   checkpoint_path:
     distribution: constant
     value: best_rexnet.ckpt
   div_factor:
     distribution: uniform
-    min: 113
-    max: 137
+    min: 119.177
+    max: 126.618
   drop_rate:
     distribution: uniform
-    min: 0.35
-    max: 0.55
+    min: 0.3963
+    max: 0.4087
   epochs:
     distribution: constant
     value: 5
   final_div_factor:
     distribution: uniform
-    min: 45000
-    max: 55000
+    min: 48917.43
+    max: 50210.99
   lr:
-    distribution: log_uniform
-    min: -7.8240460109
-    max: -5.2983173665
+    distribution: uniform
+    min: 2.263e-3
+    max: 2.343e-3
   max_momentum:
     distribution: uniform
-    min: 0.8
-    max: 0.96
+    min: 0.9328
+    max: 0.9413
   model_name:
     distribution: constant
     value: rexnet_200
@@ -47,22 +45,23 @@ parameters:
     value: rmsprop
   pct_start:
     distribution: uniform
-    min: 0.3
-    max: 0.4
+    min: 0.3751
+    max: 0.3816
   stages:
-    distribution: constant
-    value: 5
-  train_bn:
     distribution: categorical
     values:
-      - true
-      - false
+      - 1
+      - 2
+      - 3
+  train_bn:
+    distribution: constant
+    value: false
   unfreeze_per_step:
     distribution: int_uniform
     min: 21
-    max: 25
+    max: 24
   weight_decay:
-    distribution: log_uniform
-    min: -13.1223633774
-    max: -8.5171931914
+    distribution: uniform
+    min: 8.942e-4
+    max: 9.585e-4
 program: second_train.py
