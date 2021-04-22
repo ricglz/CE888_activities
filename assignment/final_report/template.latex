@@ -8,7 +8,7 @@
 %% and
 %% http://www.ieee.org/
 
-\documentclass[10pt,journal,compsoc]{IEEEtran}
+\documentclass[conference]{IEEEtran}
 
 % *** CITATION PACKAGES ***
 \usepackage{cite}

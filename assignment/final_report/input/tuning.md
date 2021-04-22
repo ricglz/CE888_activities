@@ -17,20 +17,27 @@ ReXNet & 99.23 & 0.0855 & 99.07 & 0.02632 & 90.68 & 0.2259 \\
 \label{tab:performance}
 \end{table*}
 
+\begin{figure}
+\centering
+\subcaptionbox{Training loss through steps \label{fig:train-loss}}{\includegraphics[width=0.49\textwidth]{img/training_loss}}%
+\hfill
+\subcaptionbox{Validation loss through steps \label{fig:val-loss}}{\includegraphics[width=0.49\textwidth]{img/validation_loss}}%
+\caption{Progression of the loss in training and validation datasets}
+\label{fig:dataset-losses}
+\end{figure}
+
 ## Hyper-parameters tuning
 
-As we have architectures as backbone that have an inference time small enough to be able to iteratively tune the hyper-parameters of the model, it was decided to do it. This was done by using Weight and Biases (wandb) \cite{wandb2020}, which is a tool that allows to log models, its metrics and more important for our case to create _"sweeps"_. These _"sweeps"_ work by defining a search space it allows to train models with different hyper-parameters with one or many machines, as the wandb backend was the one that decided the hyper-parameters to use from the search space, allowing to parallelize the search between several GPUs more easily, leading to faster results. It also allowed to use either grid, random or bayes search, in our case most of the cases random search was enough, but there were cases where it was used a bayes or grid search instead.
+As we have architectures as backbone that have an inference time small enough to be able to iteratively tune the hyper-parameters of the model, it was decided to do it. This was done by using Weight and Biases (wandb) \cite{wandb2020}, which is a tool that allows to log models, their metrics and, more importantly for our case, to create _"sweeps"_. These _"sweeps"_ work by defining a search space that allows training models with different hyper-parameters with one or many machines. In these "sweeps" it allows the user to use either grid, random or bayes search to generate the hyper-parameters to experiment with. In our case most of the time random search was enough, but there were occasions where a bayes or grid search were used instead. The hyper-parameters that were tuned were the following:
 
-The hyper-parameters to be tuned are the following:
-
-* Amount of augmentations to do for tta
+* Amount of augmentations to do for TTA
 * Drop rate
 * Optimizer
 * Optimizer's weight decay
 * Mixup's alpha
 * If BatchNormalizer layers will be trained or not
 * AutoAugment hyper-parameters:
-    * If will use AutoAugment or pre-defined augmentations
+    * If AutoAugment or pre-defined augmentations will used
     * Amount of augmentations per policy
     * Magnitude of augmentations per policy
     * Probability of augmentations

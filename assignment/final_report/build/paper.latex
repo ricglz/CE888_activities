@@ -8,7 +8,7 @@
 %% and
 %% http://www.ieee.org/
 
-\documentclass[10pt,journal,compsoc]{IEEEtran}
+\documentclass[conference]{IEEEtran}
 
 % *** CITATION PACKAGES ***
 \usepackage{cite}
@@ -63,7 +63,8 @@
 % not capitalized unless they are the first or last word of the title.
 % Linebreaks \\ can be used within to get better formatting as desired.
 % Do not put math or special symbols in the title.
-\title{Improving Fire Detection with Efficient Training Techniques}
+\title{Improving Fire Detection with Efficient Deep Learning Training
+Techniques}
 
 % author names and IEEE memberships
 % note positions of commas and nonbreaking spaces ( ~ ) LaTeX will not break
@@ -86,14 +87,25 @@
 % in the abstract or keywords.
 \IEEEtitleabstractindextext{%
 \begin{abstract}
-Pending abstract
+Deep Learning and Convolutional Neural Networks are currently a popular
+topic of research, leading to works that attempt to build models that
+can be used in the world, instead of just being used in research.
+Nevertheless, there are works that focus on this but don't achieve a
+good performance, due to the use of inefficient architectures or not
+applying techniques to improve the training and reduce the resources
+used. In this work we will increase the accuracy of our baseline model,
+with the use of newer architectures and by the use of new techniques
+such as Mixed-Precision training, Mixup and Transfer Learning. The
+result of this work were four new models that not only trained in fewer
+amount of epochs, but also achieve higher accuracy than our baseline.
 \end{abstract}
 
 % Note that keywords are not normally used for peerreview papers.
 \begin{IEEEkeywords}
     CNN;
     Deep Learning;
-    Image Classification\end{IEEEkeywords}}
+    Image Classification;
+    Efficient Training\end{IEEEkeywords}}
 
 % make the title area
 \maketitle
@@ -119,46 +131,48 @@ Pending abstract
 % creates the second title. It will be ignored for other modes.
 \IEEEpeerreviewmaketitle
 
-\IEEEraisesectionheading{\section{Introduction}\label{introduction}}
+\hypertarget{introduction}{%
+\section{Introduction}\label{introduction}}
 
-\IEEEPARstart{N}{owadays} due to the advancements in AI and the
-increasing amount of ecological disasters have led that many researchers
-focused their attention in not only make new advancements in the theory
-of the field, but also propose ways to solve, prevent or detect those
+Nowadays due to the advancements in Artificial Intelligence (AI) and the
+increasing amount of ecological disasters many researchers have focused
+their attention in not only making new advancements in the theory of the
+field, but also by proposing ways to solve, prevent or detect those
 disasters to mitigate the impact that they have \cite{weber2020}.
 
-A natural disaster is researched this way are Wildfires. According to
-\cite{NOAA2020} wildfires produce emissions which are highly
+A natural disaster is researched this way are wildfires. According to
+\cite{NOAA2020}, wildfires produce emissions which are highly
 contaminant, leading to an increase in air pollution not only in the
 area affected by the wildfires, but also close areas near to it.
-Furthermore, the natural fauna and flora are also threatened, by
-consequence that the fire was caused due to human intervention. This is
-explained by \cite{malhi2009}, who uses as an example the Amazon
-Rainforest where the human caused wildfires alongside droughts have
-threatened the Rainforest to reach a possible tipping point, where it
-would become unsustainable unless there is some kind of intervention.
+Furthermore, the natural fauna and flora are also threatened, by fires
+caused from human intervention. This is explained by \cite{malhi2009},
+who uses as an example the Amazon Rainforest, where the human caused
+wildfires alongside droughts and have threatened the Rainforest to a
+possible tipping point, where it could become unsustainable unless there
+is some kind of intervention.
 
-To be able to tackle this problem, researchers have decided to attempt
-the detection of wildfires in their early stages having the examples of
+To tackle this problem, researchers have decided to work in the
+detection of wildfires in their early stages such as in
 \cite{shamsoshoara2020} and \cite{saied2020}, whose work have been
 either proposing CNN models using their own datasets or creating a new
 dataset containing images to create models that can be used to solve the
 problem.
 
 Nevertheless, the models normally are not very accurate, an example of
-this is the one proposed by \cite{shamsoshoara2020} whose proposed model
-achieved 76\%, which shows that is still possible and worth to achieve a
-higher score, specially considering that the architecture used is
-considered an old model, and new and better ones have been published
-since then. In addition to the prior the training process was a very
-simple training process that was primarily based on training through a
-lot of epochs. Thus, new techniques can be used to not only increase the
-accuracy but also reduce the amount of epochs needed to train it.
+this is the one proposed by \cite{shamsoshoara2020} whose model achieved
+76\%, which shows that it is still possible and worth to achieve a
+higher score. Specially considering that the architecture used could be
+seen as old, as new and better ones have been published since then. In
+addition to the prior, the training process was a very simple training
+process that was primarily based on training through a lot of epochs.
+Thus, new techniques can be used to not only increase the accuracy but
+also reduce the amount of epochs needed to train it.
 
-That is why the objective of this research is to propose using new
-architectures, models that can achieve higher accuracy over the same
-test dataset as the one used at \cite{shamsoshoara2020}, while needing
-less amount of epochs to be trained.
+That is why the objective of this research is to present, using new
+architectures and better training techniques, models that can achieve
+higher accuracy over the same test dataset as the one used in
+\cite{shamsoshoara2020}, while needing less amount of epochs to be
+trained.
 
 \hypertarget{background-literature-review}{%
 \section{Background / Literature
@@ -167,14 +181,14 @@ Review}\label{background-literature-review}}
 \hypertarget{mixed-precision-training}{%
 \subsection{Mixed-precision training}\label{mixed-precision-training}}
 
-One of the current problems that people are facing nowadays with DL is
-the amount of resources that it takes to train a model. Either because
-the architecture has a lot of parameters and takes a lot of memory of
-the GPU, or because it takes a lot of time to be trained due to the
-computational power it needs. To solve this problem
+One of the current problems that people are facing nowadays with Deep
+Learning (DL) is the amount of resources that it takes to train a model,
+either because the architecture has a lot of parameters and takes a lot
+of memory of the GPU. Or because it takes a lot of time to be trained
+due to the computational power it needs. To solve this problem,
 \cite{micikevicius2018} proposed what is known as mixed-precision
-training, where instead of use the full-precision number of 8 bytes, it
-would use the 4 byte format. This led to a reduction of the amount of
+training, where instead of using the full-precision number of 8 bytes,
+it would use the 4 byte format. This led to a reduction of the amount of
 memory it took to train the model, in addition to a speedup in the time
 that the model took to be trained.
 
@@ -182,26 +196,28 @@ that the model took to be trained.
 \subsection{Data Augmentation}\label{data-augmentation}}
 
 Data Augmentation is a technique that improves the generalization of the
-network, this is done by performing manipulation of the data, being in
-the case of images techniques such as: shearing, rotating, saturate and
-others \cite{van2001}. This technique is effective because it generates
-new data each time a new epoch is ran. Thus, resulting quite effective
-when learning from an overall small dataset. In addition to the prior,
-it also has been proven effective as it adds randomness to the training
-as it reduces the changes that the same batch have the same data each
-epoch \cite{perez2017}.
+network. This is done by performing manipulation of the data, in the
+case of images, this mean applying techniques such as: shearing,
+rotation, saturation and others \cite{van2001}. This technique is
+effective because it generates new data each time a new epoch is run;
+thus, resulting quite effective when learning from an overall small
+dataset. In addition to the prior, it also has been proven to be
+effective as it adds randomness to the training and it reduces the
+changes that the same batch have the same data each epoch
+\cite{perez2017}.
 
 \hypertarget{autoaugment}{%
 \subsubsection{AutoAugment}\label{autoaugment}}
 
-Nevertheless, one limitation this technique has its effectiveness
-depends on the augmentations done over the data and which will be its
-correct parameters, mainly its magnitude and probability. A solution of
-this limitation is proposed by \cite{cubuk2019} who created a procedure
-called \emph{AutoAugment} that created a search space consisting of
-policy which consisted of sub-policies that decide which augmentation to
-do and which are its parameters. This resulted in an improvement of the
-previous state-of-the-art models.
+Nevertheless, one limitation this technique has is that its
+effectiveness depends on the augmentations done over the data, as well
+as choosing the correct parameters, mainly their magnitude and
+probability. A solution of this limitation is proposed by
+\cite{cubuk2019} who created a procedure called \emph{AutoAugment} that
+created a search space consisting of a policy which consisted of
+sub-policies that decide which augmentation to do and which are their
+parameters. This resulted in an improvement of the previous
+state-of-the-art models.
 
 \hypertarget{test-time-augmentation}{%
 \subsubsection{Test Time Augmentation}\label{test-time-augmentation}}
@@ -210,10 +226,9 @@ Even though, data augmentation is commonly used only for the training
 phase it also has a purpose during the testing phase. This technique is
 called Test Time Augmentation (TTA), in which the input is augmented and
 passed as an input for the model n times to result in a total of n
-outputs. With these outputs, then is performed a merge operation which
-normally is to perform a mean between all the outputs obtained. This
-merge result is then used to obtain the desired test metrics
-\cite{kim2020}.
+outputs. With these outputs, a merge operation is then performed, which
+normally is a mean function. This merge result is then used to obtain
+the desired test metrics \cite{kim2020}.
 
 \hypertarget{mixup}{%
 \subsection{Mixup}\label{mixup}}
@@ -227,13 +242,13 @@ merge result is then used to obtain the desired test metrics
 \label{fig:mixup}
 \end{figure}
 
-Is a technique that was proposed by \cite{zhang2018} that was aimed to
-help in the stabilization of adversarial networks in generative model,
-nevertheless it has found success also in classification tasks. The
+Mixup is a technique that was proposed by \cite{zhang2018}, that aims to
+help in the stabilization of adversarial networks in generative models;
+nevertheless, it has also found success in classification tasks. The
 technique consists of mixing both the data and labels of elements in the
-batch, resulting in an overall generalization of how it would look the
-distribution of the data of two different elements of the same or
-different class. An example of the result of mixup can be seen in figure
+batch, resulting in an overall generalization of how the distribution of
+the data would look for two different elements of the same or different
+class. An example of the result of mixup can be seen in figure
 \ref{fig:mixup}.
 
 \hypertarget{transfer-learning}{%
@@ -245,16 +260,34 @@ task that has already been learned''. This technique helps in reducing
 the amount of computational time to achieve the same or better accuracy.
 By using the weights of a model with the same architecture trained for
 another task, the model will use that prior knowledge to learn this new
-task faster, this has been proved by the examples of \cite{shao2018}
+task faster. This has been proved by the examples of \cite{shao2018}
 
 \hypertarget{onecyclelr}{%
 \subsection{OneCycleLR}\label{onecyclelr}}
 
 \begin{figure}
 \centering
-\includegraphics[width=0.5\textwidth,height=\textheight]{img/one_cycle_lr}
-\caption{Behavior of the OneCycleLR}
+\subcaptionbox{Learning rate behavior}{\includegraphics[width=0.24\textwidth]{img/one_cycle_lr}}%
+\hfill
+\subcaptionbox{Momentum behavior}{\includegraphics[width=0.24\textwidth]{img/one_cycle_momentum}}%
+\caption{Behavior of momentum and LR when using OneCycleLR. Plots done by \cite{gugger2018}}
+\label{fig:one_cycle}
 \end{figure}
+
+Proposed by \cite{smith2018}, OneCycleLR is a scheduler that was created
+to achieve what \cite{smith2018} called as ``Super-Convergence'', where
+the model achieves an improvement of the accuracy in less epochs.
+
+The scheduler, as can be seen at figure \ref{fig:one_cycle}, doesn't
+only consist of modifying the learning rate as most schedulers do, but
+it also modifies the momentum. In the case of the learning rate, it
+starts with an initial value, which will increase by each step until it
+reaches a max value; conventionally this is at the middle of the
+training, but can be at any other point. Then, the learning rate will
+decrease until reaching a value lower than the initial value. In the
+case of the momentum, the behavior is the opposite of the learning rate,
+starting with a very high value, then descending and finally going back
+again to the max value.
 
 \hypertarget{methodology}{%
 \section{Methodology}\label{methodology}}
@@ -272,12 +305,12 @@ perform the same preprocessing is fully available on Github
 
 The FLAME dataset consists of 47,992 images that are labeled as having
 fire or not. 39,375 of the total amount of images are for
-training/validation. As can be seen at \ref{tab:1} the
+training/validation. As can be seen at figure \ref{tab:1}, the
 training/validation set, the labels are skewed towards the class with
 fire. These images were obtained by the researchers by extracting the
 frames of videos recorded by drones of forest areas \cite{Flame2020}.
 
-\begin{table}
+\begin{table}[b]
 \centering
 \begin{tabular}{|l|c|c|r|}
 \toprule
@@ -295,8 +328,8 @@ Test & 5137 (59.61\%) & 3480 (40.39\%) & 8617 (100.00\%) \\
 \subsubsection{Kaggle's dataset}\label{kaggles-dataset}}
 
 This dataset was created for a NASA challenge in 2018, the authors
-collected a total of 1,000 images all labeled for training data. These
-images contrary to the previous dataset are from a wide range of
+collected a total of 1,000 images, all labeled for training data. These
+images, contrary to the previous dataset are from a wide range of
 environments, from urban to rural areas. Nevertheless, the dataset is
 skewed, containing 755 images labeled as fire and the rest as no-fire
 \cite{saied2020}.
@@ -319,37 +352,37 @@ the training/validation dataset of flame.
 \subsubsection{Balancing the datasets}\label{balancing-the-datasets}}
 
 After merging the datasets, the next part of the preprocessing was to
-balance the dataset. Because as mentioned in the prior sections all the
-datasets are skewed towards the label with fire. To balance the dataset,
-we over-sample the no fire class label by performing Data Augmentation
-over random samples of the label. The augmentations done to the dataset
-were brightness, contrast, rotation, horizontal and vertical flip. This
-resulted in a dataset containing 76,726 images with a perfect balance
-between the 2 classes.
+balance the dataset; because, as mentioned in the prior sections, all
+the datasets are skewed towards the label with fire. To balance the
+dataset, we over-sample the no fire class label by performing Data
+Augmentation over random samples of the label. The augmentations done to
+the dataset were brightness, contrast, rotation, horizontal and vertical
+flip. This resulted in a dataset containing 76,726 images with a perfect
+balance between the 2 classes.
 
 \hypertarget{dividing-trainingvalidation}{%
 \subsubsection{Dividing
 Training/Validation}\label{dividing-trainingvalidation}}
 
-The next step would be to split the training/validation dataset into its
-own predefined folders, this would help for always using the same images
-for training and validation, instead of random ones. Therefore the
-dataset
+The next step would be to split the training/validation dataset into
+their own predefined folders, this will help by always using the same
+images for training and validation, instead of random ones. Therefore
+the dataset
 \footnote{Dataset without halving training: \url{https://drive.google.com/file/d/1uv9vAl55IinuEMXHocnJQUhPbMikuSIX}}
-was split into 80\% training and 20\% validation, will keeping the
-balanced ratios between the labels.
+was split into 80\% training and 20\% validation, keeping the balanced
+ratios between the labels.
 
 \hypertarget{reducing-the-amount-of-data-in-training}{%
 \subsubsection{Reducing the amount of data in
 training}\label{reducing-the-amount-of-data-in-training}}
 
 With a total of 61,378 images, there was a lot of data to process. If we
-want that the training would be as efficient as possible it was a lot of
-data to handle, in addition that most of images were very similar
-between each other, as these were frames extracted of videos. Then it
-was decided to cut the amount of training data into half, while keeping
-the ratio of classes as before. This was the last step for the creation
-of the dataset
+want that the training to be as efficient as possible we need to reduce
+the amount of data used for training. As there are a lot of images that
+are very similar between each other, due to being frames extracted from
+videos. Then it was decided to cut the amount of training data into
+half, while keeping the ratio of classes as before. This was the last
+step for the creation of the dataset
 \footnote{Dataset after halving training: \url{https://drive.google.com/file/d/1RrO4boe9jHUsCY1l9Z55iG1sfydJzubs/view}}
 and resulted in a distribution as it shows in table \ref{tab:2}
 
@@ -375,9 +408,9 @@ For this paper we will experiment with different architectures as the
 backbone of our model. Taking in consideration that
 \cite{shamsoshoara2020} used the Xception \cite{chollet2017}
 architecture as the backbone of their model, which could be considered
-as an old architecture it is important to look for newer models which
-are more efficient in terms of time of inference, training and amount of
-parameters.
+an old architecture. Therefore it is important to look for newer models
+which are more efficient in terms of time of inference, training and
+amount of parameters.
 
 These conditions reduced the experimentation to the next architectures:
 EfficientNet \cite{tan2020}, ReXNet \cite{han2020}, GENet \cite{lin2020}
@@ -386,26 +419,239 @@ and RepVGG \cite{ding2021}.
 With these architectures we will perform transfer learning to be able to
 learn from the current task. It must be mentioned that all of these
 architectures have already been trained and have been shared by
-\cite{timm2019} who have also shared the code to be able to used the
-models.
+\cite{timm2019} who have also shared the code to use the models.
 
 \hypertarget{training}{%
 \subsection{Training}\label{training}}
 
-The model will be trained using Mixed Precision, in addition of using as
-learning scheduler the OneCycleLR. Also we used a special data loader
+The model will be trained for 5 epochs using Mixed Precision and
+OneCycleLR as a learning scheduler. Also we used a special data loader
 which will create batches containing the same amount of random elements
 of each class. This was possible due to the previous work of
 \cite{galato2019}, who developed a similar sampler for their use case.
+Also depending of the model, it will be trained using mixup. And
+finally, it must be mentioned that the model that will be obtained at
+the end will be the model that achieves the highest average between
+accuracy and F1 score in the validation dataset.
 
-\hypertarget{tuning}{%
-\subsection{Tuning}\label{tuning}}
+The optimizer for the training will be either SGD, Adam or RMSProp,
+depending of how the tuning of the hyper-parameters turns out.
+Meanwhile, the loss function will be BCEWithLogitsLoss.
+
+In addition the complete code can be found on Github
+\footnote{\url{https://github.com/ricglz/CE888_activities/tree/main/assignment/scripts}},
+where it can be found the scripts used to perform the experiments.
+
+\hypertarget{tta}{%
+\subsubsection{TTA}\label{tta}}
+
+For the test dataset we will use TTA. The merge function that will be
+used is the mean function. Meanwhile, the amount of augmentations to
+perform will depend on the backbone of the model. The augmentations to
+perform will be determined by AutoAugment policies.
+
+\hypertarget{data-augmentation-1}{%
+\subsubsection{Data Augmentation}\label{data-augmentation-1}}
+
+For training the model either custom AutoAugment policies will be used
+or random vertical and horizontal flips, rotations of 45º and
+modifications in the brightness and contrast of the photos.
+
+\hypertarget{fine-tuning}{%
+\subsubsection{Fine-tuning}\label{fine-tuning}}
+
+As part of the training the model is not completely trainable from the
+start. At the start, only the first N layers will be trainable while the
+others will be frozen. At the end of each epoch the next N layers will
+be unfrozen, until either all the layers are now trainable or the
+training has been completed. N will depend of the model, as well as if
+the BatchNormalizer layers will also be trainable or not.
+
+\begin{table*}[t]
+\centering
+\begin{tabular}{|l|c|c|c|c|c|c|}
+\toprule
+& \multicolumn{2}{|c|}{Training} & \multicolumn{2}{|c|}{Validation} & \multicolumn{2}{|c|}{Test}\\
+\cmidrule{2-3} \cmidrule{4-5} \cmidrule{6-7}
+Model & Accuracy (\%) & Loss & Accuracy (\%) & Loss & Accuracy (\%) & Loss \\
+\midrule
+FLAME & 96.79 & 0.0857 & 94.31 & 0.1506 & 76.23 & 0.7414 \\
+GENet & 73.05 & 0.3925 & 99.15 & 0.0749 & 83.17 & 0.3722 \\
+EfficientNet & 97.94 & 0.006275 & 99.62 & 0.0293 & 83.18 & 0.4198 \\
+RepVGG & 98.58 & 0.2313 & 98.74 & 0.1525 & 0.8463 & 0.5854 \\
+ReXNet & 99.23 & 0.0855 & 99.07 & 0.02632 & 90.68 & 0.2259 \\
+\bottomrule
+\end{tabular}
+\caption{Models accuracies and losses in all datasets}
+\label{tab:performance}
+\end{table*}
+
+\begin{figure}
+\centering
+\subcaptionbox{Training loss through steps \label{fig:train-loss}}{\includegraphics[width=0.49\textwidth]{img/training_loss}}%
+\hfill
+\subcaptionbox{Validation loss through steps \label{fig:val-loss}}{\includegraphics[width=0.49\textwidth]{img/validation_loss}}%
+\caption{Progression of the loss in training and validation datasets}
+\label{fig:dataset-losses}
+\end{figure}
+
+\hypertarget{hyper-parameters-tuning}{%
+\subsection{Hyper-parameters tuning}\label{hyper-parameters-tuning}}
+
+As we have architectures as backbone that have an inference time small
+enough to be able to iteratively tune the hyper-parameters of the model,
+it was decided to do it. This was done by using Weight and Biases
+(wandb) \cite{wandb2020}, which is a tool that allows to log models,
+their metrics and, more importantly for our case, to create
+\emph{``sweeps''}. These \emph{``sweeps''} work by defining a search
+space that allows training models with different hyper-parameters with
+one or many machines. In these ``sweeps'' it allows the user to use
+either grid, random or bayes search to generate the hyper-parameters to
+experiment with. In our case most of the time random search was enough,
+but there were occasions where a bayes or grid search were used instead.
+The hyper-parameters that were tuned were the following:
+
+\begin{itemize}
+\tightlist
+\item
+  Amount of augmentations to do for TTA
+\item
+  Drop rate
+\item
+  Optimizer
+\item
+  Optimizer's weight decay
+\item
+  Mixup's alpha
+\item
+  If BatchNormalizer layers will be trained or not
+\item
+  AutoAugment hyper-parameters:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    If AutoAugment or pre-defined augmentations will used
+  \item
+    Amount of augmentations per policy
+  \item
+    Magnitude of augmentations per policy
+  \item
+    Probability of augmentations
+  \end{itemize}
+\item
+  OneCycleLR hyper-parameters:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Anneal strategy to use (linear or cos)
+  \item
+    Min momentum value
+  \item
+    Max momentum value
+  \item
+    Max learning rate value
+  \item
+    Div factor to determine the initial learning rate
+  \item
+    Div factor to determine the minimum learning rate
+  \item
+    When the learning rate will start decreasing
+  \end{itemize}
+\item
+  Fine-tuning hyper-parameters:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    How many layers to unfreeze per epoch
+  \end{itemize}
+\end{itemize}
 
 \hypertarget{results}{%
 \section{Results}\label{results}}
 
+The following results were obtained by using NVidia RTX 2080 gpu for the
+ReXnet model and a GTX 1080 TI for the other.
+
+As we can see in figure \ref{fig:train-loss}, the reduction of the
+training loss seems normal among most of the models, the GENet model
+being the exception. This is because the model was the only one that was
+trained by using mixup. Thus, even though it has overall a high loss
+through all the training, the loss is also very stable without a lot of
+peaks, just like the ones that ReXNet and EfficientNet have at the start
+of the training.
+
+We will consider the model done in \cite{shamsoshoara2020} as our
+baseline to determine if the tuning and new techniques, actually improve
+the model performance over what is the current state-of-the-art. As it
+can be seen in table \ref{tab:performance}, all the models perform
+better than the FLAME model in the test dataset, as both the accuracy
+and the loss in the dataset improve. Nevertheless, we have a special
+case that is the GENet model, in which the performance in the training
+dataset is considerably lower than the other models, even though it
+achieved a higher accuracy than the FLAME model in the test dataset.
+This is because GENet is the only model that used mixup as part of the
+training, as a result of the tuning of the hyper-parameters.
+
+In addition another metric that we consider worthy to analyze is the
+amount of time it took to train the model. And as it can be seen in
+table \ref{tab:time}, it is very impressive that most of the models used
+can be trained in less than 10 minutes. A comparison with the FLAME
+model is not possible as \cite{shamsoshoara2020} only shared the amount
+of epochs needed to train, which were 40. But taking into consideration
+that in average we took around 3 minutes per epoch to train, then we can
+assume that probably their model was trained in around 120 minutes, but
+the real number may be higher.
+
+\begin{table}[t]
+\centering
+\begin{tabular}{|l|l|}
+\toprule
+Model & Time Taken (minutes) \\
+\midrule
+GENet & 9.8 \\
+EfficientNet & 26.1 \\
+RepVGG & 9.89 \\
+ReXNet & 8.22 \\
+\bottomrule
+\end{tabular}
+\caption{Time that each model takes to train}
+\label{tab:time}
+\end{table}
+
 \hypertarget{conclusion}{%
 \section{Conclusion}\label{conclusion}}
+
+This paper developed four models that showed the necessity that exists
+of using efficient techniques and architectures to not only obtain a
+good model performance, while using less resources during the training.
+This allows researchers or other developers to implement these models in
+IoT devices, as the response will be faster than with models that demand
+more resources to operate. It could even allow the developers to add the
+software directly to the devices themselves, because based on the
+information in table \ref{tab:time} we can assume that the inference
+time of most of the models, with the exception of EfficientNet, is
+faster than needed.
+
+Nevertheless, there are still factors that could improve the performance
+of the models, starting with having a more diverse dataset. As we
+consider that one problem with the datasets is the repetition of the
+same frames, caused due to being extracted from videos. This procedure
+may cause that the model can't learn to generalize quickly enough to
+classify one label with the other, or maybe every if the dataset is of
+very poor quality. In addition that basically this create the illusion
+that our dataset may be big enough, able to generalize the information,
+while the reality may be that there are not enough samples of all the
+environments.
+
+Now that we know that these techniques help in the creation of better
+models, a next step could be to replicate the procedure, we should
+replicate the procedure for architectures that were designed for mobile
+devices or those devices with limited resources. Architectures such as:
+MobileNet \cite{howard2019}, FBNet \cite{wu2019} and pruned versions of
+the less complex versions of EfficientNet \cite{tan2020}.
 
 % can use a bibliography generated by BibTeX as a .bbl file
 % BibTeX documentation can be easily obtained at:
