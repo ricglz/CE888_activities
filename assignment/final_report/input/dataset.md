@@ -40,7 +40,7 @@ After merging the datasets, the next part of the preprocessing was to balance th
 
 ### Dividing Training/Validation
 
-The next step would be to split the training/validation dataset into their own predefined folders, this will help by always using the same images for training and validation, instead of random ones. Therefore the dataset \footnote{Dataset without halving training: \url{https://drive.google.com/file/d/1uv9vAl55IinuEMXHocnJQUhPbMikuSIX}} was split into 80% training and 20% validation, keeping the balanced ratios between the labels.
+The next step would be to split the training/validation dataset into their own predefined folders, this will help by always using the same images for training and validation, instead of random ones. Therefore the dataset \footnote{Dataset before halving training: \url{https://drive.google.com/file/d/1uv9vAl55IinuEMXHocnJQUhPbMikuSIX}} was split into 80% training and 20% validation, keeping the balanced ratios between the labels.
 
 \begin{table}[h]
 \centering

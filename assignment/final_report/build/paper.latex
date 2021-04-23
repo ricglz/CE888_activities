@@ -188,9 +188,10 @@ of memory of the GPU. Or because it takes a lot of time to be trained
 due to the computational power it needs. To solve this problem,
 \cite{micikevicius2018} proposed what is known as mixed-precision
 training, where instead of using the full-precision number of 8 bytes,
-it would use the 4 byte format. This led to a reduction of the amount of
-memory it took to train the model, in addition to a speedup in the time
-that the model took to be trained.
+it would use the 4 byte format. As showed in \cite{he2019} using this
+technique led to a reduction of the amount of memory it took to train
+the model, in addition to a speedup in the time that the model took to
+be trained.
 
 \hypertarget{data-augmentation}{%
 \subsection{Data Augmentation}\label{data-augmentation}}
@@ -203,8 +204,8 @@ effective because it generates new data each time a new epoch is run;
 thus, resulting quite effective when learning from an overall small
 dataset. In addition to the prior, it also has been proven to be
 effective as it adds randomness to the training and it reduces the
-changes that the same batch have the same data each epoch
-\cite{perez2017}.
+changes that the same batch have the same data each epoch as was shown
+in \cite{perez2017}.
 
 \hypertarget{autoaugment}{%
 \subsubsection{AutoAugment}\label{autoaugment}}
@@ -233,7 +234,7 @@ the desired test metrics \cite{kim2020}.
 \hypertarget{mixup}{%
 \subsection{Mixup}\label{mixup}}
 
-\begin{figure}
+\begin{figure}[h]
 \centering
 \subcaptionbox{Before Mixup}{\includegraphics[width=0.2\textwidth]{img/before_mixup}}%
 \hfill
@@ -244,12 +245,12 @@ the desired test metrics \cite{kim2020}.
 
 Mixup is a technique that was proposed by \cite{zhang2018}, that aims to
 help in the stabilization of adversarial networks in generative models;
-nevertheless, it has also found success in classification tasks. The
-technique consists of mixing both the data and labels of elements in the
-batch, resulting in an overall generalization of how the distribution of
-the data would look for two different elements of the same or different
-class. An example of the result of mixup can be seen in figure
-\ref{fig:mixup}.
+nevertheless, it has also found success in classification tasks as was
+demostrated in \cite{gong2020}. The technique consists of mixing both
+the data and labels of elements in the batch, resulting in an overall
+generalization of how the distribution of the data would look for two
+different elements of the same or different class. An example of the
+result of mixup can be seen in figure \ref{fig:mixup}.
 
 \hypertarget{transfer-learning}{%
 \subsection{Transfer learning}\label{transfer-learning}}
@@ -260,7 +261,8 @@ task that has already been learned''. This technique helps in reducing
 the amount of computational time to achieve the same or better accuracy.
 By using the weights of a model with the same architecture trained for
 another task, the model will use that prior knowledge to learn this new
-task faster. This has been proved by the examples of \cite{shao2018}
+task faster, proven by the works of \cite{shao2018}, \cite{zoph2016} and
+\cite{chiang2020}.
 
 \hypertarget{onecyclelr}{%
 \subsection{OneCycleLR}\label{onecyclelr}}
@@ -289,6 +291,12 @@ case of the momentum, the behavior is the opposite of the learning rate,
 starting with a very high value, then descending and finally going back
 again to the max value.
 
+The scheduler has proven its usefulness in reducing the amount of
+iterations need, while keeping or increasing the accuracy in the works
+of \cite{kuo2020} and \cite{kim2020Pynet}. In the case of the former it
+was possible to reduce the amount of epochs needed by a 68\% compared to
+their baseline, while also improving the model's accuracy.
+
 \hypertarget{methodology}{%
 \section{Methodology}\label{methodology}}
 
@@ -300,17 +308,7 @@ The dataset used was a merge between the datasets done by
 perform the same preprocessing is fully available on Github
 \footnote{\url{https://github.com/ricglz/CE888_activities/blob/main/assignment/scripts/data_preprocessing.py}}.
 
-\hypertarget{flame-dataset}{%
-\subsubsection{FLAME dataset}\label{flame-dataset}}
-
-The FLAME dataset consists of 47,992 images that are labeled as having
-fire or not. 39,375 of the total amount of images are for
-training/validation. As can be seen at figure \ref{tab:1}, the
-training/validation set, the labels are skewed towards the class with
-fire. These images were obtained by the researchers by extracting the
-frames of videos recorded by drones of forest areas \cite{Flame2020}.
-
-\begin{table}[b]
+\begin{table}[h]
 \centering
 \begin{tabular}{|l|c|c|r|}
 \toprule
@@ -324,8 +322,18 @@ Test & 5137 (59.61\%) & 3480 (40.39\%) & 8617 (100.00\%) \\
 \label{tab:1}
 \end{table}
 
-\hypertarget{kaggles-dataset}{%
-\subsubsection{Kaggle's dataset}\label{kaggles-dataset}}
+\hypertarget{flame-dataset}{%
+\subsubsection{FLAME dataset}\label{flame-dataset}}
+
+The FLAME dataset consists of 47,992 images that are labeled as having
+fire or not. 39,375 of the total amount of images are for
+training/validation. As can be seen at table \ref{tab:1}, the
+training/validation set, the labels are skewed towards the class with
+fire. These images were obtained by the researchers by extracting the
+frames of videos recorded by drones of forest areas \cite{Flame2020}.
+
+\hypertarget{fires-dataset}{%
+\subsubsection{FIRE's dataset}\label{fires-dataset}}
 
 This dataset was created for a NASA challenge in 2018, the authors
 collected a total of 1,000 images, all labeled for training data. These
@@ -345,8 +353,8 @@ skew over the fire images.
 \hypertarget{merging-datasets}{%
 \subsubsection{Merging datasets}\label{merging-datasets}}
 
-All the images of the Kaggle's and Dunning's dataset were merged into
-the training/validation dataset of flame.
+All the images of the FIRE's and Dunning's dataset were merged into the
+training/validation dataset of flame.
 
 \hypertarget{balancing-the-datasets}{%
 \subsubsection{Balancing the datasets}\label{balancing-the-datasets}}
@@ -368,9 +376,24 @@ The next step would be to split the training/validation dataset into
 their own predefined folders, this will help by always using the same
 images for training and validation, instead of random ones. Therefore
 the dataset
-\footnote{Dataset without halving training: \url{https://drive.google.com/file/d/1uv9vAl55IinuEMXHocnJQUhPbMikuSIX}}
+\footnote{Dataset before halving training: \url{https://drive.google.com/file/d/1uv9vAl55IinuEMXHocnJQUhPbMikuSIX}}
 was split into 80\% training and 20\% validation, keeping the balanced
 ratios between the labels.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|c|c|r|}
+\toprule
+Dataset & Fire & No Fire & Total \\
+\midrule
+Train & 15341 (50\%) & 15341 (50\%) & 30682 (100.00\%) \\
+Validation & 7671 (50\%) & 7671 (50\%) & 15342 (100.00\%) \\
+Test & 5137 (59.61\%) & 3480 (40.39\%) & 8617 (100.00\%) \\
+\bottomrule
+\end{tabular}
+\caption{Dataset distribution after preprocessing}
+\label{tab:2}
+\end{table}
 
 \hypertarget{reducing-the-amount-of-data-in-training}{%
 \subsubsection{Reducing the amount of data in
@@ -385,21 +408,6 @@ half, while keeping the ratio of classes as before. This was the last
 step for the creation of the dataset
 \footnote{Dataset after halving training: \url{https://drive.google.com/file/d/1RrO4boe9jHUsCY1l9Z55iG1sfydJzubs/view}}
 and resulted in a distribution as it shows in table \ref{tab:2}
-
-\begin{table}
-\centering
-\begin{tabular}{|l|c|c|r|}
-\toprule
-Dataset & Fire & No Fire & Total \\
-\midrule
-Train & 15341 (50\%) & 15341 (50\%) & 30682 (100.00\%) \\
-Validation & 7671 (50\%) & 7671 (50\%) & 15342 (100.00\%) \\
-Test & 5137 (59.61\%) & 3480 (40.39\%) & 8617 (100.00\%) \\
-\bottomrule
-\end{tabular}
-\caption{Dataset distribution after preprocessing}
-\label{tab:2}
-\end{table}
 
 \hypertarget{model}{%
 \subsection{Model}\label{model}}
@@ -421,22 +429,51 @@ learn from the current task. It must be mentioned that all of these
 architectures have already been trained and have been shared by
 \cite{timm2019} who have also shared the code to use the models.
 
+\begin{table*}[t]
+\centering
+\begin{tabular}{|l|c|c|c|c|c|c|}
+\toprule
+& \multicolumn{2}{|c|}{Training} & \multicolumn{2}{|c|}{Validation} & \multicolumn{2}{|c|}{Test}\\
+\cmidrule{2-3} \cmidrule{4-5} \cmidrule{6-7}
+Model & Accuracy (\%) & Loss & Accuracy (\%) & Loss & Accuracy (\%) & Loss \\
+\midrule
+FLAME & 96.79 & 0.0857 & 94.31 & 0.1506 & 76.23 & 0.7414 \\
+GENet & 73.05 & 0.3925 & 99.15 & 0.0749 & 83.17 & 0.3722 \\
+EfficientNet & 97.94 & 0.006275 & 99.62 & 0.0293 & 83.18 & 0.4198 \\
+RepVGG & 98.58 & 0.2313 & 98.74 & 0.1525 & 0.8463 & 0.5854 \\
+ReXNet & 99.23 & 0.0855 & 99.07 & 0.02632 & 90.68 & 0.2259 \\
+\bottomrule
+\end{tabular}
+\caption{Models accuracies and losses in all datasets}
+\label{tab:performance}
+\end{table*}
+
 \hypertarget{training}{%
 \subsection{Training}\label{training}}
 
 The model will be trained for 5 epochs using Mixed Precision and
-OneCycleLR as a learning scheduler. Also we used a special data loader
-which will create batches containing the same amount of random elements
-of each class. This was possible due to the previous work of
-\cite{galato2019}, who developed a similar sampler for their use case.
-Also depending of the model, it will be trained using mixup. And
-finally, it must be mentioned that the model that will be obtained at
-the end will be the model that achieves the highest average between
-accuracy and F1 score in the validation dataset.
+OneCycleLR as a learning scheduler. In addition to augmenting the data,
+the images will be resized to a ratio of 224x224 and normalize the
+values based on the mean and standard deviation of the Imagenet dataset
+\footnote{$mean = [0.485, 0.456, 0.406]$ and $std=[0.229, 0.224, 0.225]$}.
+As this was the one used in which the models were pre-trained.
+
+Also we used a special data loader which will create batches containing
+the same amount of random elements of each class. This was possible due
+to the previous work of \cite{galato2019}, who developed a similar
+sampler for their use case. Also depending of the model, it will be
+trained using mixup.
 
 The optimizer for the training will be either SGD, Adam or RMSProp,
 depending of how the tuning of the hyper-parameters turns out.
-Meanwhile, the loss function will be BCEWithLogitsLoss.
+Meanwhile, the loss function will depend if the model is trained by
+using mixup or not. When using Mixup it will be trained by using
+CrossEntropyLoss, meanwhile if it's not trained by it, the model will be
+trained using BCEWithLogitsLoss.
+
+When the training has ended we will restore the weights of the model to
+the epoch in which it had the best score, which we consider to be the
+average between the accuracy and F1 score in the test dataset.
 
 In addition the complete code can be found on Github
 \footnote{\url{https://github.com/ricglz/CE888_activities/tree/main/assignment/scripts}},
@@ -466,34 +503,6 @@ others will be frozen. At the end of each epoch the next N layers will
 be unfrozen, until either all the layers are now trainable or the
 training has been completed. N will depend of the model, as well as if
 the BatchNormalizer layers will also be trainable or not.
-
-\begin{table*}[t]
-\centering
-\begin{tabular}{|l|c|c|c|c|c|c|}
-\toprule
-& \multicolumn{2}{|c|}{Training} & \multicolumn{2}{|c|}{Validation} & \multicolumn{2}{|c|}{Test}\\
-\cmidrule{2-3} \cmidrule{4-5} \cmidrule{6-7}
-Model & Accuracy (\%) & Loss & Accuracy (\%) & Loss & Accuracy (\%) & Loss \\
-\midrule
-FLAME & 96.79 & 0.0857 & 94.31 & 0.1506 & 76.23 & 0.7414 \\
-GENet & 73.05 & 0.3925 & 99.15 & 0.0749 & 83.17 & 0.3722 \\
-EfficientNet & 97.94 & 0.006275 & 99.62 & 0.0293 & 83.18 & 0.4198 \\
-RepVGG & 98.58 & 0.2313 & 98.74 & 0.1525 & 0.8463 & 0.5854 \\
-ReXNet & 99.23 & 0.0855 & 99.07 & 0.02632 & 90.68 & 0.2259 \\
-\bottomrule
-\end{tabular}
-\caption{Models accuracies and losses in all datasets}
-\label{tab:performance}
-\end{table*}
-
-\begin{figure}
-\centering
-\subcaptionbox{Training loss through steps \label{fig:train-loss}}{\includegraphics[width=0.49\textwidth]{img/training_loss}}%
-\hfill
-\subcaptionbox{Validation loss through steps \label{fig:val-loss}}{\includegraphics[width=0.49\textwidth]{img/validation_loss}}%
-\caption{Progression of the loss in training and validation datasets}
-\label{fig:dataset-losses}
-\end{figure}
 
 \hypertarget{hyper-parameters-tuning}{%
 \subsection{Hyper-parameters tuning}\label{hyper-parameters-tuning}}
@@ -575,6 +584,19 @@ The hyper-parameters that were tuned were the following:
 The following results were obtained by using NVidia RTX 2080 gpu for the
 ReXnet model and a GTX 1080 TI for the other.
 
+\hypertarget{results-compared-to-baseline}{%
+\subsection{Results compared to
+baseline}\label{results-compared-to-baseline}}
+
+\begin{figure}[h]
+\centering
+\subcaptionbox{Training loss through steps \label{fig:train-loss}}{\includegraphics[width=0.24\textwidth, height=1.5in]{img/training_loss}}%
+\hfill
+\subcaptionbox{Validation loss through steps \label{fig:val-loss}}{\includegraphics[width=0.24\textwidth, height=1.5in]{img/validation_loss}}%
+\caption{Progression of the loss in training and validation datasets}
+\label{fig:dataset-losses}
+\end{figure}
+
 As we can see in figure \ref{fig:train-loss}, the reduction of the
 training loss seems normal among most of the models, the GENet model
 being the exception. This is because the model was the only one that was
@@ -595,31 +617,73 @@ achieved a higher accuracy than the FLAME model in the test dataset.
 This is because GENet is the only model that used mixup as part of the
 training, as a result of the tuning of the hyper-parameters.
 
-In addition another metric that we consider worthy to analyze is the
-amount of time it took to train the model. And as it can be seen in
-table \ref{tab:time}, it is very impressive that most of the models used
-can be trained in less than 10 minutes. A comparison with the FLAME
-model is not possible as \cite{shamsoshoara2020} only shared the amount
-of epochs needed to train, which were 40. But taking into consideration
-that in average we took around 3 minutes per epoch to train, then we can
-assume that probably their model was trained in around 120 minutes, but
-the real number may be higher.
+\hypertarget{efficient-training-results}{%
+\subsection{Efficient training
+results}\label{efficient-training-results}}
 
-\begin{table}[t]
+\begin{table}[h]
 \centering
-\begin{tabular}{|l|l|}
+\begin{tabular}{llp{2cm}}
 \toprule
-Model & Time Taken (minutes) \\
+Model & Time Taken (minutes) & Maximum GPU Memory Allocated (\%) \\
 \midrule
-GENet & 9.8 \\
-EfficientNet & 26.1 \\
-RepVGG & 9.89 \\
-ReXNet & 8.22 \\
+GENet & 9.8 & 16.92 \\
+EfficientNet & 26.1 & 18.98 \\
+RepVGG & 9.89 & 15.81 \\
+ReXNet & 8.22 & 62.92 \\
 \bottomrule
 \end{tabular}
-\caption{Time that each model takes to train}
-\label{tab:time}
+\caption{Time and memory metrics of each model}
+\label{tab:efficiency}
 \end{table}
+
+In addition to the performance metrics, it will be analyzed the
+computation time to train the model and the maximum percentage of memory
+allocated. And as it can be seen in table \ref{tab:efficiency}, it is
+very impressive that most of the models used can be trained in less than
+10 minutes. A comparison with the FLAME model is not possible as
+\cite{shamsoshoara2020} only shared the amount of epochs needed to
+train, which were 40. But taking into consideration that in average we
+took around 3 minutes per epoch to train, then we can assume that
+probably their model was trained in around 120 minutes, but the real
+number may be higher.
+
+Regarding the memory consumption, there are 2 factors to consider prior
+to analyzing the results. First the GPUs memories, the GTX 1080 Ti has
+11GB of memory, meanwhile the RTX 2080 that was the one used for the
+ReXNet training has only 8GB. Secondly, the ReXNet model was trained in
+a multi-node GPU which later on was discovered had a problem of
+allocating the same GPU to different process. Taking that in
+consideration is very interesting how all of the models are using less
+than 5GB, as even though the ReXNet model is reporting a use of 62.92\%
+of the memory it can be assume that part of it is used for another
+process as the percentage is significantly higher than the other models.
+Also it means, that we could have experimented with higher batch sizes
+and analyze if it would improve or decrease the performance of the
+model.
+
+\hypertarget{hyper-parameter-tuning-insights}{%
+\subsection{Hyper-Parameter tuning
+insights}\label{hyper-parameter-tuning-insights}}
+
+After tuning the hyper-parameters an insight concluded is that even
+though a lot of papers decide to use SGD as their optimizer, in our case
+none of the models ended up using it. Instead, the most popular
+optimizer for our models was Adam, which was the one used for most of
+the models, with the exception of RepVGG which used RMSProp.
+
+In addition to the prior, it was interesting to see that mixup was
+almost non-effective, as it was only used in the GENet. The reason could
+be because there were only two classes; thus, reducing the effectiveness
+of the technique. Also it can be concluded based on the models, that if
+the OneCycleLR is used, it's possible that the best anneal strategy to
+use is a linear behavior instead of a cosine. Additionally, also for the
+OneCycleLR, the minimum value of the momentum should be between 0.75 and
+0.82, meanwhile the max value should be 0.86 and 0.95
+
+Finally, for this dataset the models require a drop rate between 0.45
+and 0.55, as all the models have the models their best drop rate in this
+range.
 
 \hypertarget{conclusion}{%
 \section{Conclusion}\label{conclusion}}
@@ -631,9 +695,16 @@ This allows researchers or other developers to implement these models in
 IoT devices, as the response will be faster than with models that demand
 more resources to operate. It could even allow the developers to add the
 software directly to the devices themselves, because based on the
-information in table \ref{tab:time} we can assume that the inference
-time of most of the models, with the exception of EfficientNet, is
-faster than needed.
+information in table \ref{tab:efficiency} we can assume that the
+inference time of most of the models, with the exception of
+EfficientNet, is faster than needed.
+
+Now that we know that these techniques help in the creation of better
+models, a next step could be to replicate the procedure, we should
+replicate the procedure for architectures that were designed for mobile
+devices or those devices with limited resources. Architectures such as:
+MobileNet \cite{howard2019}, FBNet \cite{wu2019} and pruned versions of
+the less complex versions of EfficientNet \cite{tan2020}.
 
 Nevertheless, there are still factors that could improve the performance
 of the models, starting with having a more diverse dataset. As we
@@ -644,14 +715,19 @@ classify one label with the other, or maybe every if the dataset is of
 very poor quality. In addition that basically this create the illusion
 that our dataset may be big enough, able to generalize the information,
 while the reality may be that there are not enough samples of all the
-environments.
+environments. As a proposal to solve this issue it would be to create a
+generative model, which creates images of environments with and without
+fire. With this technique there would be a dataset with a broad spectrum
+of environments that could lead better performance and generalization
+for the classification models.
 
-Now that we know that these techniques help in the creation of better
-models, a next step could be to replicate the procedure, we should
-replicate the procedure for architectures that were designed for mobile
-devices or those devices with limited resources. Architectures such as:
-MobileNet \cite{howard2019}, FBNet \cite{wu2019} and pruned versions of
-the less complex versions of EfficientNet \cite{tan2020}.
+As mentioned before, Adam was the most used optimizer in our models,
+despite SGD can be seen in some cases as the favorite for training. This
+opens a possible new research to answer the following question: In which
+circumstances SGD can be a better optimizer than Adam or RMSProp? As
+there are works such as \cite{keskar2017} in which it shows how SGD
+performs better than Adam. Could it be related to the dataset used or to
+the amount of epochs in which the run is performed?
 
 % can use a bibliography generated by BibTeX as a .bbl file
 % BibTeX documentation can be easily obtained at:

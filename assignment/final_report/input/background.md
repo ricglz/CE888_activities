@@ -39,7 +39,7 @@ Mixup is a technique that was proposed by \cite{zhang2018}, that aims to help in
 
 ## Transfer learning
 
-As said by \cite{torrey2010} "Transfer learning is the improvement of learning in a new task through the transfer of knowledge from a related task that has already been learned". This technique helps in reducing the amount of computational time to achieve the same or better accuracy. By using the weights of a model with the same architecture trained for another task, the model will use that prior knowledge to learn this new task faster. This has been proved by the examples of \cite{shao2018}, \cite{zoph2016} and \cite{chiang2020}.
+As said by \cite{torrey2010} "Transfer learning is the improvement of learning in a new task through the transfer of knowledge from a related task that has already been learned". This technique helps in reducing the amount of computational time to achieve the same or better accuracy. By using the weights of a model with the same architecture trained for another task, the model will use that prior knowledge to learn this new task faster, proven by the works of \cite{shao2018}, \cite{zoph2016} and \cite{chiang2020}.
 
 ## OneCycleLR
 
