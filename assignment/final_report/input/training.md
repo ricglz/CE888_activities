@@ -1,10 +1,12 @@
 ## Training
 
-The model will be trained for 5 epochs using Mixed Precision and OneCycleLR as a learning scheduler. Also we used a special data loader which will create batches containing the same amount of random elements of each class. This was possible due to the previous work of \cite{galato2019}, who developed a similar sampler for their use case. Also depending of the model, it will be trained using mixup. And finally, it must be mentioned that the model that will be obtained at the end will be the model that achieves the highest average between accuracy and F1 score in the validation dataset.
+The model will be trained for 5 epochs using Mixed Precision and OneCycleLR as a learning scheduler. In addition to augmenting the data, the images will be resized to a ratio of 224x224 and normalize the values based on the mean and standard deviation of the Imagenet dataset \footnote{$mean = [0.485, 0.456, 0.406]$ and $std=[0.229, 0.224, 0.225]$}. As this was the one used in which the models were pre-trained.
 
-<!-- The optimizer for the training will be either SGD, Adam or RMSProp, depending of how the tuning of the hyper-parameters turns out. Meanwhile, the loss function will depend if the model is trained by using mixup or not. When using Mixup it will be trained by using CrossEntropyLoss, meanwhile if it's not trained by it, the model will be trained using BCEWithLogitsLoss. -->
+Also we used a special data loader which will create batches containing the same amount of random elements of each class. This was possible due to the previous work of \cite{galato2019}, who developed a similar sampler for their use case. Also depending of the model, it will be trained using mixup.
 
-The optimizer for the training will be either SGD, Adam or RMSProp, depending of how the tuning of the hyper-parameters turns out. Meanwhile, the loss function will be BCEWithLogitsLoss.
+The optimizer for the training will be either SGD, Adam or RMSProp, depending of how the tuning of the hyper-parameters turns out. Meanwhile, the loss function will depend if the model is trained by using mixup or not. When using Mixup it will be trained by using CrossEntropyLoss, meanwhile if it's not trained by it, the model will be trained using BCEWithLogitsLoss.
+
+When the training has ended we will restore the weights of the model to the epoch in which it had the best score, which we consider to be the average between the accuracy and F1 score in the test dataset.
 
 In addition the complete code can be found on Github \footnote{\url{https://github.com/ricglz/CE888_activities/tree/main/assignment/scripts}}, where it can be found the scripts used to perform the experiments.
 
