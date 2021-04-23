@@ -42,7 +42,8 @@ class FlameDataModule(LightningDataModule):
         if args.auto_augment:
             return [AutoAugment(args.magnitude, args.amount)]
         if args.augmix:
-            return [parse_hparams(args)]
+            config_str = parse_hparams(args)
+            return [augment_and_mix_transform(config_str, {})]
         return [
             T.ColorJitter(brightness=0.1, contrast=0.1),
             T.RandomRotation(degrees=45),
