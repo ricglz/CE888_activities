@@ -7,7 +7,9 @@ from torch.utils.data import DataLoader
 from torchvision.datasets import ImageFolder
 import torchvision.transforms as T
 
-from auto_augment import AutoAugment
+from timm.data.auto_augment import augment_and_mix_transform
+
+from auto_augment import AutoAugment, parse_hparams
 from sampler import BalancedBatchSampler
 from utils import get_data_dir, CustomParser as ArgumentParser
 
@@ -26,14 +28,7 @@ class FlameDataModule(LightningDataModule):
         normalize = T.Normalize([0.485, 0.456, 0.406],
                                 [0.229, 0.224, 0.225])
         to_tensor = T.ToTensor()
-        augmentations = [
-            AutoAugment(args.magnitude, args.amount)
-        ] if args.auto_augment else [
-            T.ColorJitter(brightness=0.1, contrast=0.1),
-            T.RandomRotation(degrees=45),
-            T.RandomHorizontalFlip(),
-            T.RandomVerticalFlip(),
-        ]
+        augmentations = self.get_augmentations(args)
         self.train_transforms = T.Compose([
             resize,
             *augmentations,
@@ -41,6 +36,19 @@ class FlameDataModule(LightningDataModule):
             normalize
         ])
         self.transforms = T.Compose([resize, to_tensor, normalize])
+
+    @staticmethod
+    def get_augmentations(args) -> list:
+        if args.auto_augment:
+            return [AutoAugment(args.magnitude, args.amount)]
+        if args.augmix:
+            return [parse_hparams(args)]
+        return [
+            T.ColorJitter(brightness=0.1, contrast=0.1),
+            T.RandomRotation(degrees=45),
+            T.RandomHorizontalFlip(),
+            T.RandomVerticalFlip(),
+        ]
 
     def prepare_data(self):
         self.data_dir = get_data_dir(self.minified)
@@ -72,13 +80,17 @@ class FlameDataModule(LightningDataModule):
 
     @staticmethod
     def add_argparse_args(parent_parser):
-        parser = ArgumentParser(parents=[parent_parser], add_help=False)
-        parser.add_argument('--amount', type=int, default=2)
-        parser.add_bool_argument('--auto_augment')
+        parser = AutoAugment.add_argparse_args(parent_parser)
+
+        parser.add_bool_argument('--augmix')
+        parser.add_argument('--magnitude', type=int, default=3)
+        parser.add_argument('--width', type=int, default=3)
+        parser.add_argument('--depth', type=int, default=-1)
+        parser.add_argument('--blend', type=int, default=0)
+        parser.add_argument('--mstd', type=float, default=0)
+
         parser.add_argument('--batch_size', type=int, default=32)
-        parser.add_argument('--magnitude', type=int, default=0)
         parser.add_argument('--no_minified', action='store_false')
-        parser.add_argument('--probability', type=float, default=0.5)
         return parser
 
     @staticmethod

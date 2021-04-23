@@ -1,10 +1,16 @@
 """Customized AutoAugment module"""
-import math
 from random import sample
+import math
 
 import torch
 from torchvision import transforms as T
 from torchvision.transforms import functional as F
+
+from utils import CustomParser as ArgumentParser
+
+def parse_hparams(hparams):
+    config_str = f'augmix-m{hparams.magnitude}-w{hparams.width}'
+    return f'{config_str}-d{hparams.depth}-mstd{hparams.mstd}'
 
 class AutoAugment(T.AutoAugment):
     def __init__(self, magnitude=0, amount=2, probability=0.5):
@@ -68,3 +74,14 @@ class AutoAugment(T.AutoAugment):
                 else:
                     raise ValueError("The provided operator {} is not recognized.".format(op_name))
         return img
+
+    @staticmethod
+    def add_argparse_args(parent_parser):
+        parser = ArgumentParser(parents=[parent_parser], add_help=False)
+
+        parser.add_argument('--amount', type=int, default=2)
+        parser.add_bool_argument('--auto_augment')
+        parser.add_argument('--magnitude', type=int, default=0)
+        parser.add_argument('--probability', type=float, default=0.5)
+
+        return parser
