@@ -22,7 +22,7 @@ Test & 5137 (59.61\%) & 3480 (40.39\%) & 8617 (100.00\%) \\
 \label{tab:1}
 \end{table}
 
-### Kaggle's dataset
+### FIRE's dataset
 
 This dataset was created for a NASA challenge in 2018, the authors collected a total of 1,000 images, all labeled for training data. These images, contrary to the previous dataset are from a wide range of environments, from urban to rural areas. Nevertheless, the dataset is skewed, containing 755 images labeled as fire and the rest as no-fire \cite{saied2020}.
 
@@ -32,7 +32,7 @@ The dataset was created by Dunning et al. consisting of 23,408 images for traini
 
 ### Merging datasets
 
-All the images of the Kaggle's and Dunning's dataset were merged into the training/validation dataset of flame.
+All the images of the FIRE's and Dunning's dataset were merged into the training/validation dataset of flame.
 
 ### Balancing the datasets
 
