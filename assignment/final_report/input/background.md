@@ -26,7 +26,7 @@ Even though, data augmentation is commonly used only for the training phase it a
 
 <!-- TODO: Add information related to the alpha value -->
 
-\begin{figure}
+\begin{figure}[h]
 \centering
 \subcaptionbox{Before Mixup}{\includegraphics[width=0.2\textwidth]{img/before_mixup}}%
 \hfill

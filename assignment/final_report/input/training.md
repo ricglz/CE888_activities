@@ -1,3 +1,22 @@
+\begin{table*}[t]
+\centering
+\begin{tabular}{|l|c|c|c|c|c|c|}
+\toprule
+& \multicolumn{2}{|c|}{Training} & \multicolumn{2}{|c|}{Validation} & \multicolumn{2}{|c|}{Test}\\
+\cmidrule{2-3} \cmidrule{4-5} \cmidrule{6-7}
+Model & Accuracy (\%) & Loss & Accuracy (\%) & Loss & Accuracy (\%) & Loss \\
+\midrule
+FLAME & 96.79 & 0.0857 & 94.31 & 0.1506 & 76.23 & 0.7414 \\
+GENet & 73.05 & 0.3925 & 99.15 & 0.0749 & 83.17 & 0.3722 \\
+EfficientNet & 97.94 & 0.006275 & 99.62 & 0.0293 & 83.18 & 0.4198 \\
+RepVGG & 98.58 & 0.2313 & 98.74 & 0.1525 & 0.8463 & 0.5854 \\
+ReXNet & 99.23 & 0.0855 & 99.07 & 0.02632 & 90.68 & 0.2259 \\
+\bottomrule
+\end{tabular}
+\caption{Models accuracies and losses in all datasets}
+\label{tab:performance}
+\end{table*}
+
 ## Training
 
 The model will be trained for 5 epochs using Mixed Precision and OneCycleLR as a learning scheduler. In addition to augmenting the data, the images will be resized to a ratio of 224x224 and normalize the values based on the mean and standard deviation of the Imagenet dataset \footnote{$mean = [0.485, 0.456, 0.406]$ and $std=[0.229, 0.224, 0.225]$}. As this was the one used in which the models were pre-trained.

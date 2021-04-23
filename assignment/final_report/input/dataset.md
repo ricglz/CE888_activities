@@ -4,11 +4,7 @@
 
 The dataset used was a merge between the datasets done by \cite{Flame2020}, \cite{saied2020} and \cite{dunnings18}. The code to perform the same preprocessing is fully available on Github \footnote{\url{https://github.com/ricglz/CE888_activities/blob/main/assignment/scripts/data_preprocessing.py}}.
 
-### FLAME dataset
-
-The FLAME dataset consists of 47,992 images that are labeled as having fire or not. 39,375 of the total amount of images are for training/validation. As can be seen at figure \ref{tab:1}, the training/validation set, the labels are skewed towards the class with fire. These images were obtained by the researchers by extracting the frames of videos recorded by drones of forest areas \cite{Flame2020}.
-
-\begin{table}[b]
+\begin{table}[h]
 \centering
 \begin{tabular}{|l|c|c|r|}
 \toprule
@@ -21,6 +17,10 @@ Test & 5137 (59.61\%) & 3480 (40.39\%) & 8617 (100.00\%) \\
 \caption{FLAME dataset distribution}
 \label{tab:1}
 \end{table}
+
+### FLAME dataset
+
+The FLAME dataset consists of 47,992 images that are labeled as having fire or not. 39,375 of the total amount of images are for training/validation. As can be seen at table \ref{tab:1}, the training/validation set, the labels are skewed towards the class with fire. These images were obtained by the researchers by extracting the frames of videos recorded by drones of forest areas \cite{Flame2020}.
 
 ### FIRE's dataset
 
@@ -42,11 +42,7 @@ After merging the datasets, the next part of the preprocessing was to balance th
 
 The next step would be to split the training/validation dataset into their own predefined folders, this will help by always using the same images for training and validation, instead of random ones. Therefore the dataset \footnote{Dataset without halving training: \url{https://drive.google.com/file/d/1uv9vAl55IinuEMXHocnJQUhPbMikuSIX}} was split into 80% training and 20% validation, keeping the balanced ratios between the labels.
 
-### Reducing the amount of data in training
-
-With a total of 61,378 images, there was a lot of data to process. If we want that the training to be as efficient as possible we need to reduce the amount of data used for training. As there are a lot of images that are very similar between each other, due to being frames extracted from videos. Then it was decided to cut the amount of training data into half, while keeping the ratio of classes as before. This was the last step for the creation of the dataset \footnote{Dataset after halving training: \url{https://drive.google.com/file/d/1RrO4boe9jHUsCY1l9Z55iG1sfydJzubs/view}} and resulted in a distribution as it shows in table \ref{tab:2}
-
-\begin{table}
+\begin{table}[h]
 \centering
 \begin{tabular}{|l|c|c|r|}
 \toprule
@@ -60,3 +56,7 @@ Test & 5137 (59.61\%) & 3480 (40.39\%) & 8617 (100.00\%) \\
 \caption{Dataset distribution after preprocessing}
 \label{tab:2}
 \end{table}
+
+### Reducing the amount of data in training
+
+With a total of 61,378 images, there was a lot of data to process. If we want that the training to be as efficient as possible we need to reduce the amount of data used for training. As there are a lot of images that are very similar between each other, due to being frames extracted from videos. Then it was decided to cut the amount of training data into half, while keeping the ratio of classes as before. This was the last step for the creation of the dataset \footnote{Dataset after halving training: \url{https://drive.google.com/file/d/1RrO4boe9jHUsCY1l9Z55iG1sfydJzubs/view}} and resulted in a distribution as it shows in table \ref{tab:2}
