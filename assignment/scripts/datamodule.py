@@ -83,7 +83,6 @@ class FlameDataModule(LightningDataModule):
         parser = AutoAugment.add_argparse_args(parent_parser)
 
         parser.add_bool_argument('--augmix')
-        parser.add_argument('--magnitude', type=int, default=3)
         parser.add_argument('--width', type=int, default=3)
         parser.add_argument('--depth', type=int, default=-1)
         parser.add_argument('--blend', type=int, default=0)
