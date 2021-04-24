@@ -196,7 +196,7 @@ class PretrainedModel(LightningModule):
     @staticmethod
     def add_argparse_args(parent_parser):
         parser = ArgumentParser(parents=[parent_parser], add_help=False)
-        parser.add_argument('--alpha', type=float, default=0)
+        parser.add_argument('--alpha', type=float, default=1)
         parser.add_argument('--base_momentum', type=float, default=0.825)
         parser.add_argument('--div_factor', type=float, default=25)
         parser.add_argument('--drop_rate', type=float, default=0.4)

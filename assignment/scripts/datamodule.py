@@ -85,8 +85,8 @@ class FlameDataModule(LightningDataModule):
 
         parser.add_bool_argument('--augmix')
         parser.add_argument('--width', type=int, default=3)
-        parser.add_argument('--depth', type=int, default=-1)
-        parser.add_argument('--blend', type=int, default=0)
+        parser.add_argument('--depth', type=int, default=1)
+        parser.add_argument('--blend', type=int, default=1)
         parser.add_argument('--mstd', type=float, default=0)
 
         parser.add_argument('--batch_size', type=int, default=32)
