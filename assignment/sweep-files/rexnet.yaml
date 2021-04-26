@@ -5,63 +5,82 @@ metric:
   target: 0.92
 parameters:
   anneal_strategy:
+    distribution: categorical
+    values:
+      - linear
+      - cos
+  augmix:
     distribution: constant
-    value: linear
+    value: true
   base_momentum:
     distribution: uniform
-    min: 0.7497
-    max: 0.769
-  checkpoint_path:
-    distribution: constant
-    value: best_rexnet.ckpt
+    min: 0.71
+    max: 0.77
+  blend:
+    distribution: int_uniform
+    min: 0
+    max: 1
   div_factor:
     distribution: uniform
-    min: 119.177
-    max: 126.618
+    min: 100
+    max: 114
   drop_rate:
     distribution: uniform
-    min: 0.3963
-    max: 0.4087
+    min: 0.4
+    max: 0.44
   epochs:
     distribution: constant
-    value: 5
+    value: 20
   final_div_factor:
     distribution: uniform
-    min: 48917.43
-    max: 50210.99
+    min: 47000
+    max: 51500
   lr:
-    distribution: uniform
-    min: 2.263e-3
-    max: 2.343e-3
+    distribution: log_uniform
+    min: -9.4334839233
+    max: -6.907755279
+  magnitude:
+    distribution: int_uniform
+    min: 0
+    max: 3
   max_momentum:
     distribution: uniform
-    min: 0.9328
-    max: 0.9413
+    min: 0.80
+    max: 0.8385
   model_name:
     distribution: constant
     value: rexnet_200
-  optimizer:
-    distribution: constant
-    value: rmsprop
-  pct_start:
+  mstd:
     distribution: uniform
-    min: 0.3751
-    max: 0.3816
-  stages:
+    min: 0
+    max: 1
+  optimizer:
     distribution: categorical
     values:
-      - 1
-      - 2
-      - 3
-  train_bn:
+      - adam
+      - rmsprop
+  pct_start:
+    distribution: uniform
+    min: 0.35
+    max: 0.45
+  stages:
     distribution: constant
-    value: false
+    value: 5
+  train_bn:
+    distribution: categorical
+    values:
+      - false
+      - true
   unfreeze_per_step:
     distribution: int_uniform
-    min: 21
-    max: 24
+    min: 22
+    max: 23
   weight_decay:
     distribution: uniform
-    min: 8.942e-4
-    max: 9.585e-4
-program: second_train.py
+    min: 1.0e-5
+    max: 3.4e-5
+  width:
+    distribution: int_uniform
+    min: 2
+    max: 3
+program: train.py

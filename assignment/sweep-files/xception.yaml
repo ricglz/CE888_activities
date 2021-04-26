@@ -17,26 +17,26 @@ parameters:
     min: 0.758
   div_factor:
     distribution: uniform
-    max: 62.032
+    max: 61.578
     min: 57.255
   drop_rate:
     distribution: uniform
     max: 0.417
-    min: 0.4022
+    min: 0.4041
   epochs:
     distribution: constant
     value: 5
   final_div_factor:
     distribution: uniform
-    max: 26944.295
-    min: 23864.06
+    max: 26711.39
+    min: 24646.995
   lr:
     distribution: uniform
-    max: 1.344e-3
+    max: 1.318e-3
     min: 9.25e-4
   max_momentum:
     distribution: uniform
-    max: 0.9238
+    max: 0.918
     min: 0.909
   mixup:
     distribution: constant
@@ -49,8 +49,8 @@ parameters:
     value: adam
   pct_start:
     distribution: uniform
-    max: 0.3718
-    min: 0.3697
+    max: 0.37171
+    min: 0.3687
   stages:
     distribution: constant
     value: 5
@@ -64,5 +64,5 @@ parameters:
   weight_decay:
     distribution: uniform
     max: 1.759e-4
-    min: 1.598e-4
+    min: 1.653e-4
 program: train.py

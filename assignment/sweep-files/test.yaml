@@ -1,49 +1,32 @@
-name: 'Efficientnet TTA sweep - 2'
-method: grid
+method: random
 metric:
   goal: maximize
   name: test_score
   target: 0.92
 parameters:
   amount:
-    distribution: constant
-    value: 2
+    distribution: int_uniform
+    min: 4
+    max: 5
   auto_augment:
     distribution: constant
     value: true
   checkpoint_path:
     distribution: constant
-    value: best_efficientnet.ckpt
+    value: second_rexnet.ckpt
   magnitude:
-    distribution: constant
-    value: 1
+    distribution: int_uniform
+    min: 0
+    max: 2
   model_name:
     distribution: constant
-    value: tf_efficientnet_b4
+    value: rexnet_200
   probability:
-    distribution: constant
-    value: 0.1
+    distribution: uniform
+    min: 0.12
+    max: 0.28
   tta:
-    distribution: categorical
-    # value: 2
-    values:
-      - 2
-      - 3
-      - 4
-      - 5
-      - 6
-      - 7
-      - 8
-      - 9
-      - 10
-      - 11
-      - 12
-      - 13
-      - 14
-      - 15
-      - 16
-      - 17
-      - 18
-      - 19
-      - 20
+    distribution: int_uniform
+    min: 11
+    max: 20
 program: test.py
